@@ -2,14 +2,7 @@ from django.utils import timezone
 from django.contrib.auth import get_user_model
 from django.test import TestCase
 
-from manager.models import (
-    Position,
-    TaskType,
-    Tag,
-    Team,
-    Project,
-    Task
-)
+from manager.models import Position, TaskType, Tag, Team, Project, Task
 
 
 class TestModels(TestCase):
@@ -57,17 +50,15 @@ class TestModels(TestCase):
     def test_worker_str(self):
         self.assertEqual(
             str(self.worker),
-            f"{self.worker.username}, ({self.worker.first_name}, {self.worker.last_name})"
+            f"{self.worker.username}, ({self.worker.first_name}, {self.worker.last_name})",
         )
 
     def test_project_str(self):
         self.assertEqual(
-            str(self.project),
-            f"{self.project.name}, (Team: {self.project.team.name})"
+            str(self.project), f"{self.project.name}, (Team: {self.project.team.name})"
         )
 
     def test_task_str(self):
         self.assertEqual(
-            str(self.task),
-            f"{self.task.name}, (Completed {self.task.is_completed})"
+            str(self.task), f"{self.task.name}, (Completed {self.task.is_completed})"
         )

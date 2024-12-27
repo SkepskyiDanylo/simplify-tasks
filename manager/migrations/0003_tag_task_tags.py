@@ -6,20 +6,28 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('manager', '0002_alter_worker_position'),
+        ("manager", "0002_alter_worker_position"),
     ]
 
     operations = [
         migrations.CreateModel(
-            name='Tag',
+            name="Tag",
             fields=[
-                ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('name', models.CharField(max_length=255)),
+                (
+                    "id",
+                    models.BigAutoField(
+                        auto_created=True,
+                        primary_key=True,
+                        serialize=False,
+                        verbose_name="ID",
+                    ),
+                ),
+                ("name", models.CharField(max_length=255)),
             ],
         ),
         migrations.AddField(
-            model_name='task',
-            name='tags',
-            field=models.ManyToManyField(related_name='tasks', to='manager.tag'),
+            model_name="task",
+            name="tags",
+            field=models.ManyToManyField(related_name="tasks", to="manager.tag"),
         ),
     ]
