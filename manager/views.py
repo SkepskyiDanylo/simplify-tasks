@@ -15,7 +15,7 @@ class UserLogoutView(LogoutView):
 
 class WorkerDetailView(DetailView):
   model = Worker
-  context_object_name = "user"
+  context_object_name = "worker"
   template_name = "accounts/profile.html"
 
   def get_context_data(self, **kwargs):
