@@ -1,5 +1,11 @@
 from django.contrib.auth.models import AbstractUser
+from django.core.validators import RegexValidator
 from django.db import models
+
+phone_number_validator = RegexValidator(
+    regex=r'^\+?1?\d{9,15}$',
+    message="Phone number must be entered in the format: '+999999999'",
+)
 
 
 class Position(models.Model):
@@ -10,6 +16,10 @@ class Position(models.Model):
 
 
 class Worker(AbstractUser):
+    profile_picture = models.ImageField(
+        upload_to="profile_pictures/",
+        default="profile_pictures/default.jpg",
+    )
     position = models.ForeignKey(
         Position,
         on_delete=models.CASCADE,
@@ -17,12 +27,17 @@ class Worker(AbstractUser):
         blank=True,
         null=True,
     )
+    information = models.TextField(blank=True)
+    phone_number = models.CharField(
+        max_length=15,
+        validators=[phone_number_validator]
+    )
 
     class Meta:
         ordering = ("position", "username")
 
     def __str__(self):
-        return f"{self.username}, ({self.first_name}, {self.last_name})"
+        return f"{self.username}"
 
 
 class TaskType(models.Model):
