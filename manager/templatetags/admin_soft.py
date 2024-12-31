@@ -14,6 +14,10 @@ def clean_text(value):
     res = value.replace('\n', ' ')
     return res
 
+@register.filter
+def format_phone_number(value):
+    return f'+{value[:1]} {value[1:4]} {value[4:6]} {value[6:]}'
+
 
 @register.filter
 def checkbox(value):
