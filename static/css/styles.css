@@ -5,3 +5,19 @@
 .nav-link:hover{
     background-color: #fafafa80;
 }
+
+.profile-picture:hover {
+    transform: scale(1.2);
+}
+
+.search-input {
+    margin-bottom: 10px;
+}
+
+.padding-top-0 {
+    padding-top: 0;
+}
+
+.padding-left-0 {
+    padding-left: 0;
+}

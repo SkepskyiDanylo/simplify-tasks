@@ -1,0 +1,152 @@
+{% extends "layouts/base.html" %}
+{% load static %}
+
+{% block content %}
+  <div class="container-fluid py-4">
+    <div class="row">
+      <div class="col-10">
+        <div class="card mb-4">
+          <div class="card-header pb-0">
+            <h6>Authors table</h6>
+          </div>
+          <div class="card-body px-0 pt-0 pb-2">
+            <div class="table-responsive p-0">
+              <table class="table align-items-center mb-0">
+                <thead>
+                <tr>
+                  <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Worker</th>
+                  <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">Position</th>
+                  <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Status
+                  </th>
+                  <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Employed
+                  </th>
+                  <th class="text-secondary opacity-7"></th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for worker in workers %}
+                  <tr>
+                    <td>
+                      <div class="d-flex px-2 py-1">
+                        <a href="{% url 'manager:profile' pk=worker.pk %}">
+                          <div>
+                            <img src="{{ worker.profile_picture.url }}"
+                                 class="avatar avatar-sm me-3 border border-1 profile-picture"
+                                 alt="{{ worker.username }}">
+                          </div>
+                        </a>
+                        <div class="d-flex flex-column justify-content-center">
+                          <h6 class="mb-0 text-sm">{{ worker.username }}</h6>
+                          <p class="text-xs text-secondary mb-0">{{ worker.email }}</p>
+                        </div>
+                      </div>
+                    </td>
+                    <td>
+                      <p class="text-xs font-weight-bold mb-0">{{ worker.position.name }}</p>
+                      <p class="text-xs text-secondary mb-0">Organization</p>
+                    </td>
+                    <td class="align-middle text-center text-sm">
+                      <span class="badge badge-sm bg-gradient-success"># status</span>
+                    </td>
+                    <td class="align-middle text-center">
+                      <span class="text-secondary text-xs font-weight-bold">#hire date</span>
+                    </td>
+                    <td class="align-middle">
+                      <a href="javascript:;" class="text-secondary font-weight-bold text-xs" data-toggle="tooltip"
+                         data-original-title="Edit user">
+                        Edit
+                      </a>
+                    </td>
+                  </tr>
+                {% endfor %}
+                </tbody>
+              </table>
+            </div>
+          </div>
+          {% if is_paginated %}
+            <div class="card-footer">
+            <nav>
+              <ul class="pagination mb-0">
+                {% if page_obj.has_previous %}
+                  <li class="page-item">
+                    <a class="page-link" href="?page={{ page_obj.previous_page_number }}">
+                      <
+                    </a>
+                  </li>
+                {% else %}
+                  <li class="page-item disabled">
+                    <a class="page-link disabled" href="">
+                      <
+                    </a>
+                  </li>
+                {% endif %}
+
+                {% for num in page_obj.paginator.page_range %}
+                  {% if page_obj.number == 1 and num <= 5 %}
+                    <li class="page-item {% if num == page_obj.number %}active{% endif %}">
+                      <a class="page-link" href="?page={{ num }}">{{ num }}</a>
+                    </li>
+                  {% elif page_obj.number == 2 and num <= 5 %}
+                    <li class="page-item {% if num == page_obj.number %}active{% endif %}">
+                      <a class="page-link" href="?page={{ num }}">{{ num }}</a>
+                    </li>
+                  {% elif page_obj.number == page_obj.paginator.num_pages and num >= page_obj.number|add:-4 %}
+                    <li class="page-item {% if num == page_obj.number %}active{% endif %}">
+                      <a class="page-link" href="?page={{ num }}">{{ num }}</a>
+                    </li>
+                  {% elif page_obj.number == page_obj.paginator.num_pages|add:-1 and num >= page_obj.number|add:-3 %}
+                    <li class="page-item {% if num == page_obj.number %}active{% endif %}">
+                      <a class="page-link" href="?page={{ num }}">{{ num }}</a>
+                    </li>
+                  {% elif num >= page_obj.number|add:-2 and num <= page_obj.number|add:2 %}
+                    <li class="page-item {% if num == page_obj.number %}active{% endif %}">
+                      <a class="page-link" href="?page={{ num }}">{{ num }}</a>
+                    </li>
+                  {% endif %}
+                {% endfor %}
+
+                {% if page_obj.has_next %}
+                  <li class="page-item">
+                    <a class="page-link" href="?page={{ page_obj.next_page_number }}">
+                      >
+                    </a>
+                  </li>
+                {% else %}
+                  <li class="page-item disabled">
+                    <a class="page-link disabled" href="">
+                      >
+                    </a>
+                  </li>
+                {% endif %}
+              </ul>
+            </nav>
+          {% endif %}
+          </div>
+        </div>
+        <div class="col-2 padding-left-0">
+          <div class="card">
+            <div class="card-body">
+              <div class="input-group">
+                <form action="">
+                  <label>
+                    <input type="text" class="form-control search-input" placeholder="Type here...">
+                  </label>
+                  <button type="submit" class="btn btn-dark mb-0 text-end">Search</button>
+                </form>
+              </div>
+            </div>
+          </div>
+          <div class="card my-2">
+            <div class="card-body">
+              <h6>Status:</h6>
+              <ul>
+                <li class="list-group-item"><a href="" class="link-secondary">Online</a></li>
+                <li class="list-group-item"><a href="" class="link-secondary">Offline</a></li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+{% endblock content %}
