@@ -47,6 +47,7 @@ MIDDLEWARE = [
     "django.contrib.auth.middleware.AuthenticationMiddleware",
     "django.contrib.messages.middleware.MessageMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
+    "manager.middlewares.UpdateLastActivityMiddleware"
 ]
 
 ROOT_URLCONF = "it_task_manager.urls"
