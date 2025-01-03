@@ -1,6 +1,8 @@
+from datetime import timedelta
 from django.contrib.auth.models import AbstractUser
 from django.core.validators import RegexValidator
 from django.db import models
+from django.utils import timezone
 
 phone_number_validator = RegexValidator(
     regex=r'^\+?1?\d{9,15}$',
@@ -32,9 +34,13 @@ class Worker(AbstractUser):
         max_length=15,
         validators=[phone_number_validator]
     )
+    last_activity = models.DateField(default=timezone.now)
 
     class Meta:
         ordering = ("position", "username")
+
+    def is_online(self, days: int = 1) -> bool:
+        return timezone.now().date() - self.last_activity < timedelta(days=days)
 
     def __str__(self):
         return f"{self.username}"

@@ -9,7 +9,7 @@
           <div class="card-header pb-0">
             <h6>Authors table</h6>
           </div>
-          <div class="card-body px-0 pt-0 pb-2">
+          <div class="card-body px-0 pt-0 pb-2 min-height-160">
             <div class="table-responsive p-0">
               <table class="table align-items-center mb-0">
                 <thead>
@@ -46,10 +46,14 @@
                       <p class="text-xs text-secondary mb-0">Organization</p>
                     </td>
                     <td class="align-middle text-center text-sm">
-                      <span class="badge badge-sm bg-gradient-success"># status</span>
+                      {% if worker.is_online %}
+                        <span class="badge badge-sm bg-gradient-success">Online</span>
+                      {% else %}
+                        <span class="badge badge-sm bg-gradient-secondary">Offline</span>
+                      {% endif %}
                     </td>
                     <td class="align-middle text-center">
-                      <span class="text-secondary text-xs font-weight-bold">#hire date</span>
+                      <span class="text-secondary text-xs font-weight-bold">{{ worker.date_joined.date }}</span>
                     </td>
                     <td class="align-middle">
                       <a href="javascript:;" class="text-secondary font-weight-bold text-xs" data-toggle="tooltip"
@@ -63,6 +67,7 @@
               </table>
             </div>
           </div>
+
           {% if is_paginated %}
             <div class="card-footer">
             <nav>
@@ -123,30 +128,31 @@
           {% endif %}
           </div>
         </div>
-        <div class="col-2 padding-left-0">
-          <div class="card">
-            <div class="card-body">
-              <div class="input-group">
-                <form action="">
-                  <label>
-                    <input type="text" class="form-control search-input" placeholder="Type here...">
-                  </label>
-                  <button type="submit" class="btn btn-dark mb-0 text-end">Search</button>
-                </form>
-              </div>
-            </div>
-          </div>
-          <div class="card my-2">
-            <div class="card-body">
-              <h6>Status:</h6>
-              <ul>
-                <li class="list-group-item"><a href="" class="link-secondary">Online</a></li>
-                <li class="list-group-item"><a href="" class="link-secondary">Offline</a></li>
-              </ul>
+      </div>
+      <div class="col-2">
+        <div class="card">
+          <div class="card-body">
+            <div class="input-group">
+              <form action="">
+                <label>
+                  <input type="text" class="form-control search-input" placeholder="Type here...">
+                </label>
+                <button type="submit" class="btn btn-dark mb-0 text-end">Search</button>
+              </form>
             </div>
           </div>
         </div>
+        <div class="card my-2">
+          <div class="card-body">
+            <h6>Status:</h6>
+            <ul>
+              <li class="list-group-item"><a href="" class="link-secondary">Online</a></li>
+              <li class="list-group-item"><a href="" class="link-secondary">Offline</a></li>
+            </ul>
+          </div>
+        </div>
       </div>
+
     </div>
   </div>
 {% endblock content %}
