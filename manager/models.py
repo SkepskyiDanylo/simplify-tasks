@@ -106,4 +106,4 @@ class Task(models.Model):
         ordering = ("deadline", "priority", "name")
 
     def __str__(self):
-        return f"{self.name}, (Completed {self.is_completed})"
+        return f"{self.name}"
