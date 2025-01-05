@@ -9,7 +9,7 @@
     <a class="navbar-brand m-0" href="#index">
       <i class="fi fi-rr-home"></i>
       <img src="{% static 'images/main-logo.png' %}" class="navbar-brand-img h-100" alt="main_logo">
-      <span class="ms-1 font-weight-bold">Task Manager</span>
+      <span class="ms-1 font-weight-bold">SimplifyTasks</span>
     </a>
   </div>
   <hr class="horizontal dark mt-0">
@@ -37,7 +37,7 @@
         <a class="nav-link {% if segment == 'tasks' %}active{% endif %}" href="#index">
           <div
               class="icon icon-sm shadow border-radius-md bg-white text-center me-2 d-flex align-items-center justify-content-center">
-          <img src="{% static "images/tasks-page.png" %}" alt="tasks-page" class="sidebar-image">
+            <img src="{% static "images/tasks-page.png" %}" alt="tasks-page" class="sidebar-image">
           </div>
           <span class="nav-link-text ms-1">Tasks</span>
         </a>
@@ -57,12 +57,12 @@
       {% if request.user.is_authenticated %}
         <li class="nav-item">
           <a class="nav-link {% if segment == 'profile' %}active{% endif %}"
-             href="{% url 'manager:profile' pk=user.pk %}">
+             href="{% url 'manager:worker-detail' pk=user.pk %}">
             <div
                 class="icon icon-sm shadow border-radius-md bg-white text-center me-2 d-flex align-items-center justify-content-center">
               <img src="{% static "images/profile-page.png" %}" alt="profile-page" class="sidebar-image">
             </div>
-            <span class="nav-link-text ms-1">Profile</span>
+            <span class="nav-link-text ms-1">{{ user.username|capfirst }}</span>
           </a>
         </li>
         <li class="nav-item">
