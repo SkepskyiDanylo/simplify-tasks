@@ -1,0 +1,171 @@
+{% extends "layouts/base.html" %}
+
+{% block content %}
+  <form action="" method="post" novalidate>
+    {% csrf_token %}
+    <div class="row m-1">
+      <div class="col-lg-4 col-md-12 mt-3">
+        <div class="card shadow h-100">
+          <div class="card-header pb-0">
+            <h6 class="mb-0 font-weight-bolder">Necessary information:</h6>
+          </div>
+          <div class="card-body pb-0 p-3">
+            <ul class="list-group">
+              <li class="list-group-item border-0 w-80">
+                <div>
+                  {% if form.username.errors %}
+                    <span class="text-sm text-danger">{{ form.username.errors }}</span>
+                  {% else %}
+                    <span class="text-sm text-secondary">Username:</span>
+                  {% endif %}
+                  <div class="d-flex mb-2">
+                    {{ form.username }}
+                  </div>
+                </div>
+              </li>
+              <li class="list-group-item border-0 w-80">
+                <div>
+                  {% if form.email.errors %}
+                    <span class="text-sm text-danger">{{ form.email.errors }}</span>
+                  {% else %}
+                    <span class="text-sm text-secondary">Email:</span>
+                  {% endif %}
+                  <div class="d-flex mb-2">
+                    {{ form.email }}
+                  </div>
+                </div>
+              </li>
+              <li class="list-group-item border-0 w-80">
+                <div>
+                  {% if form.first_name.errors %}
+                    <span class="text-sm text-danger">{{ form.first_name.errors }}</span>
+                  {% else %}
+                    <span class="text-sm text-secondary">First name:</span>
+                  {% endif %}
+                  <div class="d-flex mb-2">
+                    {{ form.first_name }}
+                  </div>
+                </div>
+              </li>
+              <li class="list-group-item border-0 w-80">
+                <div>
+                  {% if form.last_name.errors %}
+                    <span class="text-sm text-danger">{{ form.last_name.errors }}</span>
+                  {% else %}
+                    <span class="text-sm text-secondary">Last name:</span>
+                  {% endif %}
+                  <div class="d-flex mb-2">
+                    {{ form.last_name }}
+                  </div>
+                </div>
+              </li>
+              <li class="list-group-item border-0 w-80">
+                <div>
+                  {% if form.password1.errors %}
+                    <span class="text-sm text-danger">{{ form.password1.errors }}</span>
+                  {% else %}
+                    <span class="text-sm text-secondary">Password:</span>
+                  {% endif %}
+                  <div class="d-flex mb-2">
+                    {{ form.password1 }}
+                  </div>
+                </div>
+              </li>
+              <li class="list-group-item border-0 w-80 mb-5">
+                <div>
+                  {% if form.password2.errors %}
+                    <span class="text-sm text-danger">{{ form.password2.errors }}</span>
+                  {% else %}
+                    <span class="text-sm text-secondary">Password confirmation:</span>
+                  {% endif %}
+                  <div class="d-flex">
+                    {{ form.password2 }}
+                  </div>
+                </div>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+      <div class="col-lg-8 col-md-12 mt-3">
+        <div class="card shadow h-100">
+          <div class="card-header pb-0">
+            <h6 class="mb-0 font-weight-bolder">Additional information:</h6>
+          </div>
+          <div class="row">
+            <div class="col-lg-6 col-md-12">
+              <div class="card-body pb-0 p-3">
+                <ul class="list-group">
+                  <li class="list-group-item border-0">
+                    <div>
+                      <span class="text-sm text-secondary">Profile picture:</span>
+                      <div class="d-flex mb-2">
+                        {{ form.profile_picture }}
+                      </div>
+                    </div>
+                  </li>
+                  <li class="list-group-item border-0">
+                    <div>
+                      <span class="text-sm text-secondary">Position:</span>
+                      <div class="d-flex mb-2">
+                        {{ form.position }}
+                      </div>
+                    </div>
+                  </li>
+                  <li class="list-group-item border-0">
+                    <div>
+                      <span class="text-sm text-secondary">Profile description:</span>
+                      <div class="d-flex mb-5">
+                        {{ form.description }}
+                      </div>
+                    </div>
+                  </li>
+                </ul>
+              </div>
+            </div>
+            <div class="col-lg-6 col-md-12">
+              <div class="card-body pb-0 p-3">
+                <ul class="list-group">
+                  <li class="list-group-item border-0">
+                    <div>
+                      <span class="text-sm text-secondary">Phone number:</span>
+                      <div class="d-flex mb-2">
+                        {{ form.phone_number }}
+                      </div>
+                    </div>
+                  </li>
+                  <li class="list-group-item border-0">
+                    <div>
+                      <span class="text-sm text-secondary">Instagram:</span>
+                      <div class="d-flex mb-2">
+                        {{ form.instagram }}
+                      </div>
+                    </div>
+                  </li>
+                  <li class="list-group-item border-0">
+                    <div>
+                      <span class="text-sm text-secondary">Facebook:</span>
+                      <div class="d-flex mb-2">
+                        {{ form.facebook }}
+                      </div>
+                    </div>
+                  </li>
+                  <li class="list-group-item border-0">
+                    <div>
+                      <span class="text-sm text-secondary">Twitter:</span>
+                      <div class="d-flex mb-2">
+                        {{ form.twitter }}
+                      </div>
+                    </div>
+                  </li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <input type="submit" value="Submit" class="btn btn-primary m-3">
+  </form>
+{% endblock %}
+
