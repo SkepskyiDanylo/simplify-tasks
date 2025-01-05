@@ -5,8 +5,6 @@
 <html lang="en">
 <head>
   {% include "includes/head.html" %}
-  {% block extrastyle %}{% endblock extrastyle %}
-  {% block extrahead %}{% endblock extrahead %}
 </head>
 
 <body class="g-sidenav-show  bg-gray-100">
@@ -17,7 +15,6 @@
     {% block navigation %}
         {% include "includes/navigation.html" %}
     {% endblock navigation %}
-    
     {% block content %}{% endblock content %}
   </main>
   
