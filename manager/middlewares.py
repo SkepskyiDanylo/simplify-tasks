@@ -9,5 +9,6 @@ class UpdateLastActivityMiddleware:
         if request.user.is_authenticated:
             user = request.user
             user.last_activity = now()
+            user.is_online = True
             user.save()
         return self.get_response(request)
