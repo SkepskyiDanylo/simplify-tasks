@@ -21,3 +21,20 @@
 .padding-left-0 {
     padding-left: 0;
 }
+
+.icon-black {
+    color: black;
+    top: 11px;
+    position: relative;
+}
+
+.sidebar-image {
+    height: 18px;
+    width: 18px;
+}
+
+.table-image {
+    height: 18px;
+    width: 18px;
+    margin-bottom: 0.438rem;
+}
