@@ -194,7 +194,7 @@ class WorkerForm(ModelForm):
         return phone_number
 
     def save(self, commit=True):
-        user = super(WorkerCreationForm, self).save(commit=False)
+        user = super(WorkerForm, self).save(commit=False)
         password = self.cleaned_data.get("password1")
         if password:
             user.set_password(password)
