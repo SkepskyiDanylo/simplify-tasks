@@ -13,7 +13,7 @@ phone_number_validator = RegexValidator(
 )
 
 
-def unique_file_path(instance, filename) -> str:
+def unique_file_path(filename: str) -> str:
     ext = filename.split('.')[-1]
     filename = f"{uuid.uuid4()}.{ext}"
     return os.path.join("profile_pictures/", filename)
@@ -38,13 +38,16 @@ class Worker(AbstractUser):
         blank=True,
         null=True,
     )
-    information = models.TextField(blank=True)
+    description = models.TextField(blank=True)
     phone_number = models.CharField(
         max_length=15,
         validators=[phone_number_validator]
     )
     last_activity = models.DateField(default=timezone.now)
     is_online = models.BooleanField(default=False)
+    instagram = models.URLField(blank=True)
+    facebook = models.URLField(blank=True)
+    twitter = models.URLField(blank=True)
 
     class Meta:
         ordering = ("position", "username")
