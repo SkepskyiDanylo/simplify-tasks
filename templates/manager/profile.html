@@ -23,7 +23,7 @@
           </div>
           <div class="d-flex align-items-center">
             {% if user == worker or user.is_superuser %}
-              <a href="javascript:;" class="btn btn-outline-white mb-0 me-1 btn-sm">
+              <a href="{% url "manager:worker-update" pk=worker.pk %}" class="btn btn-outline-white mb-0 me-1 btn-sm">
                 Edit
               </a>
             {% endif %}

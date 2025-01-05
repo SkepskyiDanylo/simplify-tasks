@@ -11,11 +11,13 @@
               <div class="col-6">
                 <h6>Authors table</h6>
               </div>
+              {% if user.is_authenticated %}
               <div class="col-6 my-auto text-end">
-                <a href="#create-user">
+                <a href="{% url "manager:worker-create" %}">
                   <img src="{% static "images/worker-add-page.png" %}" alt="worker-add" class="table-image">
                 </a>
               </div>
+              {% endif %}
             </div>
           </div>
           <div class="card-body px-0 pt-0 pb-2 min-height-160">
@@ -37,7 +39,7 @@
                   <tr>
                     <td>
                       <div class="d-flex px-2 py-1">
-                        <a href="{% url 'manager:profile' pk=worker.pk %}">
+                        <a href="{% url 'manager:worker-detail' pk=worker.pk %}">
                           <div>
                             <img src="{{ worker.profile_picture.url }}"
                                  class="avatar avatar-sm me-3 border border-1 profile-picture"
@@ -65,8 +67,7 @@
                       <span class="text-secondary text-xs font-weight-bold">{{ worker.date_joined.date }}</span>
                     </td>
                     <td class="align-middle">
-                      <a href="javascript:;" class="text-secondary font-weight-bold text-xs" data-toggle="tooltip"
-                         data-original-title="Edit user">
+                      <a href="{% url "manager:worker-update" pk=worker.pk %}" class="text-secondary font-weight-bold text-xs">
                         Edit
                       </a>
                     </td>
