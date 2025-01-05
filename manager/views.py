@@ -1,14 +1,17 @@
+from django.contrib.auth.mixins import LoginRequiredMixin
 from django.db.models import QuerySet
 from django.contrib.auth.views import LoginView, LogoutView
-from django.views.generic import DetailView, ListView
+from django.urls import reverse_lazy
+from django.views.generic import DetailView, ListView, CreateView, UpdateView
 
-from .forms import LoginForm, WorkerSearchForm
+from .forms import LoginForm, WorkerSearchForm, WorkerForm
 from .models import Worker
 
 
 class UserLoginView(LoginView):
   template_name = "accounts/login.html"
   form_class = LoginForm
+
 
 class UserLogoutView(LogoutView):
   template_name = "accounts/logged_out.html"
@@ -53,3 +56,25 @@ class WorkerDetailView(DetailView):
     context = super().get_context_data(**kwargs)
     context["segment"] = "profile"
     return context
+
+
+class WorkerCreateView(LoginRequiredMixin, CreateView):
+  model = Worker
+  form_class = WorkerForm
+  template_name = "manager/worker_form.html"
+
+  def get_success_url(self):
+    return reverse_lazy("manager:worker-detail", args=[self.object.pk])
+
+  def get_context_data(self, **kwargs) -> dict:
+    context = super().get_context_data(**kwargs)
+    context["segment"] = "create worker"
+    return context
+
+
+class WorkerUpdateView(LoginRequiredMixin, UpdateView):
+  model = Worker
+  template_name = "manager/worker_form.html"
+  form_class = WorkerForm
+  def get_success_url(self):
+    return reverse_lazy("manager:worker-detail", args=[self.object.pk])
