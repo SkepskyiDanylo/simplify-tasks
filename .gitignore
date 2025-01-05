@@ -3,6 +3,5 @@
 **__pycache__/
 .env
 db.sqlite3
-*.png
-*.jpg
-*.svg
+db_structure.svg
+task.png
