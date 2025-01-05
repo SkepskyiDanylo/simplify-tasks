@@ -1,6 +1,7 @@
 .venv/
 .idea/
 **__pycache__/
+media/
 .env
 db.sqlite3
 db_structure.svg
