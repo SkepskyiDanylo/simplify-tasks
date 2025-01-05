@@ -1,13 +1,22 @@
+import os
+import uuid
 from datetime import timedelta
 from django.contrib.auth.models import AbstractUser
 from django.core.validators import RegexValidator
 from django.db import models
 from django.utils import timezone
 
+
 phone_number_validator = RegexValidator(
     regex=r'^\+?1?\d{9,15}$',
     message="Phone number must be entered in the format: '+999999999'",
 )
+
+
+def unique_file_path(instance, filename) -> str:
+    ext = filename.split('.')[-1]
+    filename = f"{uuid.uuid4()}.{ext}"
+    return os.path.join("profile_pictures/", filename)
 
 
 class Position(models.Model):
@@ -19,7 +28,7 @@ class Position(models.Model):
 
 class Worker(AbstractUser):
     profile_picture = models.ImageField(
-        upload_to="profile_pictures/",
+        upload_to=unique_file_path,
         default="profile_pictures/default.jpg",
     )
     position = models.ForeignKey(
@@ -35,15 +44,25 @@ class Worker(AbstractUser):
         validators=[phone_number_validator]
     )
     last_activity = models.DateField(default=timezone.now)
+    is_online = models.BooleanField(default=False)
 
     class Meta:
         ordering = ("position", "username")
 
-    def is_online(self, days: int = 1) -> bool:
-        return timezone.now().date() - self.last_activity < timedelta(days=days)
-
     def __str__(self):
         return f"{self.username}"
+
+    def check_is_online(self, days: int = 1) -> bool:
+        status = timezone.now().date() - self.last_activity < timedelta(days=days)
+        self.is_online = status
+        self.save()
+        return status
+
+    def reset_picture(self) -> None:
+        if self.profile_picture.name != self.profile_picture.field.default:
+            self.profile_picture.delete(save=False)
+        self.profile_picture = self.profile_picture.field.default
+        self.save()
 
 
 class TaskType(models.Model):

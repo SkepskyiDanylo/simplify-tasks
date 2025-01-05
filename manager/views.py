@@ -1,4 +1,4 @@
-from django.shortcuts import render
+from django.db.models import QuerySet
 from django.contrib.auth.views import LoginView, LogoutView
 from django.views.generic import DetailView, ListView
 
@@ -20,7 +20,7 @@ class WorkerListView(ListView):
   template_name = "manager/worker_list.html"
   paginate_by = 10
 
-  def get_context_data(self, **kwargs):
+  def get_context_data(self, **kwargs) -> dict:
     context = super().get_context_data(**kwargs)
     context["segment"] = "workers"
     username = self.request.GET.get("username", "")
@@ -29,11 +29,17 @@ class WorkerListView(ListView):
     )
     return context
 
-  def get_queryset(self):
+  def get_queryset(self) -> QuerySet:
     queryset = Worker.objects.all()
     username = self.request.GET.get("username")
+    status = self.request.GET.get("status")
     if username:
-      return queryset.filter(username__icontains=username)
+      queryset = queryset.filter(username__icontains=username)
+    if status:
+      if status=="Online":
+        queryset = queryset.filter(is_online=True)
+      elif status=="Offline":
+        queryset = queryset.filter(is_online=False)
     return queryset
 
 
@@ -43,7 +49,7 @@ class WorkerDetailView(DetailView):
   template_name = "manager/profile.html"
   queryset = Worker.objects.all().prefetch_related("teams")
 
-  def get_context_data(self, **kwargs):
+  def get_context_data(self, **kwargs) -> dict:
     context = super().get_context_data(**kwargs)
     context["segment"] = "profile"
     return context
