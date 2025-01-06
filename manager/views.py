@@ -5,7 +5,7 @@ from django.urls import reverse_lazy
 from django.views.generic import DetailView, ListView, CreateView, UpdateView
 
 from .forms import LoginForm, WorkerSearchForm, WorkerForm
-from .models import Worker
+from .models import Worker, Task
 
 
 class UserLoginView(LoginView):
@@ -76,5 +76,18 @@ class WorkerUpdateView(LoginRequiredMixin, UpdateView):
   model = Worker
   template_name = "manager/worker_form.html"
   form_class = WorkerForm
+
   def get_success_url(self):
     return reverse_lazy("manager:worker-detail", args=[self.object.pk])
+
+
+class TaskListView(ListView):
+  model = Task
+  context_object_name = "tasks"
+  template_name = "manager/task_list.html"
+  paginate_by = 10
+
+  def get_context_data(self, **kwargs) -> dict:
+    context = super().get_context_data(**kwargs)
+    context["segment"] = "tasks"
+    return context

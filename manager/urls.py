@@ -8,6 +8,7 @@ urlpatterns = [
     path("woker/<int:pk>/", views.WorkerDetailView.as_view(), name="worker-detail"),
     path("workers/create/", views.WorkerCreateView.as_view(), name="worker-create"),
     path("workers/<int:pk>/update/", views.WorkerUpdateView.as_view(), name="worker-update"),
+    path("tasks/", views.TaskListView.as_view(), name="task-list"),
 ]
 
 app_name = "manager"
