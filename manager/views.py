@@ -1,10 +1,11 @@
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.db.models import QuerySet
 from django.contrib.auth.views import LoginView, LogoutView
+from django.http import HttpRequest, HttpResponseRedirect
 from django.urls import reverse_lazy
 from django.views.generic import DetailView, ListView, CreateView, UpdateView
 
-from .forms import LoginForm, WorkerSearchForm, WorkerForm
+from .forms import LoginForm, WorkerSearchForm, WorkerForm, TaskSearchForm
 from .models import Worker, Task
 
 
@@ -90,4 +91,32 @@ class TaskListView(ListView):
   def get_context_data(self, **kwargs) -> dict:
     context = super().get_context_data(**kwargs)
     context["segment"] = "tasks"
+    name = self.request.GET.get("name", "")
+    context["search_form"] = TaskSearchForm(
+      initial={"name": name}
+    )
     return context
+
+  def get_queryset(self) -> QuerySet:
+    queryset = Task.objects.all().filter(project=None)
+    name = self.request.GET.get("name")
+    if name:
+      queryset = queryset.filter(name__icontains=name)
+    return queryset
+
+
+def toggle_task_assignment(request: HttpRequest, pk: int) -> HttpResponseRedirect:
+  user = request.user
+  task = Task.objects.get(pk=pk)
+  print(task)
+  if user.is_authenticated:
+    if user in task.assigners.all():
+      task.assigners.remove(user)
+    else:
+      if task.project:
+        if user in task.project.team.workers:
+          task.assigners.add(user)
+      else:
+        print("adding")
+        task.assigners.add(user)
+  return HttpResponseRedirect(reverse_lazy("manager:task-list"))
