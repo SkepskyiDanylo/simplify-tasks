@@ -33,8 +33,17 @@
     width: 18px;
 }
 
+.navbar-image {
+    height: 20px;
+    width: 20px;
+}
+
 .table-image {
     height: 18px;
     width: 18px;
     margin-bottom: 0.438rem;
+}
+
+.task-card:hover {
+    transform: scale(1.01);
 }

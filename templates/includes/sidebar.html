@@ -34,7 +34,7 @@
         </a>
       </li>
       <li class="nav-item">
-        <a class="nav-link {% if segment == 'tasks' %}active{% endif %}" href="#index">
+        <a class="nav-link {% if segment == 'tasks' %}active{% endif %}" href="{% url "manager:task-list" %}">
           <div
               class="icon icon-sm shadow border-radius-md bg-white text-center me-2 d-flex align-items-center justify-content-center">
             <img src="{% static "images/tasks-page.png" %}" alt="tasks-page" class="sidebar-image">
@@ -62,7 +62,7 @@
                 class="icon icon-sm shadow border-radius-md bg-white text-center me-2 d-flex align-items-center justify-content-center">
               <img src="{% static "images/profile-page.png" %}" alt="profile-page" class="sidebar-image">
             </div>
-            <span class="nav-link-text ms-1">{{ user.username|capfirst }}</span>
+            <span class="nav-link-text ms-1">Profile</span>
           </a>
         </li>
         <li class="nav-item">
