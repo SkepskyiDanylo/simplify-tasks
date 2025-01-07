@@ -1,22 +1,22 @@
 {% extends "layouts/base.html" %}
-{% load static query_transform%}
+{% load static query_transform %}
 
 {% block content %}
   <div class="container-fluid py-4">
     <div class="row">
       <div class="col-10">
         <div class="card mb-4">
-        <div class="card-header pb-0">
+          <div class="card-header pb-0">
             <div class="row">
               <div class="col-6">
-                <h6>Authors table</h6>
+                <h6>Workers table</h6>
               </div>
               {% if user.is_authenticated %}
-              <div class="col-6 my-auto text-end">
-                <a href="{% url "manager:worker-create" %}">
-                  <img src="{% static "images/worker-add-page.png" %}" alt="worker-add" class="table-image">
-                </a>
-              </div>
+                <div class="col-6 my-auto text-end">
+                  <a href="{% url "manager:worker-create" %}">
+                    <img src="{% static "images/worker-add-page.png" %}" alt="worker-add" class="table-image">
+                  </a>
+                </div>
               {% endif %}
             </div>
           </div>
@@ -67,9 +67,12 @@
                       <span class="text-secondary text-xs font-weight-bold">{{ worker.date_joined.date }}</span>
                     </td>
                     <td class="align-middle">
-                      <a href="{% url "manager:worker-update" pk=worker.pk %}" class="text-secondary font-weight-bold text-xs">
-                        Edit
-                      </a>
+                      {% if user.is_superuser %}
+                        <a href="{% url "manager:worker-update" pk=worker.pk %}"
+                           class="text-secondary font-weight-bold text-xs">
+                          Edit
+                        </a>
+                      {% endif %}
                     </td>
                   </tr>
                 {% endfor %}
@@ -77,7 +80,11 @@
               </table>
             </div>
           </div>
-          {% include 'includes/pagination.html' %}
+          {% if is_paginated %}
+            <div class="card-footer">
+              {% include 'includes/pagination.html' %}
+            </div>
+          {% endif %}
         </div>
       </div>
       <div class="col-2">
@@ -96,17 +103,17 @@
             <h6>Status:</h6>
             <ul>
               <li class="list-group-item">
-                <a href="?{% query_transform request status='' %}" class="link-secondary">
+                <a href="?{% query_transform request status='' page="" %}" class="link-secondary">
                   Reset
                 </a>
               </li>
               <li class="list-group-item">
-                <a href="?{% query_transform request status='Online' %}" class="link-secondary">
+                <a href="?{% query_transform request status='Online' page="" %}" class="link-secondary">
                   Online
                 </a>
               </li>
               <li class="list-group-item">
-                <a href="?{% query_transform request status='Offline' %}" class="link-secondary">
+                <a href="?{% query_transform request status='Offline' page="" %}" class="link-secondary">
                   Offline
                 </a>
               </li>
