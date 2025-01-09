@@ -1,3 +1,4 @@
+from click import clear
 from django import forms
 from django.forms import ModelForm
 from django.contrib.auth.forms import (
@@ -5,8 +6,9 @@ from django.contrib.auth.forms import (
     UsernameField,
     UserCreationForm,
 )
+from django.utils.timezone import make_aware
 
-from manager.models import Worker, Position
+from manager.models import Worker, Position, Task, TaskType, Tag, Project
 
 
 class LoginForm(AuthenticationForm):
@@ -178,6 +180,9 @@ class WorkerForm(ModelForm):
             "description",
             "profile_picture",
             "phone_number",
+            "twitter",
+            "facebook",
+            "instagram",
         )
 
     def clean_password2(self) -> str:
@@ -215,3 +220,124 @@ class TaskSearchForm(forms.Form):
             }
         ),
     )
+
+
+class TaskForm(forms.ModelForm):
+    name = forms.CharField(
+        max_length=255,
+        required=True,
+        label="",
+        widget=forms.TextInput(
+            attrs={
+                "placeholder": "Name",
+                "class": "form-control",
+            }
+        )
+    )
+    description = forms.CharField(
+        required=False,
+        label="",
+        widget=forms.Textarea(
+            attrs={
+                "placeholder": "Description",
+                "class": "form-control",
+            }
+        )
+    )
+    deadline = forms.DateTimeField(
+        required=False,
+        label="",
+        widget=forms.DateInput(
+            attrs={
+                "class": "form-control",
+                "type": "datetime",
+            }
+        )
+    )
+    priority = forms.IntegerField(
+        required=False,
+        label="",
+        widget=forms.NumberInput(
+            attrs={
+                "class": "form-control",
+                "placeholder": "Priority 1-5",
+                "max": 5,
+                "min": 1,
+                "step": 1,
+                "value": 3,
+            }
+        )
+    )
+    task_type = forms.ModelChoiceField(
+        queryset=TaskType.objects.all(),
+        required=False,
+        label="",
+        widget=forms.Select(
+            attrs={
+                "class": "form-control",
+            }
+        )
+    )
+    assigners = forms.ModelChoiceField(
+        queryset=Worker.objects.all(),
+        required=True,
+        label="",
+        widget=forms.SelectMultiple(
+            attrs={
+                "class": "form-select",
+            }
+        )
+    )
+    tags = forms.ModelChoiceField(
+        queryset=Tag.objects.all(),
+        required=False,
+        label="",
+        widget=forms.CheckboxSelectMultiple(
+            attrs={
+                "class": "form-check-input",
+            }
+        )
+    )
+    class Meta:
+        model = Task
+        fields = (
+            "name",
+            "description",
+            "deadline",
+            "priority",
+            "task_type",
+            "tags"
+        )
+
+    def clean_deadline(self):
+        deadline = self.cleaned_data.get('deadline')
+
+        if deadline and deadline.tzinfo is None:
+            deadline = make_aware(deadline)
+
+        return deadline
+
+
+class TaskProjectForm(TaskForm):
+    project = forms.ModelChoiceField(
+        queryset=Project.objects.all(),
+        required=False,
+        label="",
+        widget=forms.Select(
+            attrs={
+                "class": "form-control",
+            }
+        )
+    )
+
+    class Meta:
+        model = Task
+        fields = (
+            "name",
+            "description",
+            "deadline",
+            "priority",
+            "task_type",
+            "project",
+            "tags"
+        )
