@@ -123,6 +123,7 @@ class Task(models.Model):
         Project, on_delete=models.CASCADE, related_name="tasks", blank=True, null=True
     )
     tags = models.ManyToManyField(Tag, related_name="tasks")
+    completed_at = models.DateTimeField(blank=True, null=True)
 
     class Meta:
         ordering = ("deadline", "priority", "name")
