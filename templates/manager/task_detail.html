@@ -1,0 +1,100 @@
+{% extends "layouts/base.html" %}
+
+{% block content %}
+  <div class="row m-1">
+    <div class="col-lg-6 col-md-12 col-12 mt-3 mx-auto">
+      <div class="card shadow h-100">
+        <div class="card-header pb-0">
+          <h6 class="mb-0 font-weight-bolder">{{ task.name }}</h6>
+        </div>
+        <div class="card-body pb-0 p-3">
+          <ul class="list-group">
+            <li class="list-group-item border-0 w-90">
+              <div>
+                <div class="d-flex mb-2 text-secondary">
+                  {{ task.description }}
+                </div>
+              </div>
+            </li>
+            <li class="list-group-item border-0 w-60">
+              <div>
+                <div class="d-flex bg-white border border-radius-xl p-2">
+                  Deadline: {{ task.deadline.date }}
+                </div>
+              </div>
+            </li>
+            <li class="list-group-item border-0 w-60">
+              <div>
+                <div class="d-flex bg-white border border-radius-xl p-2">
+                  Priority: {{ task.get_priority_display }}
+                </div>
+              </div>
+            </li>
+            <li class="list-group-item border-0 w-60">
+              <div>
+                <div class="d-flex bg-white border border-radius-xl p-2">
+                  Type: {{ task.task_type }}
+                </div>
+              </div>
+            </li>
+            {% if task.project %}
+              <li class="list-group-item border-0 w-60">
+                <div>
+                  <span class="text-sm text-secondary">Project:</span>
+                  <div class="d-flex bg-white border border-radius-xl p-2">
+                    {{ task.project.name }}
+                  </div>
+                </div>
+              </li>
+            {% endif %}
+            <li class="list-group-item border-0 w-60">
+              <div>
+                {% for assigner in task.assigners.all %}
+                  <div class="d-flex mb-1 bg-white border border-radius-xl p-2">
+                    <a href="{% url "manager:worker-detail" pk=assigner.pk %}"><img
+                        src="{{ assigner.profile_picture.url }}"
+                        class="avatar avatar-sm me-3 border border-1 profile-picture"
+                        alt="{{ worker.username }}">
+                    </a>
+                    <span class="text text-dark pt-1">{{ assigner.username }} {{ assigner.position.name }}</span>
+                  </div>
+                {% endfor %}
+              </div>
+            </li>
+            <li class="list-group-item border-0 w-100 mb-3">
+              <div>
+                {% for tag in task.tags.all %}
+                  <div class="d-inline p-2 w-20 bg-dark border-radius-xl text-white text-sm">
+                    {{ tag.name }}
+                  </div>
+                {% endfor %}
+              </div>
+            </li>
+          </ul>
+        </div>
+        <div class="card-footer pt-0 pb-1">
+          {% if user in task.assigners.all or user.is_superuser %}
+            {% if task.is_completed %}
+              <a class="btn btn-danger" href="{% url "manager:task-toggle-completed" pk=task.pk %}">Set not
+                completed</a>
+            {% else %}
+              <a class="btn btn-success" href="{% url "manager:task-toggle-completed" pk=task.pk %}">Set
+                completed</a>
+            {% endif %}
+            <a class="btn btn-primary" href="#">Edit</a>
+          {% endif %}
+          {% if user.is_authenticated %}
+            {% if user in task.assigners.all %}
+              {% if not task.is_completed %}
+                <a href="{% url "manager:task-toggle-assignment" pk=task.pk %}" class="btn btn-danger">Delete me</a>
+              {% endif %}
+            {% else %}
+              <a href="{% url "manager:task-toggle-assignment" pk=task.pk %}" class="btn btn-success">Assign me</a>
+            {% endif %}
+          {% endif %}
+        </div>
+      </div>
+    </div>
+  </div>
+{% endblock %}
+
