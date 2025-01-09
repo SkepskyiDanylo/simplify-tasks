@@ -1,0 +1,99 @@
+{% extends "layouts/base.html" %}
+
+{% block content %}
+  <form action="" method="post" novalidate>
+    {% csrf_token %}
+    <div class="row m-1">
+      <div class="col-lg-6 col-md-12 col-12 mt-3 mx-auto">
+        <div class="card shadow h-100">
+          <div class="card-header pb-0 w-90">
+            {% if form.name.errors %}
+              <span class="text text-sm text-danger">{{ form.name.errors }}</span>
+            {% else %}
+              <span class="text text-sm">Task name:</span>
+            {% endif %}
+            <h6 class="mb-0 font-weight-bolder">{{ form.name }}</h6>
+          </div>
+          <div class="card-body pb-0 p-3">
+            <ul class="list-group">
+              <li class="list-group-item border-0 w-90">
+                <div>
+                  {% if form.description.errors %}
+                    <span class="text text-sm text-danger">{{ form.description.errors }}</span>
+                  {% else %}
+                    <span class="text text-sm">Task description:</span>
+                  {% endif %}
+                  <div class="d-flex mb-2 text-secondary">
+                    {{ form.description }}
+                  </div>
+                </div>
+              </li>
+              <li class="list-group-item border-0 w-60">
+                <div>
+                  <span class="text text-sm">Deadline:</span>
+                  <div class="d-flex bg-white border border-radius-xl p-2">
+                    {{ form.deadline }}
+                  </div>
+                </div>
+              </li>
+              <li class="list-group-item border-0 w-60">
+                <div>
+                  <span class="text text-sm">Priority:</span>
+                  <div class="d-flex bg-white border border-radius-xl p-2">
+                    {{ form.priority }}
+                  </div>
+                </div>
+              </li>
+              <li class="list-group-item border-0 w-60">
+                <div>
+                  <span class="text text-sm ">Type:</span>
+                  <div class="d-flex bg-white border border-radius-xl p-2">
+                    {{ form.task_type }}
+                  </div>
+                </div>
+              </li>
+              {% if not form.project %}
+                <li class="list-group-item border-0 w-60">
+                  <div>
+                    <span class="text text-sm ">Assigners:</span>
+                    <div class="d-flex bg-white border border-radius-xl p-2">
+                      {{ form.assigners }}
+                    </div>
+                  </div>
+                </li>
+              {% else %}
+                <li class="list-group-item border-0 w-60">
+                  <div>
+                    <span class="text text-sm ">Project:</span>
+                    <div class="d-flex bg-white border border-radius-xl p-2">
+                      {{ form.project }}
+                    </div>
+                  </div>
+                </li>
+              {% endif %}
+              <li class="list-group-item border-0 w-60">
+                <div>
+                  <span class="text text-sm ">Tags:</span>
+                  <div class="d-flex bg-white border border-radius-xl p-2">
+                    <div class="form-switch me-2">
+                      {% for checkbox in form.tags %}
+                        <div>
+                          {{ checkbox.tag }}
+                          <span class="text text-sm">{{ checkbox.choice_label }}</span>
+                        </div>
+                      {% endfor %}
+                    </div>
+                  </div>
+                </div>
+              </li>
+            </ul>
+          </div>
+          <div class="card-footer pt-0 pb-1">
+            <button type="submit" class="btn btn-success mt-2">Submit</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </form>
+{% endblock %}
+
