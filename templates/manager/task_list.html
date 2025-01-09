@@ -9,7 +9,7 @@
           <card class="card-body p-2">
             <div>
               <form action="" method="get">
-                {{search_form.name}}
+                {{ search_form.name }}
                 <button type="submit" class="visually-hidden"></button>
               </form>
             </div>
@@ -21,12 +21,13 @@
       {% for task in tasks %}
         <div class="col-lg-3 col-md-6 col-sm-12 col-12 h-200 mb-3 task-card">
           <div class="card shadow" style="height: 375px">
-            <div class="card-header pb-0">
-              <h6>{{ task.name|truncatechars:30 }}</h6>
-            </div>
-            <hr class="horizontal dark mt-0">
-            <div class="card-body pt-0">
-              <div class="pb-1" style="height: 150px">
+            <a href="{% url "manager:task-detail" pk=task.pk %}">
+              <div class="card-header pb-0">
+                <h6>{{ task.name|truncatechars:30 }}</h6>
+              </div>
+              <hr class="horizontal dark mt-0">
+              <div class="card-body pt-0">
+                <div class="pb-1" style="height: 150px">
                 <span class="text-sm">
                   {% if task.description %}
                     <span>{{ task.description|truncatechars:225 }}</span>
@@ -34,21 +35,31 @@
                     No description
                   {% endif %}
                 </span>
+                </div>
+                <div>
+                  <span class="text-sm">Deadline: {{ task.deadline.date }}</span>
+                </div>
+                <div>
+                  <span class="text-sm">Priority: {{ task.get_priority_display }}</span>
+                </div>
               </div>
-              <div>
-                <span class="text-sm">Deadline: {{ task.deadline.date }}</span>
-              </div>
-              <div>
-                <span class="text-sm">Priority: {{ task.get_priority_display }}</span>
-              </div>
-            </div>
+            </a>
             <div class="card-footer pt-0 pb-1">
               {% if user in task.assigners.all or user.is_superuser %}
-                <a class="btn btn-primary" href="#">Edit</a>
+                {% if task.is_completed %}
+                  <a class="btn btn-danger" href="{% url "manager:task-toggle-completed" pk=task.pk %}">Set not
+                    completed</a>
+                {% else %}
+                  <a class="btn btn-success" href="{% url "manager:task-toggle-completed" pk=task.pk %}">Set
+                    completed</a>
+                {% endif %}
+                <a class="btn btn-primary" href="{% url "manager:task-update" pk=task.pk %}">Edit</a>
               {% endif %}
               {% if user.is_authenticated %}
                 {% if user in task.assigners.all %}
-                  <a href="{% url "manager:task-toggle-assignment" pk=task.pk %}" class="btn btn-danger">Delete me</a>
+                  {% if not task.is_completed %}
+                    <a href="{% url "manager:task-toggle-assignment" pk=task.pk %}" class="btn btn-danger">Delete me</a>
+                  {% endif %}
                 {% else %}
                   <a href="{% url "manager:task-toggle-assignment" pk=task.pk %}" class="btn btn-success">Assign me</a>
                 {% endif %}
