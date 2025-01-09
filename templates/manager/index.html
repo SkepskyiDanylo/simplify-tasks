@@ -1,0 +1,251 @@
+{% extends "layouts/base.html" %}
+{% load static %}
+
+
+{% block content %}
+
+  <div class="container-fluid py-4">
+    <div class="row">
+      <div class="col-lg-6 col-12">
+        <div class="row">
+
+          <div class="col-lg-6 col-md-6 col-12">
+            <div class="card">
+              <span class="mask bg-primary opacity-10 border-radius-lg"></span>
+              <div class="card-body p-3 position-relative">
+                <div class="row">
+                  <div class="col-8 text-start">
+                    <div class="icon icon-shape bg-white shadow text-center border-radius-2xl">
+                      <i class="ni ni-circle-08 text-dark text-gradient text-lg opacity-10" aria-hidden="true"></i>
+                    </div>
+                    <h5 class="text-white font-weight-bolder mb-0 mt-3">
+                      {{ workers_count }}
+                    </h5>
+                    <span class="text-white text-sm">Employee Active</span>
+                  </div>
+                  <div class="col-4">
+                    <div class="dropstart text-end mb-6">
+                      <a href="javascript:;" class="cursor-pointer" id="dropdownUsers1" data-bs-toggle="dropdown"
+                         aria-expanded="false">
+                        <i class="fa fa-ellipsis-h text-white"></i>
+                      </a>
+                      <ul class="dropdown-menu px-2 py-3" aria-labelledby="dropdownUsers1">
+                        <li><a class="dropdown-item border-radius-md" href="{% url "manager:worker-create" %}">Add
+                          worker</a></li>
+                      </ul>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="col-lg-6 col-md-6 col-12 mt-4 mt-md-0">
+            <div class="card">
+              <span class="mask bg-dark opacity-10 border-radius-lg"></span>
+              <div class="card-body p-3 position-relative">
+                <div class="row">
+                  <div class="col-8 text-start">
+                    <div class="icon icon-shape bg-white shadow text-center border-radius-2xl">
+                      <i class="ni ni-bullet-list-67 text-dark text-gradient text-lg opacity-10" aria-hidden="true"></i>
+                    </div>
+                    <h5 class="text-white font-weight-bolder mb-0 mt-3">
+                      {{ tasks_count }}
+                    </h5>
+                    <span class="text-white text-sm">Tasks</span>
+                  </div>
+                  <div class="col-4">
+                    <div class="dropstart text-end mb-6">
+                      <a href="javascript:;" class="cursor-pointer" id="dropdownUsers2" data-bs-toggle="dropdown"
+                         aria-expanded="false">
+                        <i class="fa fa-ellipsis-h text-white"></i>
+                      </a>
+                      <ul class="dropdown-menu px-2 py-3" aria-labelledby="dropdownUsers2">
+                        <li><a class="dropdown-item border-radius-md" href="#add_task">Add task</a></li>
+                      </ul>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="row mt-4">
+          <div class="col-lg-6 col-md-6 col-12">
+            <div class="card">
+              <span class="mask bg-dark opacity-10 border-radius-lg"></span>
+              <div class="card-body p-3 position-relative">
+                <div class="row">
+                  <div class="col-8 text-start">
+                    <div class="icon icon-shape bg-white shadow text-center border-radius-2xl">
+                      <i class="ni ni-single-02 text-dark text-gradient text-lg opacity-10" aria-hidden="true"></i>
+                    </div>
+                    <h5 class="text-white font-weight-bolder mb-0 mt-3">
+                      {{ teams_count }}
+                    </h5>
+                    <span class="text-white text-sm">Teams</span>
+                  </div>
+                  <div class="col-4">
+                    <div class="dropstart text-end mb-6">
+                      <a href="javascript:;" class="cursor-pointer" id="dropdownUsers3" data-bs-toggle="dropdown"
+                         aria-expanded="false">
+                        <i class="fa fa-ellipsis-h text-white"></i>
+                      </a>
+                      <ul class="dropdown-menu px-2 py-3" aria-labelledby="dropdownUsers3">
+                        <li><a class="dropdown-item border-radius-md" href="#team-create">Create a team</a></li>
+                      </ul>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="col-lg-6 col-md-6 col-12 mt-4 mt-md-0">
+            <div class="card">
+              <span class="mask bg-primary opacity-10 border-radius-lg"></span>
+              <div class="card-body p-3 position-relative">
+                <div class="row">
+                  <div class="col-8 text-start">
+                    <div class="icon icon-shape bg-white shadow text-center border-radius-2xl">
+                      <i class="ni ni-folder-17 text-dark text-gradient text-lg opacity-10" aria-hidden="true"></i>
+                    </div>
+                    <h5 class="text-white font-weight-bolder mb-0 mt-3">
+                      {{ projects_count }}
+                    </h5>
+                    <span class="text-white text-sm">Projects</span>
+                  </div>
+                  <div class="col-4">
+                    <div class="dropstart text-end mb-6">
+                      <a href="javascript:;" class="cursor-pointer" id="dropdownUsers4" data-bs-toggle="dropdown"
+                         aria-expanded="false">
+                        <i class="fa fa-ellipsis-h text-white"></i>
+                      </a>
+                      <ul class="dropdown-menu px-2 py-3" aria-labelledby="dropdownUsers4">
+                        <li><a class="dropdown-item border-radius-md" href="#add-project">Add project</a></li>
+                      </ul>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-lg-6 col-12 mt-4 mt-lg-0">
+        <div class="card shadow h-100">
+          <div class="card-header pb-0 p-3">
+            <h6 class="mb-0">Tasks</h6>
+          </div>
+          <div class="card-body pb-0 p-3 pb-2">
+            <ul class="list-group">
+              <li class="list-group-item border-0 d-flex align-items-center px-0">
+                <div class="w-100">
+                  <div class="d-flex mb-2">
+                    <span class="me-2 text-sm font-weight-bold text-dark">Tasks completed</span>
+                    <span class="ms-auto text-sm font-weight-bold">{{ tasks_completed }}%</span>
+                  </div>
+                  <div>
+                    <div class="progress progress-md">
+                      <div class="progress-bar bg-success w-{{ tasks_completed_rounded }}" role="progressbar"
+                           aria-valuenow="60" aria-valuemin="0" aria-valuemax="100"></div>
+                    </div>
+                  </div>
+                </div>
+              </li>
+              <li class="list-group-item border-0 d-flex align-items-center px-0">
+                <div class="w-100">
+                  <div class="d-flex mb-2">
+                    <span class="me-2 text-sm font-weight-bold text-dark">Tasks not completed</span>
+                    <span class="ms-auto text-sm font-weight-bold">{{ tasks_not_completed }}%</span>
+                  </div>
+                  <div>
+                    <div class="progress progress-md">
+                      <div class="progress-bar bg-danger w-{{ tasks_not_completed_rounded }}" role="progressbar"
+                           aria-valuenow="10" aria-valuemin="0" aria-valuemax="100"></div>
+                    </div>
+                  </div>
+                </div>
+              </li>
+            </ul>
+          </div>
+          <div class="card-footer pt-0 p-3 d-flex align-items-center">
+            <div class="w-60">
+              <p class="text-sm">
+                We went through more than <b>{{ tasks_count }}</b> tasks with over than <b>{{ workers_count }}</b>
+                workers.
+              </p>
+            </div>
+            <div class="w-40 text-end">
+              <a class="btn btn-dark mb-0 text-end" href="{% url "manager:task-list" %}">View all tasks</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="row my-4">
+      <div class="col-lg-8 col-md-6 mb-md-0 mb-4">
+        <div class="card h-100">
+          <div class="card-body p-3 m-2">
+            <div class="row">
+              <div class="col-lg-6">
+                <div class="d-flex flex-column h-100">
+                  <p class="mb-1 pt-2 text-bold">Join our Team</p>
+                  <h5 class="font-weight-bolder">Organization</h5>
+                  <p class="mb-5">From creating unique interfaces
+                    to tackling complex challenges.<br>
+                    Become part of a company where every step leads to success🚀</p>
+                  <a class="text-body text-sm font-weight-bold mb-0 icon-move-right mt-auto"
+                     href="https://mail.google.com/mail/?view=cm&to=organization@example.com"
+                     target="_blank">
+                    Contact us
+                    <i class="fas fa-arrow-right text-sm ms-1" aria-hidden="true"></i>
+                  </a>
+                </div>
+              </div>
+              <div class="col-lg-5 ms-auto text-center mt-5 mt-lg-0">
+                <div class="bg-dark border-radius-lg h-100">
+                  <div class="position-relative d-flex align-items-center justify-content-center h-100">
+                    <img class="w-100 position-relative z-index-2 pt-4"
+                         src="{% static "images/pc.png" %}" alt="pc">
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-lg-4 col-md-6">
+        <div class="card h-100">
+          <div class="card-header pb-1">
+            <h6>Tasks overview</h6>
+            <p class="text-sm">
+            <i class="fa fa-arrow-up text-success" aria-hidden="true"></i>
+            <span class="font-weight-bold">{{ tasks_this_month }}</span> tasks completed this month
+          </p>
+          </div>
+          <div class="card-body p-3">
+            <div class="timeline timeline-one-side">
+              {% for task in tasks %}
+              <div class="timeline-block mb-3">
+              <span class="timeline-step">
+                <i class="ni ni-check-bold text-success text-gradient"></i>
+              </span>
+                <div class="timeline-content">
+                  <h6 class="text-dark text-sm font-weight-bold mb-0">{{ task.name|truncatechars:50 }}</h6>
+                  <p class="text-secondary font-weight-bold text-xs mt-1 mb-0">{{ task.completed_at }}</p>
+                </div>
+              </div>
+              {% endfor %}
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+{% endblock content %}
