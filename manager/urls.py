@@ -10,6 +10,11 @@ urlpatterns = [
     path("workers/<int:pk>/update/", views.WorkerUpdateView.as_view(), name="worker-update"),
     path("tasks/", views.TaskListView.as_view(), name="task-list"),
     path("tasks/<int:pk>/toggle_assignment/", views.toggle_task_assignment, name="task-toggle-assignment"),
+    path("tasks/<int:pk>/toggle_completed/", views.toggle_task_completed, name="task-toggle-completed"),
+    path("task/<int:pk>/", views.TaskDetailView.as_view(), name="task-detail"),
+    path("task/<int:pk>/update/", views.TaskUpdateView.as_view(), name="task-update"),
+    # path("task/<int:pk>/update/", views.TaskCreateView.as_view(), name="task-create"),
+    path("", views.IndexView.as_view(), name="index"),
 ]
 
 app_name = "manager"
