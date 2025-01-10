@@ -13,7 +13,7 @@ phone_number_validator = RegexValidator(
 )
 
 
-def unique_file_path(filename: str) -> str:
+def unique_file_path(instance: callable, filename: str) -> str:
     ext = filename.split('.')[-1]
     filename = f"{uuid.uuid4()}.{ext}"
     return os.path.join("profile_pictures/", filename)
