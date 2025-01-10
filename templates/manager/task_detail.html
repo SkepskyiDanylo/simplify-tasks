@@ -19,7 +19,7 @@
             <li class="list-group-item border-0 w-60">
               <div>
                 <div class="d-flex bg-white border border-radius-xl p-2">
-                  Deadline: {{ task.deadline.date }}
+                  Deadline: {{ task.deadline.date }} {{ task.deadline.time|date:"H:i" }} UTC
                 </div>
               </div>
             </li>
@@ -81,7 +81,7 @@
               <a class="btn btn-success" href="{% url "manager:task-toggle-completed" pk=task.pk %}">Set
                 completed</a>
             {% endif %}
-            <a class="btn btn-primary" href="#">Edit</a>
+            <a class="btn btn-primary" href="{% url "manager:task-update" pk=task.pk %}">Edit</a>
           {% endif %}
           {% if user.is_authenticated %}
             {% if user in task.assigners.all %}

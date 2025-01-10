@@ -1,7 +1,7 @@
 {% extends "layouts/base.html" %}
 
 {% block content %}
-  <form action="" method="post" novalidate>
+  <form action="" method="post" enctype="multipart/form-data" novalidate>
     {% csrf_token %}
     <div class="row m-1">
       <div class="col-lg-4 col-md-12 mt-3">
@@ -100,6 +100,9 @@
                     <div>
                       <span class="text-sm text-secondary">Profile picture:</span>
                       <div class="d-flex mb-2">
+                        {% if form.profile_picture.errors %}
+                          {{ form.profile_picture.errors }}
+                        {% endif %}
                         {{ form.profile_picture }}
                       </div>
                     </div>

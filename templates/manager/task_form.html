@@ -30,7 +30,11 @@
               </li>
               <li class="list-group-item border-0 w-60">
                 <div>
-                  <span class="text text-sm">Deadline:</span>
+                  {% if form.deadline.errors %}
+                    <span class="text text-sm">{{ form.deadline.errors }}</span>
+                  {% else %}
+                    <span class="text text-sm">Deadline local time:</span>
+                  {% endif %}
                   <div class="d-flex bg-white border border-radius-xl p-2">
                     {{ form.deadline }}
                   </div>
@@ -38,7 +42,11 @@
               </li>
               <li class="list-group-item border-0 w-60">
                 <div>
-                  <span class="text text-sm">Priority:</span>
+                  {% if form.priority.errors %}
+                    <span class="text text-sm">{{ form.priority.errors }}</span>
+                  {% else %}
+                    <span class="text text-sm">Priority:</span>
+                  {% endif %}
                   <div class="d-flex bg-white border border-radius-xl p-2">
                     {{ form.priority }}
                   </div>
@@ -46,7 +54,11 @@
               </li>
               <li class="list-group-item border-0 w-60">
                 <div>
-                  <span class="text text-sm ">Type:</span>
+                  {% if form.task_type.errors %}
+                    <span class="text text-sm">{{ form.task_type.errors }}</span>
+                  {% else %}
+                    <span class="text text-sm">Type:</span>
+                  {% endif %}
                   <div class="d-flex bg-white border border-radius-xl p-2">
                     {{ form.task_type }}
                   </div>
@@ -55,8 +67,12 @@
               {% if not form.project %}
                 <li class="list-group-item border-0 w-60">
                   <div>
-                    <span class="text text-sm ">Assigners:</span>
-                    <div class="d-flex bg-white border border-radius-xl p-2">
+                    {% if form.assigners.errors %}
+                      <span class="text text-sm">{{ form.assigners.errors }}</span>
+                    {% else %}
+                      <span class="text text-sm">Assigners:</span>
+                    {% endif %}
+                    <div class="d-flex bg-white border border-radius-xl p-2 h-100">
                       {{ form.assigners }}
                     </div>
                   </div>
@@ -64,7 +80,11 @@
               {% else %}
                 <li class="list-group-item border-0 w-60">
                   <div>
-                    <span class="text text-sm ">Project:</span>
+                    {% if form.project.errors %}
+                      <span class="text text-sm">{{ form.project.errors }}</span>
+                    {% else %}
+                      <span class="text text-sm">Project:</span>
+                    {% endif %}
                     <div class="d-flex bg-white border border-radius-xl p-2">
                       {{ form.project }}
                     </div>
@@ -73,7 +93,11 @@
               {% endif %}
               <li class="list-group-item border-0 w-60">
                 <div>
-                  <span class="text text-sm ">Tags:</span>
+                  {% if form.tags.errors %}
+                    <span class="text text-sm">{{ form.tags.errors }}</span>
+                  {% else %}
+                    <span class="text text-sm">Tags:</span>
+                  {% endif %}
                   <div class="d-flex bg-white border border-radius-xl p-2">
                     <div class="form-switch me-2">
                       {% for checkbox in form.tags %}
