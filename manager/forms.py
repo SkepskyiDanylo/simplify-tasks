@@ -247,10 +247,10 @@ class TaskForm(forms.ModelForm):
     deadline = forms.DateTimeField(
         required=False,
         label="",
-        widget=forms.DateInput(
+        widget=forms.DateTimeInput(
             attrs={
                 "class": "form-control",
-                "type": "datetime",
+                "type": "datetime-local",
             }
         )
     )
@@ -278,7 +278,7 @@ class TaskForm(forms.ModelForm):
             }
         )
     )
-    assigners = forms.ModelChoiceField(
+    assigners = forms.ModelMultipleChoiceField(
         queryset=Worker.objects.all(),
         required=True,
         label="",
@@ -288,7 +288,7 @@ class TaskForm(forms.ModelForm):
             }
         )
     )
-    tags = forms.ModelChoiceField(
+    tags = forms.ModelMultipleChoiceField(
         queryset=Tag.objects.all(),
         required=False,
         label="",
@@ -304,6 +304,7 @@ class TaskForm(forms.ModelForm):
             "name",
             "description",
             "deadline",
+            "assigners",
             "priority",
             "task_type",
             "tags"
