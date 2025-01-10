@@ -106,6 +106,11 @@ class WorkerUpdateView(LoginRequiredMixin, UpdateView):
     def get_success_url(self):
         return reverse_lazy("manager:worker-detail", args=[self.object.pk])
 
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context["segment"] = f"worker #{self.object.pk} edit"
+        return context
+
 
 class TaskListView(ListView):
     model = Task
@@ -183,3 +188,21 @@ class TaskUpdateView(LoginRequiredMixin, UpdateView):
 
     def get_success_url(self):
         return reverse_lazy("manager:task-detail", args=[self.object.pk])
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context["segment"] = f"task #{self.object.pk} Edit"
+        return context
+
+class TaskCreateView(LoginRequiredMixin, CreateView):
+    model = Task
+    template_name = "manager/task_form.html"
+    form_class = TaskForm
+
+    def get_success_url(self):
+        return reverse_lazy("manager:task-detail", args=[self.object.pk])
+
+    def get_context_data(self, **kwargs) -> dict:
+        context = super().get_context_data(**kwargs)
+        context["segment"] = "task create"
+        return context
