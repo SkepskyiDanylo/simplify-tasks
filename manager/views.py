@@ -5,7 +5,7 @@ from django.http import HttpRequest, HttpResponseRedirect
 from django.shortcuts import get_object_or_404
 from django.urls import reverse_lazy
 from django.utils import timezone
-from django.views.generic import DetailView, ListView, CreateView, UpdateView, TemplateView
+from django.views.generic import DetailView, ListView, CreateView, UpdateView, TemplateView, DeleteView
 
 from .forms import LoginForm, WorkerSearchForm, WorkerForm, TaskSearchForm, TaskForm, TaskProjectForm
 from .models import Worker, Task, Project, Team
@@ -116,7 +116,7 @@ class TaskListView(ListView):
     model = Task
     context_object_name = "tasks"
     template_name = "manager/task_list.html"
-    paginate_by = 10
+    paginate_by = 8
 
     def get_context_data(self, **kwargs) -> dict:
         context = super().get_context_data(**kwargs)
@@ -206,3 +206,11 @@ class TaskCreateView(LoginRequiredMixin, CreateView):
         context = super().get_context_data(**kwargs)
         context["segment"] = "task create"
         return context
+
+
+class TaskDeleteView(LoginRequiredMixin, DeleteView):
+    model = Task
+    template_name = "manager/confirm_delete.html"
+
+    def get_success_url(self):
+        return reverse_lazy("manager:task-list")
