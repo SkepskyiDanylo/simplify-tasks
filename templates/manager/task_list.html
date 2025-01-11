@@ -9,8 +9,19 @@
           <card class="card-body p-2">
             <div>
               <form action="" method="get">
+                <div class="row">
+
+
+                <div class="col-11">
                 {{ search_form.name }}
                 <button type="submit" class="visually-hidden"></button>
+                </div>
+                <div class="col-1 m-auto">
+                <a href="{% url "manager:task-create" %}" class="text-end">
+                  <img src="{% static "images/task-add.png" %}" alt="task-add" class="table-image m-auto">
+                </a>
+                </div>
+                </div>
               </form>
             </div>
           </card>
