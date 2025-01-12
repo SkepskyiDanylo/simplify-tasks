@@ -1,0 +1,29 @@
+{% extends "layouts/base.html" %}
+
+{% block content %}
+  <div class="row m-1">
+    <div class="col-9 mx-auto">
+      <div class="card h-100 w-100">
+        <div class="card-header">
+          <span class="text text-bolder text-dark">
+            Delete {{ model }}
+          </span>
+        </div>
+        <div class="card-body">
+          <div>
+            <i class="text text-danger">
+              Are you sure that you want to delete {{ model }} " #{{ object.pk }} {{ object }} "?
+            </i>
+          </div>
+          <div class="card-footer p-0 mt-5">
+            <form action="" method="post" class="d-inline">
+              {% csrf_token %}
+              <button type="submit" class="btn btn-danger mb-0">DELETE</button>
+            </form>
+            <a onclick="window.history.back()" class="btn btn-success mb-0">Back</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+{% endblock %}
