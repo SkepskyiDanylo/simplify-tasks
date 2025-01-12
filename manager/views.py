@@ -220,3 +220,14 @@ class TaskDeleteView(LoginRequiredMixin, DeleteView):
         context["segment"] = "task delete"
         context["model"] = "task"
         return context
+
+
+class ProjectListView(ListView):
+    model = Project
+    context_object_name = "projects"
+    template_name = "manager/project_list.html"
+
+    def get_context_data(self, **kwargs) -> dict:
+        context = super().get_context_data(**kwargs)
+        context["segment"] = "projects"
+        return context
