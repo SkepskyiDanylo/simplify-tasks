@@ -33,7 +33,7 @@ class Worker(AbstractUser):
     )
     position = models.ForeignKey(
         Position,
-        on_delete=models.CASCADE,
+        on_delete=models.SET_NULL,
         related_name="workers",
         blank=True,
         null=True,
@@ -88,7 +88,7 @@ class Team(models.Model):
 
 class Project(models.Model):
     name = models.CharField(max_length=255)
-    team = models.ForeignKey(Team, on_delete=models.CASCADE, related_name="projects")
+    team = models.ForeignKey(Team, on_delete=models.SET_NULL,null=True ,related_name="projects")
 
     def __str__(self):
         return f"{self.name}, (Team: {self.team})"
