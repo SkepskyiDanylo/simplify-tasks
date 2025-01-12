@@ -92,6 +92,9 @@
               <a href="{% url "manager:task-toggle-assignment" pk=task.pk %}" class="btn btn-success">Assign me</a>
             {% endif %}
           {% endif %}
+          {% if user.is_superuser %}
+            <a href="{% url "manager:task-delete" pk=task.pk %}" class="btn btn-danger">Delete</a>
+          {% endif %}
         </div>
       </div>
     </div>

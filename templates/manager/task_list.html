@@ -10,17 +10,15 @@
             <div>
               <form action="" method="get">
                 <div class="row">
-
-
-                <div class="col-11">
-                {{ search_form.name }}
-                <button type="submit" class="visually-hidden"></button>
-                </div>
-                <div class="col-1 m-auto">
-                <a href="{% url "manager:task-create" %}" class="text-end">
-                  <img src="{% static "images/task-add.png" %}" alt="task-add" class="table-image m-auto">
-                </a>
-                </div>
+                  <div class="col-11">
+                    {{ search_form.name }}
+                    <button type="submit" class="visually-hidden"></button>
+                  </div>
+                  <div class="col-1 m-auto">
+                    <a href="{% url "manager:task-create" %}" class="text-end">
+                      <img src="{% static "images/task-add.png" %}" alt="task-add" class="table-image m-auto">
+                    </a>
+                  </div>
                 </div>
               </form>
             </div>
@@ -59,10 +57,10 @@
               {% if user in task.assigners.all or user.is_superuser %}
                 {% if task.is_completed %}
                   <a class="btn btn-danger" href="{% url "manager:task-toggle-completed" pk=task.pk %}">Set not
-                    completed</a>
+                    done</a>
                 {% else %}
-                  <a class="btn btn-success" href="{% url "manager:task-toggle-completed" pk=task.pk %}">Set
-                    completed</a>
+                  <a class="btn btn-success" href="{% url "manager:task-toggle-completed" pk=task.pk %}">
+                    Set done</a>
                 {% endif %}
                 <a class="btn btn-primary" href="{% url "manager:task-update" pk=task.pk %}">Edit</a>
               {% endif %}
