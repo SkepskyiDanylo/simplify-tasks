@@ -230,4 +230,13 @@ class ProjectListView(ListView):
     def get_context_data(self, **kwargs) -> dict:
         context = super().get_context_data(**kwargs)
         context["segment"] = "projects"
+        for project in context["projects"]:
+            tasks = project.tasks.all()
+            if tasks.count() == 0:
+                project.completed_tasks = 0
+                project.completed_rounded = 0
+            else:
+                project.completed_tasks = round(project.tasks.filter(is_completed=True).count() / project.tasks.all().count() * 100)
+                print(project.completed_tasks)
+                project.completed_rounded = round(project.completed_tasks / 10) * 10
         return context
