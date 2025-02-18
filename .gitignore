@@ -5,4 +5,4 @@ media/
 .env
 db.sqlite3
 db_structure.svg
-task.png
+*.png
