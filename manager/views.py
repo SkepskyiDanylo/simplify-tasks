@@ -1,7 +1,7 @@
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.db.models import QuerySet
 from django.contrib.auth.views import LoginView, LogoutView
-from django.http import HttpRequest, HttpResponseRedirect
+from django.http import HttpRequest, HttpResponseRedirect, Http404
 from django.shortcuts import get_object_or_404
 from django.urls import reverse_lazy
 from django.utils import timezone
@@ -14,6 +14,23 @@ from .models import Worker, Task, Project, Team
 class UserLoginView(LoginView):
     template_name = "accounts/login.html"
     form_class = LoginForm
+
+    def get(self, request, *args, **kwargs):
+        if request.user.is_authenticated:
+            return HttpResponseRedirect(reverse_lazy("manager:index"))
+        return super().get(request, *args, **kwargs)
+
+    def form_valid(self, form):
+        response = super().form_valid(form)
+
+        remember_me = self.request.POST.get('remember_me', False)
+
+        if remember_me:
+            self.request.session.set_expiry(3600 * 24 * 7)
+        else:
+            self.request.session.set_expiry(0)
+
+        return response
 
 
 class UserLogoutView(LogoutView):
@@ -82,6 +99,13 @@ class WorkerDetailView(DetailView):
         context = super().get_context_data(**kwargs)
         context["segment"] = "profile"
         return context
+
+    def get(self, request, *args, **kwargs):
+        pk = self.kwargs.get("pk")
+        user = get_object_or_404(Worker, pk=pk)
+        if request.user.is_authenticated and request.user == user:
+            return HttpResponseRedirect(reverse_lazy("manager:current-profile"))
+        return super().get(request, *args, **kwargs)
 
 
 class WorkerCreateView(LoginRequiredMixin, CreateView):
@@ -194,6 +218,7 @@ class TaskUpdateView(LoginRequiredMixin, UpdateView):
         context["segment"] = f"task #{self.object.pk} Edit"
         return context
 
+
 class TaskCreateView(LoginRequiredMixin, CreateView):
     model = Task
     template_name = "manager/task_form.html"
@@ -239,4 +264,18 @@ class ProjectListView(ListView):
                 project.completed_tasks = round(project.tasks.filter(is_completed=True).count() / project.tasks.all().count() * 100)
                 print(project.completed_tasks)
                 project.completed_rounded = round(project.completed_tasks / 10) * 10
+        return context
+
+
+class ProfileDetailView(LoginRequiredMixin, TemplateView):
+    template_name = "manager/profile.html"
+    queryset = Worker.objects.all().prefetch_related("teams")
+
+    def get_context_data(self, **kwargs) -> dict:
+        context = super().get_context_data(**kwargs)
+        context["segment"] = "profile"
+        try:
+            context["worker"] = Worker.objects.get(pk=self.request.user.pk)
+        except Worker.DoesNotExist:
+            raise Http404("Profile does not exist")
         return context
