@@ -2,8 +2,25 @@
     border-radius: 20px;
 }
 
-.nav-link:hover{
+.nav-link:hover {
     background-color: #fafafa80;
+}
+
+.git-hub-container {
+    transition: transform 0.2s ease-in-out;
+}
+
+.git-hub-container:hover {
+    transform: scale(1.2);
+}
+
+.git-hub svg{
+    color: #6c757d;
+    transition: color 0.2s ease-in-out;
+}
+
+.git-hub:hover svg {
+    color: black;
 }
 
 .profile-picture:hover {
@@ -44,6 +61,138 @@
     margin-bottom: 0.438rem;
 }
 
+.card-container {
+    height: 375px;
+    perspective: 1000px;
+}
+
+.task-card {
+    border-radius: 20px;
+    will-change: transform;
+    transition: transform 0.1s ease-out;
+}
+
 .task-card:hover {
-    transform: scale(1.01);
+    z-index: 1000;
+}
+
+.transparent-input {
+            background: transparent !important;
+            border: none !important;
+            outline: none !important;
+            color: white;
+            font-size: 16px;
+            width: 100%;
+            border-radius: 5px;
+}
+
+
+.transparent-input::placeholder {
+    color: rgba(255, 255, 255, 10);
+}
+
+.transparent-input option {
+    background: #222 !important;
+    color: white !important;
+}
+
+.file-input {
+    display: none;
+}
+
+.picture-edit {
+    object-fit: cover;
+    cursor: pointer;
+}
+
+.transparent-textarea {
+    background: transparent !important;
+    color: black !important;
+    border: none !important;
+    height: 50px;
+    width: 70%;
+    min-height: 50px;
+    resize: vertical;
+    margin: 5px;
+}
+
+.transparent-text {
+    background: transparent !important;
+    color: black !important;
+    border: none; !important;
+    min-width: 50px;
+    max-width: 500px;
+    outline: none !important;
+    margin: 3px;
+}
+
+.image-edit-container {
+    position: relative;
+    display: inline-block;
+}
+
+.edit-icon {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background: rgba(50, 50, 50, 0.8);
+    color: white;
+    padding: 15px;
+    border-radius: 50%;
+    font-size: 14px;
+    opacity: 0;
+    transition: opacity 0.3s ease-in-out, transform 0.3s ease-in-out;
+    z-index: 2;
+}
+
+.image-edit-container:hover .edit-icon {
+    opacity: 1;
+    transform: translate(-50%, -50%) scale(1.1);
+    cursor: pointer;
+}
+
+.error-container {
+    position: fixed;
+    background-color: rgba(255, 255, 255, 0.5);
+    opacity: 1;
+    border: solid black 1px;
+    border-radius: 20px;
+    min-width: 300px;
+    max-width: 1000px;
+    min-height: 100px;
+    max-height: 600px;
+    padding: 30px;
+    bottom: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 1000;
+}
+
+.close-toast {
+    position: absolute;
+    background: none;
+    border: none;
+    color: gray;
+    font-size: 16px;
+    cursor: pointer;
+    top: 5px;
+    right: 5px;
+    transition: transform 0.3s ease-in-out;
+}
+
+.close-toast:hover {
+    transform: rotate(180deg);
+}
+
+.icon-link {
+    transition: scale 0.3s ease-in-out;
+}
+
+.icon-link:hover {
+    scale: 1.2;
+}
+
+.ml-17-5 {
+    margin-left: 17.5rem;
 }

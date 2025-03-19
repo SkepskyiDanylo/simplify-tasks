@@ -1,10 +1,9 @@
-from click import clear
 from django import forms
 from django.forms import ModelForm
 from django.contrib.auth.forms import (
     AuthenticationForm,
     UsernameField,
-    UserCreationForm,
+    UserCreationForm
 )
 from django.utils.timezone import make_aware
 
@@ -41,7 +40,7 @@ class WorkerForm(ModelForm):
         widget=forms.TextInput(
             attrs=
             {
-                "class": "form-control"
+                "class": "transparent-input"
                 ,"placeholder": "Username"
             }
         ),
@@ -51,7 +50,7 @@ class WorkerForm(ModelForm):
         required=False,
         widget=forms.PasswordInput(
             attrs={
-                "class": "form-control",
+                "class": "transparent-text",
                 "placeholder": "Password"
             }
         )
@@ -61,7 +60,7 @@ class WorkerForm(ModelForm):
         required=False,
         widget=forms.PasswordInput(
             attrs={
-                "class": "form-control",
+                "class": "transparent-text",
                 "placeholder": "Password confirmation"
             }
         )
@@ -73,7 +72,7 @@ class WorkerForm(ModelForm):
         widget=forms.TextInput(
             attrs={
                 "placeholder": "First name",
-                "class": "form-control",
+                "class": "transparent-text",
             }
         )
     )
@@ -84,7 +83,7 @@ class WorkerForm(ModelForm):
         widget=forms.TextInput(
             attrs={
                 "placeholder": "Last name",
-                "class": "form-control",
+                "class": "transparent-text",
             }
         )
     )
@@ -94,8 +93,8 @@ class WorkerForm(ModelForm):
         label="",
         widget=forms.TextInput(
             attrs={
-                "placeholder": "Email",
-                "class": "form-control",
+                "placeholder": "example@example.com",
+                "class": "transparent-text",
             }
         )
     )
@@ -106,8 +105,19 @@ class WorkerForm(ModelForm):
         widget=forms.TextInput(
             attrs={
                 "placeholder": "+",
-                "class": "form-control",
+                "class": "transparent-text",
                 "value": "+",
+            }
+        )
+    )
+    location = forms.CharField(
+        max_length=255,
+        required=False,
+        label="",
+        widget=forms.TextInput(
+            attrs={
+                "placeholder": "Location",
+                "class": "transparent-text",
             }
         )
     )
@@ -117,7 +127,7 @@ class WorkerForm(ModelForm):
         widget=forms.Textarea(
             attrs={
                 "placeholder": "Enter profile description",
-                "class": "form-control",
+                "class": "transparent-textarea",
             }
         )
     )
@@ -126,7 +136,7 @@ class WorkerForm(ModelForm):
         label="",
         widget=forms.FileInput(
             attrs={
-                "class": "form-control",
+                "class": "transparent-input",
             }
         )
     )
@@ -136,7 +146,7 @@ class WorkerForm(ModelForm):
         label="",
         widget=forms.Select(
             attrs={
-                "class": "form-control",
+                "class": "transparent-input",
             }
         )
     )
@@ -145,7 +155,7 @@ class WorkerForm(ModelForm):
         label="",
         widget=forms.URLInput(
             attrs={
-                "class": "form-control",
+                "class": "transparent-text",
                 "placeholder": "https://www.instagram.com",
             }
         )
@@ -155,7 +165,7 @@ class WorkerForm(ModelForm):
         label="",
         widget=forms.URLInput(
             attrs={
-                "class": "form-control",
+                "class": "transparent-text",
                 "placeholder": "https://www.facebook.com",
             }
         )
@@ -165,10 +175,17 @@ class WorkerForm(ModelForm):
         label="",
         widget=forms.URLInput(
             attrs={
-                "class": "form-control",
+                "class": "transparent-text",
                 "placeholder": "https://www.twitter.com",
             }
         )
+    )
+    is_superuser = forms.BooleanField(
+        required=False,
+        label="Admin?",
+        widget=forms.CheckboxInput(attrs={
+            "class": "form-check-input border",
+        })
     )
     class Meta:
         model = Worker
@@ -178,11 +195,13 @@ class WorkerForm(ModelForm):
             "email",
             "position",
             "description",
+            "location",
             "profile_picture",
             "phone_number",
             "twitter",
             "facebook",
             "instagram",
+            "is_superuser",
         )
 
     def clean_password2(self) -> str:
@@ -190,6 +209,10 @@ class WorkerForm(ModelForm):
         password2 = self.cleaned_data.get("password2")
         if password1 and password2 and password1 != password2:
             raise forms.ValidationError("Passwords don't match")
+        if password1 and len(password1) < 8:
+            raise forms.ValidationError("Password must be at least 8 characters")
+        if password1 and password1.isnumeric():
+            raise forms.ValidationError("Password cannot contain only numbers")
         return password2
     
     def clean_phone_number(self) -> str:

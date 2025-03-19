@@ -45,9 +45,10 @@ class Worker(AbstractUser):
     )
     last_activity = models.DateField(default=timezone.now)
     is_online = models.BooleanField(default=False)
-    instagram = models.URLField(blank=True)
-    facebook = models.URLField(blank=True)
-    twitter = models.URLField(blank=True)
+    instagram = models.URLField(blank=True, null=True)
+    facebook = models.URLField(blank=True, null=True)
+    twitter = models.URLField(blank=True, null=True)
+    location = models.CharField(max_length=255, blank=True, null=True)
 
     class Meta:
         ordering = ("position", "username")

@@ -1,174 +1,142 @@
 {% extends "layouts/base.html" %}
+{% load static admin_soft %}
 
 {% block content %}
   <form action="" method="post" enctype="multipart/form-data" novalidate>
     {% csrf_token %}
-    <div class="row m-1">
-      <div class="col-lg-4 col-md-12 mt-3">
-        <div class="card shadow h-100">
-          <div class="card-header pb-0">
-            <h6 class="mb-0 font-weight-bolder">Necessary information:</h6>
-          </div>
-          <div class="card-body pb-0 p-3">
-            <ul class="list-group">
-              <li class="list-group-item border-0 w-80">
-                <div>
-                  {% if form.username.errors %}
-                    <span class="text-sm text-danger">{{ form.username.errors }}</span>
-                  {% else %}
-                    <span class="text-sm text-secondary">Username:</span>
-                  {% endif %}
-                  <div class="d-flex mb-2">
-                    {{ form.username }}
-                  </div>
-                </div>
-              </li>
-              <li class="list-group-item border-0 w-80">
-                <div>
-                  {% if form.email.errors %}
-                    <span class="text-sm text-danger">{{ form.email.errors }}</span>
-                  {% else %}
-                    <span class="text-sm text-secondary">Email:</span>
-                  {% endif %}
-                  <div class="d-flex mb-2">
-                    {{ form.email }}
-                  </div>
-                </div>
-              </li>
-              <li class="list-group-item border-0 w-80">
-                <div>
-                  {% if form.first_name.errors %}
-                    <span class="text-sm text-danger">{{ form.first_name.errors }}</span>
-                  {% else %}
-                    <span class="text-sm text-secondary">First name:</span>
-                  {% endif %}
-                  <div class="d-flex mb-2">
-                    {{ form.first_name }}
-                  </div>
-                </div>
-              </li>
-              <li class="list-group-item border-0 w-80">
-                <div>
-                  {% if form.last_name.errors %}
-                    <span class="text-sm text-danger">{{ form.last_name.errors }}</span>
-                  {% else %}
-                    <span class="text-sm text-secondary">Last name:</span>
-                  {% endif %}
-                  <div class="d-flex mb-2">
-                    {{ form.last_name }}
-                  </div>
-                </div>
-              </li>
-              <li class="list-group-item border-0 w-80">
-                <div>
-                  {% if form.password1.errors %}
-                    <span class="text-sm text-danger">{{ form.password1.errors }}</span>
-                  {% else %}
-                    <span class="text-sm text-secondary">Password:</span>
-                  {% endif %}
-                  <div class="d-flex mb-2">
-                    {{ form.password1 }}
-                  </div>
-                </div>
-              </li>
-              <li class="list-group-item border-0 w-80 mb-5">
-                <div>
-                  {% if form.password2.errors %}
-                    <span class="text-sm text-danger">{{ form.password2.errors }}</span>
-                  {% else %}
-                    <span class="text-sm text-secondary">Password confirmation:</span>
-                  {% endif %}
-                  <div class="d-flex">
-                    {{ form.password2 }}
-                  </div>
-                </div>
-              </li>
-            </ul>
-          </div>
-        </div>
-      </div>
-      <div class="col-lg-8 col-md-12 mt-3">
-        <div class="card shadow h-100">
-          <div class="card-header pb-0">
-            <h6 class="mb-0 font-weight-bolder">Additional information:</h6>
-          </div>
-          <div class="row">
-            <div class="col-lg-6 col-md-12">
-              <div class="card-body pb-0 p-3">
-                <ul class="list-group">
-                  <li class="list-group-item border-0">
-                    <div>
-                      <span class="text-sm text-secondary">Profile picture:</span>
-                      <div class="d-flex mb-2">
-                        {% if form.profile_picture.errors %}
-                          {{ form.profile_picture.errors }}
-                        {% endif %}
-                        {{ form.profile_picture }}
-                      </div>
-                    </div>
-                  </li>
-                  <li class="list-group-item border-0">
-                    <div>
-                      <span class="text-sm text-secondary">Position:</span>
-                      <div class="d-flex mb-2">
-                        {{ form.position }}
-                      </div>
-                    </div>
-                  </li>
-                  <li class="list-group-item border-0">
-                    <div>
-                      <span class="text-sm text-secondary">Profile description:</span>
-                      <div class="d-flex mb-5">
-                        {{ form.description }}
-                      </div>
-                    </div>
-                  </li>
-                </ul>
+    <div class="container-fluid">
+      <div class="page-header border-radius-lg mt-4 d-flex flex-column justify-content-end">
+        <span class="mask bg-primary opacity-9"></span>
+        <div class="w-100 position-relative p-3">
+          <div class="d-flex justify-content-between align-items-end">
+            <div class="d-flex align-items-center">
+              <div class="avatar avatar-xl position-relative me-3 image-edit-container">
+                <label for="profile-upload">
+                  <i class="fa-solid fa-pen edit-icon"></i>
+                  <img src="{{ picture }}" alt="profile_image" id="userImage"
+                       class="w-100 h-100 border-radius-lg shadow-sm picture-edit">
+                </label>
+                <input type="file" id="profile-upload" name="{{ form.profile_picture.name }}" class="file-input">
+              </div>
+              <div>
+                <p class="mb-1 text-white font-weight-bolder">
+                  {{ form.username }}
+                </p>
+                <p class="mb-0 text-white text-sm">
+                  {{ form.position }}
+                </p>
               </div>
             </div>
-            <div class="col-lg-6 col-md-12">
-              <div class="card-body pb-0 p-3">
-                <ul class="list-group">
-                  <li class="list-group-item border-0">
-                    <div>
-                      <span class="text-sm text-secondary">Phone number:</span>
-                      <div class="d-flex mb-2">
-                        {{ form.phone_number }}
-                      </div>
-                    </div>
-                  </li>
-                  <li class="list-group-item border-0">
-                    <div>
-                      <span class="text-sm text-secondary">Instagram:</span>
-                      <div class="d-flex mb-2">
-                        {{ form.instagram }}
-                      </div>
-                    </div>
-                  </li>
-                  <li class="list-group-item border-0">
-                    <div>
-                      <span class="text-sm text-secondary">Facebook:</span>
-                      <div class="d-flex mb-2">
-                        {{ form.facebook }}
-                      </div>
-                    </div>
-                  </li>
-                  <li class="list-group-item border-0">
-                    <div>
-                      <span class="text-sm text-secondary">Twitter:</span>
-                      <div class="d-flex mb-2">
-                        {{ form.twitter }}
-                      </div>
-                    </div>
-                  </li>
-                </ul>
-              </div>
+            <div class="d-flex align-items-center">
+              <input type="submit" value="Save" class="btn btn-success mb-0 me-1 btn-sm">
             </div>
           </div>
         </div>
       </div>
     </div>
-    <input type="submit" value="Submit" class="btn btn-primary m-3">
+    <div class="container-fluid py-4">
+      <div class="col-12">
+        <div class="card h-100">
+          <div class="card-header pb-0 p-3">
+            <div class="row">
+              <div class="col-md-8 d-flex align-items-center">
+                <h6 class="mb-0">Profile Information:</h6>
+              </div>
+            </div>
+          </div>
+          <div class="card-body p-3">
+            <p class="text-sm max-width-500">
+              &nbsp; {{ form.description }}
+            </p>
+            <hr class="horizontal gray-light">
+            <ul class="list-group">
+              <li class="list-group-item border-0 ps-0 pt-0 text-sm"><strong class="text-dark">Full Name:</strong>
+                &nbsp; {{ form.first_name }} {{ form.last_name }}
+              </li>
+              <li class="list-group-item border-0 ps-0 text-sm"><strong class="text-dark">Mobile:</strong>
+                &nbsp; {{ form.phone_number }}
+              </li>
+              <li class="list-group-item border-0 ps-0 text-sm"><strong class="text-dark">Email:</strong>
+                &nbsp; {{ form.email }}
+              </li>
+              <li class="list-group-item border-0 ps-0 text-sm"><strong class="text-dark">Location:</strong> &nbsp;
+                &nbsp; {{ form.location }}
+              </li>
+              <li class="list-group-item border-0 ps-0 pb-0">
+                <strong class="text-dark text-sm">Social:</strong> &nbsp;
+                <p>
+                  &nbsp; {{ form.facebook }}
+                </p>
+                <p>
+                  &nbsp; {{ form.instagram }}
+                </p>
+                <p>
+                  &nbsp; {{ form.twitter }}
+                </p>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="container-fluid">
+      <div class="col-12">
+        <div class="card h-100">
+          <div class="card-header pb-0 p-3">
+            <div class="row">
+              <div class="col-md-8 d-flex align-items-center">
+                <h6 class="mb-0">Password:</h6>
+              </div>
+            </div>
+          </div>
+          <div class="card-body p-3">
+            <p class="text-sm max-width-500">
+              &nbsp; {{ form.password1 }}
+            </p>
+            <p class="text-sm max-width-500">
+              &nbsp; {{ form.password2 }}
+            </p>
+            {% if user.is_superuser %}
+              <p class="text-sm max-width-500 p-1">
+                &nbsp; {{ form.is_superuser }} <span>Is admin?</span>
+              </p>
+            {% endif %}
+          </div>
+        </div>
+      </div>
+    </div>
   </form>
-{% endblock %}
+  {% if form.errors %}
+    <div class="error-container" id="toast-container">
+      {% for field, errors in form.errors.items %}
+        <div>
+          {% for error in errors %}
+            <div>
+              <span class="text-bold text-sm text-danger mb-1"> {{ error }}</span>
+            </div>
+          {% endfor %}
+        </div>
+      {% endfor %}
+      <button class="close-toast" onclick="closeToast()"><i class="fa-solid fa-x"></i></button>
+    </div>
+  {% endif %}
+{% endblock content %}
 
+{% block extra_js %}
+  <script>
+      document.getElementById('profile-upload').addEventListener('change', function (event) {
+          let file = event.target.files[0];
+          if (file) {
+              let reader = new FileReader();
+              reader.onload = function (e) {
+                  document.getElementById('userImage').src = e.target.result;
+              };
+              reader.readAsDataURL(file);
+          }
+      });
+
+      function closeToast() {
+          document.getElementById('toast-container').style.display = 'none';
+      }
+  </script>
+{% endblock %}
