@@ -49,6 +49,7 @@ class Worker(AbstractUser):
     facebook = models.URLField(blank=True, null=True)
     twitter = models.URLField(blank=True, null=True)
     location = models.CharField(max_length=255, blank=True, null=True)
+    team = models.ForeignKey("Team", on_delete=models.SET_NULL, blank=True, null=True, related_name="workers")
 
     class Meta:
         ordering = ("position", "username")
@@ -78,7 +79,7 @@ class TaskType(models.Model):
 
 class Team(models.Model):
     name = models.CharField(max_length=255)
-    workers = models.ManyToManyField(Worker, related_name="teams")
+    leader = models.ForeignKey("Worker", on_delete=models.SET_NULL, blank=True, null=True, related_name="leader_of")
 
     class Meta:
         ordering = ("name",)
