@@ -1,0 +1,58 @@
+{% extends "layouts/base.html" %}
+
+{% block content %}
+  <div class="row m-1">
+    <div class="col-lg-6 col-md-12 col-12 mt-3 mx-auto">
+      <div class="card shadow h-100">
+        <div class="card-header pb-0">
+          <h6 class="mb-0 font-weight-bolder">{{ project.name }}</h6>
+        </div>
+        <div class="card-body pb-0 p-3">
+          <ul class="list-group">
+          {% if project.team %}
+            <li class="list-group-item border-0 w-60">
+              <div class="mb-8">
+              <div class="mb-5">Team: <b>{{ project.team.name }}</b></div>
+                {% for worker in project.team.workers.all %}
+                  <div class="d-flex mb-1 bg-white border border-radius-xl p-3">
+                    <a href="{% url "manager:worker-detail" pk=worker.pk %}"><img
+                        src="{{ worker.profile_picture.url }}"
+                        class="avatar avatar-sm me-3 border border-1 profile-picture"
+                        alt="{{ worker.username }}">
+                    </a>
+                    <span class="text text-dark pt-1">{{ worker.username }} {{ worker.position.name }}</span>
+                  </div>
+                {% endfor %}
+              </div>
+            </li>
+          {% endif %}
+          </ul>
+        </div>
+{#        <div class="card-footer pt-0 pb-1">#}
+{#          {% if user in task.assigners.all or user.is_superuser %}#}
+{#            {% if task.is_completed %}#}
+{#              <a class="btn btn-danger" href="{% url "manager:task-toggle-completed" pk=task.pk %}">Set not#}
+{#                completed</a>#}
+{#            {% else %}#}
+{#              <a class="btn btn-success" href="{% url "manager:task-toggle-completed" pk=task.pk %}">Set#}
+{#                completed</a>#}
+{#            {% endif %}#}
+{#            <a class="btn btn-primary" href="{% url "manager:task-update" pk=task.pk %}">Edit</a>#}
+{#          {% endif %}#}
+{#          {% if user.is_authenticated %}#}
+{#            {% if user in task.assigners.all %}#}
+{#              {% if not task.is_completed %}#}
+{#                <a href="{% url "manager:task-toggle-assignment" pk=task.pk %}" class="btn btn-danger">Delete me</a>#}
+{#              {% endif %}#}
+{#            {% else %}#}
+{#              <a href="{% url "manager:task-toggle-assignment" pk=task.pk %}" class="btn btn-success">Assign me</a>#}
+{#            {% endif %}#}
+{#          {% endif %}#}
+{#          {% if user.is_superuser %}#}
+{#            <a href="{% url "manager:task-delete" pk=task.pk %}" class="btn btn-danger">Delete</a>#}
+{#          {% endif %}#}
+{#        </div>#}
+      </div>
+    </div>
+  </div>
+{% endblock %}
