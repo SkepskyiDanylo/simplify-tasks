@@ -16,7 +16,7 @@
           <li class="nav-item d-flex align-items-center">
             {% if request.user.is_authenticated %}
               <a class="nav-link text-body font-weight-bold px-0" href="{% url "manager:current-profile" %}">
-                <i class="ni ni-single-02 me-sm-1"></i>
+                <i class="fa-solid fa-user me-sm-1"></i>
                 <span class="d-sm-inline d-none">{{ user.username|capfirst }}</span>
               </a>
             {% else %}

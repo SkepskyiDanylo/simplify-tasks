@@ -19,6 +19,8 @@ urlpatterns = [
     path("task/create/", views.TaskCreateView.as_view(), name="task-create"),
     path("projects/", views.ProjectListView.as_view(), name="project-list"),
     path("project/<int:pk>/", views.ProjectDetailView.as_view(), name="project-detail"),
+    path("teams/<int:pk>/", views.TeamDetailView.as_view(), name="team-detail"),
+    path("teams/create/", views.TeamCreateView.as_view(), name="team-create"),
 ]
 
 app_name = "manager"

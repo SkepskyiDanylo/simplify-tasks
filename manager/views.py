@@ -291,3 +291,18 @@ class ProjectDetailView(DetailView):
         context = super().get_context_data(**kwargs)
         context["segment"] = "project detail"
         return context
+
+
+class TeamDetailView(DetailView):
+    model = Team
+    context_object_name = "team"
+    template_name = "manager/team_detail.html"
+
+    def get_context_data(self, **kwargs) -> dict:
+        context = super().get_context_data(**kwargs)
+        context["segment"] = "team"
+        return context
+
+
+class TeamCreateView(LoginRequiredMixin, CreateView):
+    pass
