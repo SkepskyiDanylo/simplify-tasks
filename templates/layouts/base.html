@@ -11,7 +11,7 @@
   {% block sidebar %}
     {% include "includes/sidebar.html" %}
   {% endblock sidebar %}
-  <main class="main-content position-relative max-height-vh-100 h-100 border-radius-lg ">
+  <main class="main-content position-relative min-height-vh-100 h-100 border-radius-lg ">
     {% block navigation %}
       {% include "includes/navigation.html" %}
     {% endblock navigation %}
@@ -22,7 +22,7 @@
   
   {% block extra_js %}
   {% endblock extra_js %}
-  
+  <hr class="horizontal dark mt-0">
   {% include "includes/footer.html" %}
 </body>
 
