@@ -1,3 +1,4 @@
+from django.contrib.auth.decorators import login_required
 from django.templatetags.static import static
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.db.models import QuerySet
@@ -8,8 +9,8 @@ from django.urls import reverse_lazy, reverse
 from django.utils import timezone
 from django.views.generic import DetailView, ListView, CreateView, UpdateView, TemplateView, DeleteView
 
-from .forms import LoginForm, WorkerSearchForm, WorkerForm, TaskSearchForm, TaskForm, TaskProjectForm
-from .models import Worker, Task, Project, Team
+from manager.forms import LoginForm, WorkerSearchForm, WorkerForm, TaskSearchForm, TaskForm, TeamForm
+from manager.models import Worker, Task, Project, Team
 
 
 class UserLoginView(LoginView):
@@ -23,8 +24,7 @@ class UserLoginView(LoginView):
 
     def form_valid(self, form):
         response = super().form_valid(form)
-        remember_me = self.request.POST.get('remember_me', False)
-
+        remember_me = self.request.POST.get("rememberMe", False)
         if remember_me:
             self.request.session.set_expiry(3600 * 24 * 7)
         else:
@@ -93,7 +93,7 @@ class WorkerDetailView(DetailView):
     model = Worker
     context_object_name = "worker"
     template_name = "manager/profile.html"
-    queryset = Worker.objects.all().prefetch_related("teams")
+    queryset = Worker.objects.all()
 
     def get_context_data(self, **kwargs) -> dict:
         context = super().get_context_data(**kwargs)
@@ -301,8 +301,86 @@ class TeamDetailView(DetailView):
     def get_context_data(self, **kwargs) -> dict:
         context = super().get_context_data(**kwargs)
         context["segment"] = "team"
+        team = context["team"]
+        leader = team.leader
+        context["workers"] = team.workers.all().exclude(pk=leader.pk)
         return context
 
 
+def add_worker_to_team(request: HttpRequest) -> HttpResponseRedirect | None:
+    if request.method == "POST":
+        worker_id = int(request.POST.get("worker_id", 0))
+        team_id = int(request.POST.get("team_id", 0))
+
+        worker = get_object_or_404(Worker, id=worker_id)
+        team = get_object_or_404(Team, id=team_id)
+
+        worker.team = team
+        worker.save()
+        return HttpResponseRedirect(reverse_lazy("manager:team-detail", kwargs={"pk": team.pk}))
+    return None
+
+@login_required
+def delete_worker_from_team(request: HttpRequest, **kwargs) -> HttpResponseRedirect:
+    user = request.user
+    team = get_object_or_404(Team, id=kwargs["pk"])
+    if user.is_superuser or user == team.leader:
+        del_user = kwargs["user_pk"]
+        del_worker = get_object_or_404(Worker, id=del_user)
+        team.workers.remove(del_worker)
+        team.save()
+    return HttpResponseRedirect(reverse_lazy("manager:team-update", kwargs={"pk": team.pk}))
+
 class TeamCreateView(LoginRequiredMixin, CreateView):
-    pass
+    model = Team
+    template_name = "manager/team_form.html"
+    form_class = TeamForm
+
+    def get_success_url(self):
+        return reverse_lazy("manager:team-detail", args=[self.object.pk])
+
+    def get_context_data(self, **kwargs) -> dict:
+        context = super().get_context_data(**kwargs)
+        context["segment"] = "team create"
+        return context
+
+    def form_valid(self, form):
+        response = super().form_valid(form)
+        self.object.workers.add(self.request.user)
+        return response
+
+    def get(self, request, *args, **kwargs):
+        user = self.request.user
+        if hasattr(user, "team") and user.team:
+            return HttpResponseRedirect(reverse_lazy("manager:team-detail", args=[user.team.pk]))
+        return super().get(request, *args, **kwargs)
+
+class TeamUpdateView(LoginRequiredMixin, UpdateView):
+    model = Team
+    template_name = "manager/team_form.html"
+    form_class = TeamForm
+
+    def get_success_url(self):
+        return reverse_lazy("manager:team-detail", args=[self.object.pk])
+
+    def get_context_data(self, **kwargs) -> dict:
+        context = super().get_context_data(**kwargs)
+        team = context["team"]
+        context["segment"] = f"team {team.pk } update"
+        leader = team.leader
+        context["workers"] = team.workers.all().exclude(pk=leader.pk)
+        context["available_workers"] = Worker.objects.filter(team=None)
+        return context
+
+class TeamDeleteView(LoginRequiredMixin, DeleteView):
+    model = Team
+    template_name = "manager/confirm_delete.html"
+
+    def get_success_url(self):
+        return reverse_lazy("manager:task-list")
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context["segment"] = "task delete"
+        context["model"] = "task"
+        return context

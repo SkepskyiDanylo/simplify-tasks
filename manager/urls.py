@@ -1,5 +1,6 @@
 from django.urls import path
 from manager import views
+from manager.views import delete_worker_from_team
 
 urlpatterns = [
     path("", views.IndexView.as_view(), name="index"),
@@ -20,7 +21,11 @@ urlpatterns = [
     path("projects/", views.ProjectListView.as_view(), name="project-list"),
     path("project/<int:pk>/", views.ProjectDetailView.as_view(), name="project-detail"),
     path("teams/<int:pk>/", views.TeamDetailView.as_view(), name="team-detail"),
+    path("add_worker/", views.add_worker_to_team, name="add-worker"),
     path("teams/create/", views.TeamCreateView.as_view(), name="team-create"),
+    path("teams/<int:pk>/update/", views.TeamUpdateView.as_view(), name="team-update"),
+    path("teams/<int:pk>/delete_worker/<int:user_pk>/", delete_worker_from_team, name="team-delete-worker"),
+    path("teams/<int:pk>/delete/", views.TeamDeleteView.as_view(), name="team-delete"),
 ]
 
 app_name = "manager"

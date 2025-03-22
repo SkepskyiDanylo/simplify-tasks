@@ -1,1 +1,59 @@
 {% extends "layouts/base.html" %}
+{% block content %}
+  <div class="row m-1">
+    <div class="col-lg-6 col-md-12 col-12 mt-3 mx-auto">
+      <div class="card shadow h-100">
+        <div class="card-header pb-0">
+          <h6 class="mb-0 font-weight-bolder">{{ team.name }}</h6>
+        </div>
+        <div class="card-body pb-0 p-3">
+        {% if team and request.user.is_superuser or request.user == team.leader %}
+          <a href="{% url "manager:team-update" pk=team.pk %}">
+            <i class="fa-solid fa-pen edit-team"></i>
+          </a>
+        {% endif %}
+          <ul class="list-group">
+            <li class="list-group-item border-0 w-90">
+              <div>
+                <div class="d-flex mb-2 text-bold align-items-center">
+                  <a href="{% url 'manager:worker-detail' pk=team.leader.pk %}">
+                    <div class="avatar-container me-3">
+                      <div class="crown-container">
+                        <i class="fa-solid fa-crown"></i>
+                      </div>
+                      <img src="{{ team.leader.profile_picture.url }}"
+                           class="avatar avatar-sm border border-1 profile-picture"
+                           alt="{{ team.leader.username }}">
+                    </div>
+                  </a>
+                  <span>
+                      {{ team.leader.first_name }} {{ team.leader.last_name }}
+                    </span>
+                </div>
+              </div>
+            </li>
+            <hr class="horizontal dark mt-0">
+            {% for worker in workers.all %}
+              <li class="list-group-item border-0 w-90">
+                <div>
+                  <div class="d-flex mb-2 text-bold align-items-center">
+                    <a href="{% url 'manager:worker-detail' pk=worker.pk %}">
+                      <div>
+                        <img src="{{ worker.profile_picture.url }}"
+                             class="avatar avatar-sm me-3 border border-1 profile-picture"
+                             alt="{{ worker.username }}">
+                      </div>
+                    </a>
+                    <span>
+                      {{ worker.first_name }} {{ worker.last_name }}
+                    </span>
+                  </div>
+                </div>
+              </li>
+            {% endfor %}
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+{% endblock %}

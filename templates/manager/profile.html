@@ -53,7 +53,11 @@
           <hr class="horizontal gray-light">
           <ul class="list-group">
             <li class="list-group-item border-0 ps-0 pt-0 text-sm"><strong class="text-dark">Full Name:</strong>
-              &nbsp; {{ worker.first_name }} {{ worker.last_name }}</li>
+              {% if not worker.first_name and not worker.last_name %}
+                &nbsp; Unknown
+              {% else %}
+                &nbsp; {{ worker.first_name }} {{ worker.last_name }}</li>
+              {% endif %}
             <li class="list-group-item border-0 ps-0 text-sm"><strong class="text-dark">Mobile:</strong>
               {% if worker.phone_number %}
                 &nbsp; {{ worker.phone_number|format_phone_number }}
@@ -62,12 +66,14 @@
               {% endif %}
             </li>
             <li class="list-group-item border-0 ps-0 text-sm"><strong class="text-dark">Email:</strong>
-              &nbsp; {{ worker.email }}</li>
-            {% if worker.teams.count > 1 %}
-              <li class="list-group-item border-0 ps-0 text-sm"><strong class="text-dark">Teams:</strong>
-                {% for team in worker.teams.all %}
-                  &nbsp; {{ team.name }}
-                {% endfor %}
+              {% if worker.email %}
+                &nbsp; {{ worker.email }}</li>
+              {% else %}
+                &nbsp; Unknown
+              {% endif %}
+            {% if worker.team %}
+              <li class="list-group-item border-0 ps-0 text-sm"><strong class="text-dark">Team:</strong>
+                &nbsp; {{ worker.team.name }}
               </li>
             {% endif %}
             <li class="list-group-item border-0 ps-0 text-sm"><strong class="text-dark">Location:</strong> &nbsp;

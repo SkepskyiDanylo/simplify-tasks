@@ -1,4 +1,4 @@
-.nav-link{
+.nav-link {
     border-radius: 20px;
 }
 
@@ -14,13 +14,17 @@
     transform: scale(1.2);
 }
 
-.git-hub svg{
+.git-hub svg {
     color: #6c757d;
     transition: color 0.2s ease-in-out;
 }
 
 .git-hub:hover svg {
     color: black;
+}
+
+.profile-picture {
+    transition: transform 0.3s ease-in-out;
 }
 
 .profile-picture:hover {
@@ -77,13 +81,13 @@
 }
 
 .transparent-input {
-            background: transparent !important;
-            border: none !important;
-            outline: none !important;
-            color: white;
-            font-size: 16px;
-            width: 100%;
-            border-radius: 5px;
+    background: transparent !important;
+    border: none !important;
+    outline: none !important;
+    color: white;
+    font-size: 16px;
+    width: 100%;
+    border-radius: 5px;
 }
 
 
@@ -119,7 +123,8 @@
 .transparent-text {
     background: transparent !important;
     color: black !important;
-    border: none; !important;
+    border: none;
+!important;
     min-width: 50px;
     max-width: 500px;
     outline: none !important;
@@ -195,4 +200,108 @@
 
 .ml-17-5 {
     margin-left: 17.5rem;
+}
+
+body.modal-open {
+    overflow: hidden;
+}
+
+.modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+    display: none;
+    justify-content: center;
+    align-items: center;
+    backdrop-filter: blur(5px);
+}
+
+.modal-content {
+    background: white;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+    min-width: 500px;
+    max-width: 800px;
+}
+
+.worker-list {
+    flex-grow: 1;
+    max-height: 60vh;
+    overflow-y: auto;
+    padding: 3px;
+}
+
+.worker-list button {
+    cursor: pointer;
+}
+
+.min-height-vh-100 {
+    min-height: 100vh;
+}
+
+.footer {
+    margin-bottom: 2rem;
+}
+
+.avatar-container {
+    position: relative;
+    display: inline-block;
+}
+
+.avatar-container .crown-container {
+    transition: transform 0.3s ease-in-out;
+}
+
+.avatar-container:hover .crown-container {
+    transform: translateX(-50%) translateY(-5px);
+}
+
+.crown-container {
+    position: absolute;
+    top: -20px;
+    left: 50%;
+    transform: translateX(-50%);
+    font-size: 14px;
+    color: gold;
+}
+
+.edit-team {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    font-size: 12px;
+    transition: transform 0.3s ease-in-out;
+}
+
+.edit-team:hover {
+    transform: scale(1.1);
+}
+
+.remove-user {
+    color: red;
+    transition: transform 0.3s ease-in-out;
+}
+
+.remove-user:hover {
+    transform: rotate(90deg);
+}
+
+.add-worker {
+    border-radius: 5px;
+    transition: background-color 0.3s ease-in-out;
+    margin: -0.25rem;
+}
+
+.add-worker-muted {
+    border-radius: 5px;
+    margin: -0.25rem;
+    opacity: 0.8;
+}
+
+.add-worker:hover {
+    background-color: rgba(153, 153, 153, 50%);
 }

@@ -1,0 +1,188 @@
+{% extends "layouts/base.html" %}
+{% load static %}
+{% block content %}
+  <form action="" method="post" novalidate>
+    {% csrf_token %}
+    <div class="row m-1">
+      <div class="col-lg-6 col-md-12 col-12 mt-3 mx-auto">
+        <div class="card shadow h-100">
+          <div class="card-header pb-0">
+            <h6 class="mb-0 font-weight-bolder">{{ form.name }}</h6>
+          </div>
+          <div class="card-body pb-0 p-3">
+            <ul class="list-group">
+              <li class="list-group-item border-0 w-90">
+                <div>
+                  <div class="d-flex mb-2 text-bold align-items-center">
+                    <a href="{% url 'manager:worker-detail' pk=request.user.pk %}">
+                      <div class="avatar-container me-3">
+                        <div class="crown-container">
+                          <i class="fa-solid fa-crown"></i>
+                        </div>
+                        <img src="{{ request.user.profile_picture.url }}"
+                             class="avatar avatar-sm border border-1 profile-picture"
+                             alt="{{ request.user.leader.username }}">
+                      </div>
+                    </a>
+                    <span>
+                      {{ request.user.first_name }} {{ request.user.last_name }}
+                    </span>
+                    <input type="hidden" value="{{ request.user.pk }}" name="{{ form.leader.name }}">
+                  </div>
+                </div>
+              </li>
+              <hr class="horizontal dark mt-0">
+              {% for worker in workers.all %}
+                <li class="list-group-item border-0 w-90">
+                  <div>
+                    <div class="d-flex mb-2 text-bold align-items-center">
+                      <a href="{% url 'manager:worker-detail' pk=worker.pk %}">
+                        <div>
+                          <img src="{{ worker.profile_picture.url }}"
+                               class="avatar avatar-sm me-3 border border-1 profile-picture"
+                               alt="{{ worker.username }}">
+                        </div>
+                      </a>
+                      <span>
+                      {{ worker.first_name }} {{ worker.last_name }}
+                      </span>
+                      <a href="{% url "manager:team-delete-worker" pk=team.pk user_pk=worker.pk %}"
+                         class="ms-2 cursor-pointer">
+                        <i class="fas fa-times remove-user"></i>
+                      </a>
+                    </div>
+                  </div>
+                </li>
+              {% endfor %}
+              {% if available_workers %}
+                <li class="list-group-item border-0 w-90">
+                  <div>
+                    <a onclick="openModal()" class="cursor-pointer">
+                      <div class="d-flex mb-2 text-bold align-items-center border p-1 w-40 add-worker">
+                        <div>
+                          <img src="{% static "default.jpg" %}"
+                               class="avatar avatar-sm me-2 border border-1"
+                               alt="default.jpg">
+                          <span>
+                            ----------
+                          </span>
+                        </div>
+                      </div>
+                    </a>
+                  </div>
+                </li>
+              {% elif team %}
+                <li class="list-group-item border-0 w-90">
+                  <div>
+                    <div class="d-flex mb-2 text-bold align-items-center border p-1 w-40 add-worker-muted">
+                      <div>
+                        <img src="{% static "default.jpg" %}"
+                             class="avatar avatar-sm me-2 border border-1"
+                             alt="default.jpg">
+                        <span class="text-muted text-sm">
+                          no workers available
+                        </span>
+                      </div>
+                    </div>
+                  </div>
+                </li>
+              {% endif %}
+            </ul>
+          </div>
+          <div class="card-footer pt-0 pb-1">
+            {% if request.user.is_superuser or request.user == team.leader %}
+              <div class="mt-4">
+                <button class="btn btn-success btn-sm" type="submit">Save</button>
+                {% if team %}
+                <a href="{% url "manager:team-delete" pk=team.pk %}" class="btn btn-sm btn-danger">Delete</a>
+                {% endif %}
+              </div>
+            {% endif %}
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="modal" id="addWorkerModal">
+      <div class="modal-content">
+        <h3>Add worker:</h3>
+        <div class="worker-list">
+          <table class="table align-items-center mb-0">
+            <thead>
+            <tr>
+              <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Worker</th>
+              <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">Full name
+              </th>
+              <th class="text-secondary opacity-7"></th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for worker in available_workers %}
+              <tr>
+                <td>
+                  <div class="d-flex px-2 py-1">
+                    <a href="{% url 'manager:worker-detail' pk=worker.pk %}">
+                      <div>
+                        <img src="{{ worker.profile_picture.url }}"
+                             class="avatar avatar-sm me-3 border border-1 profile-picture"
+                             alt="{{ worker.username }}">
+                      </div>
+                    </a>
+                    <div class="d-flex flex-column justify-content-center">
+                      <h6 class="mb-0 text-sm">{{ worker.username }}</h6>
+                      <p class="text-xs text-secondary mb-0">{{ worker.email }}</p>
+                    </div>
+                  </div>
+                </td>
+                <td>
+                  <p class="text-xs font-weight-bold mb-0">{{ worker.first_name }} {{ worker.last_name }}</p>
+                  <p class="text-xs text-secondary mb-0">Organization</p>
+                </td>
+                <td class="align-middle">
+                  <button type="button" onclick="addWorker({{ worker.id }})" class="btn btn-sm btn-success">
+                    add
+                  </button>
+                </td>
+              </tr>
+            {% endfor %}
+            </tbody>
+          </table>
+          <button type="button" class="close-toast" onclick="closeModal()"><i class="fa-solid fa-x"></i></button>
+        </div>
+      </div>
+    </div>
+  </form>
+{% endblock %}
+
+{% block extra_js %}
+  <script>
+      function openModal() {
+          document.getElementById("addWorkerModal").style.display = "flex";
+          document.body.classList.add("modal-open");
+      }
+
+      function closeModal() {
+          document.getElementById("addWorkerModal").style.display = "none";
+          document.body.classList.remove("modal-open");
+      }
+
+      function addWorker(workerId) {
+          fetch("{% url 'manager:add-worker' %}", {
+              method: "POST",
+              headers: {
+                  "Content-Type": "application/x-www-form-urlencoded",
+                  "X-CSRFToken": "{{ csrf_token }}"
+              },
+              body: `worker_id=${workerId}&team_id={{ team.id }}`
+          })
+          localStorage.setItem("modalOpen", "true");
+          location.reload();
+      }
+
+      document.addEventListener("DOMContentLoaded", function () {
+          if (localStorage.getItem("modalOpen") === "true") {
+              openModal();
+              localStorage.removeItem("modalOpen");
+          }
+      });
+  </script>
+{% endblock %}

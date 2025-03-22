@@ -7,7 +7,7 @@ from django.contrib.auth.forms import (
 )
 from django.utils.timezone import make_aware
 
-from manager.models import Worker, Position, Task, TaskType, Tag, Project
+from manager.models import Worker, Position, Task, TaskType, Tag, Project, Team
 
 
 class LoginForm(AuthenticationForm):
@@ -364,4 +364,25 @@ class TaskProjectForm(TaskForm):
             "task_type",
             "project",
             "tags"
+        )
+
+
+class TeamForm(forms.ModelForm):
+    name = forms.CharField(
+        max_length=255,
+        required=True,
+        label="",
+        widget=forms.TextInput(
+            attrs={
+                "placeholder": "Name",
+                "class": "transparent-text",
+            }
+        )
+    )
+
+    class Meta:
+        model = Team
+        fields = (
+            "name",
+            "leader",
         )
