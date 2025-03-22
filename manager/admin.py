@@ -10,13 +10,13 @@ admin.site.unregister(Group)
 class AuthUserAdmin(UserAdmin):
     list_display = UserAdmin.list_display + ("position",)
     fieldsets = UserAdmin.fieldsets + (
-        (("Additional info", {"fields": ("position", "profile_picture",)}),)
+        (("Additional info", {"fields": ("position", "profile_picture", "team")}),)
     )
     add_fieldsets = UserAdmin.add_fieldsets + (
         (
             (
                 "Additional info",
-                {"fields": ("position", "profile_picture",)},
+                {"fields": ("position", "profile_picture", "team")},
             ),
         )
     )
