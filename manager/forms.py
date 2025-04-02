@@ -1,9 +1,10 @@
 from django import forms
+from django.contrib.auth.password_validation import validate_password
+from django.core.exceptions import ValidationError
 from django.forms import ModelForm
 from django.contrib.auth.forms import (
     AuthenticationForm,
     UsernameField,
-    UserCreationForm
 )
 from django.utils.timezone import make_aware
 
@@ -189,7 +190,7 @@ class WorkerForm(ModelForm):
     )
     class Meta:
         model = Worker
-        fields = UserCreationForm.Meta.fields + (
+        fields =  (
             "first_name",
             "last_name",
             "email",
@@ -202,17 +203,22 @@ class WorkerForm(ModelForm):
             "facebook",
             "instagram",
             "is_superuser",
+            "password1",
+            "password2",
         )
 
     def clean_password2(self) -> str:
         password1 = self.cleaned_data.get("password1")
         password2 = self.cleaned_data.get("password2")
-        if password1 and password2 and password1 != password2:
-            raise forms.ValidationError("Passwords don't match")
-        if password1 and len(password1) < 8:
-            raise forms.ValidationError("Password must be at least 8 characters")
-        if password1 and password1.isnumeric():
-            raise forms.ValidationError("Password cannot contain only numbers")
+
+        if password1 and password2:
+            if password1 != password2:
+                raise ValidationError("Passwords don't match")
+            try:
+                validate_password(password1)
+            except ValidationError as e:
+                raise ValidationError(e.messages)
+
         return password2
     
     def clean_phone_number(self) -> str:
@@ -385,4 +391,45 @@ class TeamForm(forms.ModelForm):
         fields = (
             "name",
             "leader",
+        )
+
+
+class ProjectForm(forms.ModelForm):
+    name = forms.CharField(
+        max_length=255,
+        required=True,
+        label="",
+        widget=forms.TextInput(
+            attrs={
+                "placeholder": "Name",
+                "class": "transparent-text",
+            }
+        )
+    )
+    description = forms.CharField(
+        required=False,
+        label="",
+        widget=forms.Textarea(
+            attrs={
+                "placeholder": "Enter profile description",
+                "class": "transparent-textarea",
+            }
+        )
+    )
+    team = forms.ModelChoiceField(
+        queryset=Team.objects.all(),
+        required=False,
+        label="",
+        widget=forms.Select(
+            attrs={
+                "class": "form-control",
+            }
+        )
+    )
+    class Meta:
+        model = Project
+        fields = (
+            "name",
+            "description",
+            "team",
         )

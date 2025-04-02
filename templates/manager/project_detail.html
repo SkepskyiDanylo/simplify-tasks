@@ -56,6 +56,9 @@
             {% endif %}
           </ul>
         </div>
+        {% if user.is_superuser %}
+          <a href="{% url "manager:project-update" pk=project.pk %}" class="btn btn-sm btn-primary">Edit</a>
+        {% endif %}
         {% if not project.team and request.user.team and request.user == request.user.team.leader %}
           <div class="card-footer pt-0 pb-1">
             <a class="btn btn-success" href="{% url "manager:project-team-toggle" pk=project.pk %}">
