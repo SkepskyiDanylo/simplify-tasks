@@ -11,7 +11,7 @@ from django.urls import reverse_lazy, reverse
 from django.utils import timezone
 from django.views.generic import DetailView, ListView, CreateView, UpdateView, TemplateView, DeleteView
 
-from manager.forms import LoginForm, WorkerSearchForm, WorkerForm, TaskSearchForm, TaskForm, TeamForm
+from manager.forms import LoginForm, WorkerSearchForm, WorkerForm, TaskSearchForm, TaskForm, TeamForm, ProjectForm
 from manager.models import Worker, Task, Project, Team
 
 
@@ -151,6 +151,20 @@ class ProfileDetailView(LoginRequiredMixin, TemplateView):
             context["worker"] = Worker.objects.get(pk=self.request.user.pk)
         except Worker.DoesNotExist:
             raise Http404("Profile does not exist")
+        return context
+
+
+class WorkerDeleteView(LoginRequiredMixin, DeleteView):
+    model = get_user_model()
+    template_name = "manager/confirm_delete.html"
+
+    def get_success_url(self):
+        return reverse_lazy("manager:worker-list")
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context["segment"] = "worker delete"
+        context["model"] = "worker"
         return context
 
 
@@ -335,6 +349,34 @@ class ProjectDetailView(DetailView):
         return context
 
 
+class ProjectDeleteView(LoginRequiredMixin, DeleteView):
+    model = Project
+    template_name = "manager/confirm_delete.html"
+
+    def get_success_url(self):
+        return reverse_lazy("manager:project-list")
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context["segment"] = "project delete"
+        context["model"] = "project"
+        return context
+
+
+class ProjectUpdateView(LoginRequiredMixin, UpdateView):
+    model = Project
+    form_class = ProjectForm
+    template_name = "manager/project_form.html"
+
+    def get_success_url(self):
+        return reverse_lazy("manager:project-detail", args=[self.object.pk])
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context["segment"] = f"project #{self.object.pk} Edit"
+        return context
+
+
 class TeamDetailView(DetailView):
     model = Team
     context_object_name = "team"
@@ -449,5 +491,3 @@ def toggle_project_by_team(request: HttpRequest, **kwargs) -> HttpResponseRedire
             project.team = team
             project.save()
     return HttpResponseRedirect(reverse_lazy("manager:project-detail", kwargs={"pk": project.pk}))
-
-

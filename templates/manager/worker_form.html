@@ -29,6 +29,11 @@
             </div>
             <div class="d-flex align-items-center">
               <input type="submit" value="Save" class="btn btn-success mb-0 me-1 btn-sm">
+              {% if user.is_superuser %}
+                <a href="{% url "manager:worker-delete" pk=worker.pk %}" class="btn btn-danger mb-0 me-1 btn-sm">
+                  Delete
+                </a>
+              {% endif %}
             </div>
           </div>
         </div>
