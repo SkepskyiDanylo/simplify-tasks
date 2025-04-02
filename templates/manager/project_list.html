@@ -15,7 +15,7 @@
               <div class="card-body pt-0">
                 <div class="pb-2">
                 <span class="text-sm">
-                  {% if project.description %}
+                  {% if project.team %}
                     {{ project.team }}
                   {% else %}
                     No team yet!
@@ -58,4 +58,33 @@
       </div>
     {% endif %}
   </div>
+  {% if user.is_authenticated and not request.user.team %}
+    <div class="error-container" id="toast-container">
+      <div>
+        <div>
+          <span class="text-bold text-sm text-danger mb-1">You don't have a team, join or create a team to take and manage projects</span>
+        </div>
+      </div>
+      <button class="close-toast" onclick="closeToast()"><i class="fa-solid fa-x"></i></button>
+    </div>
+  {% endif %}
 {% endblock content %}
+
+{% block extra_js %}
+  <script>
+      document.getElementById('profile-upload').addEventListener('change', function (event) {
+          let file = event.target.files[0];
+          if (file) {
+              let reader = new FileReader();
+              reader.onload = function (e) {
+                  document.getElementById('userImage').src = e.target.result;
+              };
+              reader.readAsDataURL(file);
+          }
+      });
+
+      function closeToast() {
+          document.getElementById('toast-container').style.display = 'none';
+      }
+  </script>
+{% endblock %}
