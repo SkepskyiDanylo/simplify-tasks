@@ -170,17 +170,18 @@ class TaskListView(ListView):
         return context
 
     def get_queryset(self) -> QuerySet:
-        queryset = Task.objects.all().filter(project=None, is_completed=False)
         name = self.request.GET.get("name")
         user = self.request.GET.get("user")
         all_tasks = self.request.GET.get("all")
         if all_tasks == "true":
             queryset = Task.objects.all().filter(project=None)
-        if user:
-            queryset = queryset.filter(assigners__in=user)
+        elif user:
+            queryset = Task.objects.all().filter(assigners__in=user)
+        else:
+            queryset = Task.objects.all().filter(project=None, is_completed=False)
         if name:
             queryset = queryset.filter(name__icontains=name)
-        return queryset
+        return queryset.order_by("is_completed", "-completed_at")
 
 
 class TaskDetailView(DetailView):
