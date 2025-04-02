@@ -20,6 +20,7 @@ urlpatterns = [
     path("task/create/", views.TaskCreateView.as_view(), name="task-create"),
     path("projects/", views.ProjectListView.as_view(), name="project-list"),
     path("project/<int:pk>/", views.ProjectDetailView.as_view(), name="project-detail"),
+    path("project/team/<int:pk>/", views.toggle_project_by_team, name="project-team-toggle"),
     path("teams/<int:pk>/", views.TeamDetailView.as_view(), name="team-detail"),
     path("add_worker/", views.add_worker_to_team, name="add-worker"),
     path("teams/create/", views.TeamCreateView.as_view(), name="team-create"),

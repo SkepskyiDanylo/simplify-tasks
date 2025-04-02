@@ -7,11 +7,11 @@
           <h6 class="mb-0 font-weight-bolder">{{ team.name }}</h6>
         </div>
         <div class="card-body pb-0 p-3">
-        {% if team and request.user.is_superuser or request.user == team.leader %}
-          <a href="{% url "manager:team-update" pk=team.pk %}">
-            <i class="fa-solid fa-pen edit-team"></i>
-          </a>
-        {% endif %}
+          {% if team and request.user.is_superuser or request.user == team.leader %}
+            <a href="{% url "manager:team-update" pk=team.pk %}">
+              <i class="fa-solid fa-pen edit-team"></i>
+            </a>
+          {% endif %}
           <ul class="list-group">
             <li class="list-group-item border-0 w-90">
               <div>
@@ -28,7 +28,7 @@
                   </a>
                   <span>
                       {{ team.leader.first_name }} {{ team.leader.last_name }}
-                    </span>
+                  </span>
                 </div>
               </div>
             </li>

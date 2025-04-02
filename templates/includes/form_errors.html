@@ -1,0 +1,30 @@
+{% if form.errors %}
+  <div class="error-container" id="toast-container">
+    {% for field, errors in form.errors.items %}
+      <div>
+        {% for error in errors %}
+          <div>
+            <span class="text-bold text-sm text-danger mb-1"> {{ error }}</span>
+          </div>
+        {% endfor %}
+      </div>
+    {% endfor %}
+    <button class="close-toast" onclick="closeToast()"><i class="fa-solid fa-x"></i></button>
+  </div>
+{% endif %}
+<script>
+    document.getElementById('profile-upload').addEventListener('change', function (event) {
+        let file = event.target.files[0];
+        if (file) {
+            let reader = new FileReader();
+            reader.onload = function (e) {
+                document.getElementById('userImage').src = e.target.result;
+            };
+            reader.readAsDataURL(file);
+        }
+    });
+
+    function closeToast() {
+        document.getElementById('toast-container').style.display = 'none';
+    }
+</script>

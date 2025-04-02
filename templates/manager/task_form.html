@@ -7,22 +7,14 @@
       <div class="col-lg-6 col-md-12 col-12 mt-3 mx-auto">
         <div class="card shadow h-100">
           <div class="card-header pb-0 w-90">
-            {% if form.name.errors %}
-              <span class="text text-sm text-danger">{{ form.name.errors }}</span>
-            {% else %}
-              <span class="text text-sm">Task name:</span>
-            {% endif %}
+            <span class="text text-sm">Task name:</span>
             <h6 class="mb-0 font-weight-bolder">{{ form.name }}</h6>
           </div>
           <div class="card-body pb-0 p-3">
             <ul class="list-group">
               <li class="list-group-item border-0 w-90">
                 <div>
-                  {% if form.description.errors %}
-                    <span class="text text-sm text-danger">{{ form.description.errors }}</span>
-                  {% else %}
-                    <span class="text text-sm">Task description:</span>
-                  {% endif %}
+                  <span class="text text-sm">Task description:</span>
                   <div class="d-flex mb-2 text-secondary">
                     {{ form.description }}
                   </div>
@@ -30,11 +22,7 @@
               </li>
               <li class="list-group-item border-0 w-60">
                 <div>
-                  {% if form.deadline.errors %}
-                    <span class="text text-sm">{{ form.deadline.errors }}</span>
-                  {% else %}
-                    <span class="text text-sm">Deadline local time:</span>
-                  {% endif %}
+                  <span class="text text-sm">Deadline local time:</span>
                   <div class="d-flex bg-white border border-radius-xl p-2">
                     {{ form.deadline }}
                   </div>
@@ -42,11 +30,7 @@
               </li>
               <li class="list-group-item border-0 w-60">
                 <div>
-                  {% if form.priority.errors %}
-                    <span class="text text-sm">{{ form.priority.errors }}</span>
-                  {% else %}
-                    <span class="text text-sm">Priority:</span>
-                  {% endif %}
+                  <span class="text text-sm">Priority:</span>
                   <div class="d-flex bg-white border border-radius-xl p-2">
                     {{ form.priority }}
                   </div>
@@ -54,11 +38,7 @@
               </li>
               <li class="list-group-item border-0 w-60">
                 <div>
-                  {% if form.task_type.errors %}
-                    <span class="text text-sm">{{ form.task_type.errors }}</span>
-                  {% else %}
-                    <span class="text text-sm">Type:</span>
-                  {% endif %}
+                  <span class="text text-sm">Type:</span>
                   <div class="d-flex bg-white border border-radius-xl p-2">
                     {{ form.task_type }}
                   </div>
@@ -73,18 +53,30 @@
                       <span class="text text-sm">Assigners:</span>
                     {% endif %}
                     <div class="d-flex bg-white border border-radius-xl p-2 h-100">
-                      {{ form.assigners }}
+                    {% if selected_user %}
+                      <select name="{{ form.assigners.name }}" id="id_assigners" class="form-select" multiple required>
+                        {% for user in users %}
+                          <option value="{{ user.pk }}" {% if user.pk == selected_user.pk %} selected {% endif %}>
+                            {{ user.pk }}| {{ user.first_name }} {{ user.last_name }}
+                          </option>
+                        {% endfor %}
+                      </select>
+                    {% else %}
+                      <select name="{{ form.assigners.name }}" id="id_assigners" class="form-select" multiple required>
+                        {% for user in users %}
+                          <option value="{{ user.pk }}" {% if task and user in task.assigners.all %} selected {% endif %}>
+                            {{ user.first_name }} {{ user.last_name }}
+                          </option>
+                        {% endfor %}
+                      </select>
+                    {% endif %}
                     </div>
                   </div>
                 </li>
               {% else %}
                 <li class="list-group-item border-0 w-60">
                   <div>
-                    {% if form.project.errors %}
-                      <span class="text text-sm">{{ form.project.errors }}</span>
-                    {% else %}
-                      <span class="text text-sm">Project:</span>
-                    {% endif %}
+                    <span class="text text-sm">Project:</span>
                     <div class="d-flex bg-white border border-radius-xl p-2">
                       {{ form.project }}
                     </div>
@@ -93,11 +85,7 @@
               {% endif %}
               <li class="list-group-item border-0 w-60">
                 <div>
-                  {% if form.tags.errors %}
-                    <span class="text text-sm">{{ form.tags.errors }}</span>
-                  {% else %}
-                    <span class="text text-sm">Tags:</span>
-                  {% endif %}
+                  <span class="text text-sm">Tags:</span>
                   <div class="d-flex bg-white border border-radius-xl p-2">
                     <div class="form-switch me-2">
                       {% for checkbox in form.tags %}
@@ -119,5 +107,6 @@
       </div>
     </div>
   </form>
+  {% include "includes/form_errors.html" %}
 {% endblock %}
 

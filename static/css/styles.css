@@ -305,3 +305,7 @@ body.modal-open {
 .add-worker:hover {
     background-color: rgba(153, 153, 153, 50%);
 }
+
+.ml-1 {
+    margin-left: 1rem;
+}

@@ -56,7 +56,11 @@
                         class="avatar avatar-sm me-3 border border-1 profile-picture"
                         alt="{{ worker.username }}">
                     </a>
-                    <span class="text text-dark pt-1">{{ assigner.username }} {{ assigner.position.name }}</span>
+                    <span class="text text-dark pt-1">{{ assigner.first_name }} {{ assigner.last_name }}
+                      <span class="text-bold">
+                        {{ assigner.position.name }}
+                      </span>
+                    </span>
                   </div>
                 {% endfor %}
               </div>
@@ -64,7 +68,7 @@
             <li class="list-group-item border-0 w-100 mb-3">
               <div>
                 {% for tag in task.tags.all %}
-                  <div class="d-inline p-2 w-20 bg-dark border-radius-xl text-white text-sm">
+                  <div class="d-inline p-2 w-20 bg-dark border-radius-xl text-white text-sm m-1">
                     {{ tag.name }}
                   </div>
                 {% endfor %}
@@ -75,10 +79,13 @@
         <div class="card-footer pt-0 pb-1">
           {% if user in task.assigners.all or user.is_superuser %}
             {% if task.is_completed %}
-              <a class="btn btn-danger" href="{% url "manager:task-toggle-completed" pk=task.pk %}">Set not
+              <a class="btn btn-danger" href="
+                  {% url "manager:task-toggle-completed" pk=task.pk %}{% if project %}?project={{ project.pk }}{% endif %}">Set
+                not
                 completed</a>
             {% else %}
-              <a class="btn btn-success" href="{% url "manager:task-toggle-completed" pk=task.pk %}">Set
+              <a class="btn btn-success" href="
+                  {% url "manager:task-toggle-completed" pk=task.pk %}{% if project %}?project={{ project.pk }}{% endif %}">Set
                 completed</a>
             {% endif %}
             <a class="btn btn-primary" href="{% url "manager:task-update" pk=task.pk %}">Edit</a>
@@ -88,7 +95,7 @@
               {% if not task.is_completed %}
                 <a href="{% url "manager:task-toggle-assignment" pk=task.pk %}" class="btn btn-danger">Delete me</a>
               {% endif %}
-            {% else %}
+            {% elif not task.project or task.project.team and user in task.project.team.workers.all %}
               <a href="{% url "manager:task-toggle-assignment" pk=task.pk %}" class="btn btn-success">Assign me</a>
             {% endif %}
           {% endif %}
@@ -100,4 +107,3 @@
     </div>
   </div>
 {% endblock %}
-
