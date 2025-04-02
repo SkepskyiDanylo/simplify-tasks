@@ -90,6 +90,7 @@ class Team(models.Model):
 
 class Project(models.Model):
     name = models.CharField(max_length=255)
+    description = models.TextField(blank=True)
     team = models.ForeignKey(Team, on_delete=models.SET_NULL,null=True, related_name="projects")
 
     def __str__(self):
