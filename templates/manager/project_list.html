@@ -57,6 +57,11 @@
         </div>
       </div>
     {% endif %}
+    <div class="project-create">
+      <a href="{% url "manager:project-create" %}">
+        <img src="{% static "images/project-create.png" %}" alt="project-create" class="sidebar-image">
+      </a>
+    </div>
   </div>
   {% if user.is_authenticated and not request.user.team %}
     <div class="error-container" id="toast-container">
