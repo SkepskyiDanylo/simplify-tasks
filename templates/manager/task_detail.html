@@ -41,9 +41,11 @@
               <li class="list-group-item border-0 w-60">
                 <div>
                   <span class="text-sm text-secondary">Project:</span>
-                  <div class="d-flex bg-white border border-radius-xl p-2">
+                  <a href="{% url "manager:project-detail" pk=task.project.pk %}">
+                    <div class="d-flex border border-radius-xl p-2 project-link">
                     {{ task.project.name }}
                   </div>
+                  </a>
                 </div>
               </li>
             {% endif %}
