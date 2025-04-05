@@ -1,7 +1,7 @@
 {% extends "layouts/base.html" %}
 
 {% block content %}
-  <form action="" method="post">
+  <form action="" method="post" novalidate>
     {% csrf_token %}
     <div class="row m-1">
       <div class="col-lg-6 col-md-12 col-12 mt-3 mx-auto">
@@ -23,7 +23,7 @@
               </li>
               <li class="list-group-item border-0 w-60">
                 <div class="mb-3">
-                  <div class="text-bold">Description:</div>
+                  <div class="text-bold">Team:</div>
                   <div class="mt-3">
                   <span class="text pt-1">
                     {{ form.team }}
@@ -33,15 +33,19 @@
               </li>
             </ul>
           </div>
-          {% if user.is_superuser and project %}
-            <div class="card-footer pt-0 pb-1">
-              <a class="btn btn-danger" href="{% url "manager:project-delete" pk=project.pk %}">
+          <div class="card-footer pt-0 pb-1">
+            <button type="submit" class="btn btn-sm btn-success">
+              Save
+            </button>
+            {% if project %}
+              <a class="btn btn-danger btn-sm" href="{% url "manager:project-delete" pk=project.pk %}">
                 Delete
               </a>
-            </div>
-          {% endif %}
+            {% endif %}
+          </div>
         </div>
       </div>
     </div>
   </form>
+  {% include "includes/form_errors.html" %}
 {% endblock %}
