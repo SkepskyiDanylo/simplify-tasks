@@ -292,6 +292,9 @@ class TaskCreateView(LoginRequiredMixin, CreateView):
                 context["selected_user"] = selected_user
             except User.DoesNotExist:
                 pass
+        project = self.request.GET.get("project", None)
+        if project:
+            context["assigned_project"] = Project.objects.get(pk=project)
         return context
 
 
@@ -374,6 +377,25 @@ class ProjectUpdateView(LoginRequiredMixin, UpdateView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context["segment"] = f"project #{self.object.pk} Edit"
+        return context
+
+    def get(self, request, *args, **kwargs):
+        if self.request.user.is_superuser:
+            return super().get(request, *args, **kwargs)
+        return HttpResponseRedirect(reverse_lazy("manager:project-list"))
+
+
+class ProjectCreateView(LoginRequiredMixin, CreateView):
+    model = Project
+    template_name = "manager/project_form.html"
+    form_class = ProjectForm
+
+    def get_success_url(self):
+        return reverse_lazy("manager:project-detail", args=[self.object.pk])
+
+    def get_context_data(self, **kwargs) -> dict:
+        context = super().get_context_data(**kwargs)
+        context["segment"] = "project create"
         return context
 
 

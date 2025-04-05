@@ -24,6 +24,7 @@ urlpatterns = [
     path("project/team/<int:pk>/", views.toggle_project_by_team, name="project-team-toggle"),
     path("project/<int:pk>/delete/", views.ProjectDeleteView.as_view(), name="project-delete"),
     path("project/<int:pk>/update/", views.ProjectUpdateView.as_view(), name="project-update"),
+    path("project/create/", views.ProjectCreateView.as_view(), name="project-create"),
     path("teams/<int:pk>/", views.TeamDetailView.as_view(), name="team-detail"),
     path("add_worker/", views.add_worker_to_team, name="add-worker"),
     path("teams/create/", views.TeamCreateView.as_view(), name="team-create"),
