@@ -274,7 +274,7 @@ class TaskForm(forms.ModelForm):
         )
     )
     deadline = forms.DateTimeField(
-        required=False,
+        required=True,
         label="",
         widget=forms.DateTimeInput(
             attrs={
@@ -284,7 +284,7 @@ class TaskForm(forms.ModelForm):
         )
     )
     priority = forms.IntegerField(
-        required=False,
+        required=True,
         label="",
         widget=forms.NumberInput(
             attrs={
@@ -299,7 +299,7 @@ class TaskForm(forms.ModelForm):
     )
     task_type = forms.ModelChoiceField(
         queryset=TaskType.objects.all(),
-        required=False,
+        required=True,
         label="",
         widget=forms.Select(
             attrs={
@@ -309,7 +309,7 @@ class TaskForm(forms.ModelForm):
     )
     assigners = forms.ModelMultipleChoiceField(
         queryset=Worker.objects.all(),
-        required=True,
+        required=False,
         label="",
         widget=forms.SelectMultiple(
             attrs={
@@ -327,6 +327,16 @@ class TaskForm(forms.ModelForm):
             }
         )
     )
+    project = forms.ModelChoiceField(
+        queryset=Project.objects.all(),
+        required=False,
+        label="",
+        widget=forms.Select(
+            attrs={
+                "class": "form-select",
+            }
+        )
+    )
     class Meta:
         model = Task
         fields = (
@@ -336,7 +346,8 @@ class TaskForm(forms.ModelForm):
             "assigners",
             "priority",
             "task_type",
-            "tags"
+            "tags",
+            "project",
         )
 
     def clean_deadline(self):
@@ -346,31 +357,6 @@ class TaskForm(forms.ModelForm):
             deadline = make_aware(deadline)
 
         return deadline
-
-
-class TaskProjectForm(TaskForm):
-    project = forms.ModelChoiceField(
-        queryset=Project.objects.all(),
-        required=False,
-        label="",
-        widget=forms.Select(
-            attrs={
-                "class": "form-control",
-            }
-        )
-    )
-
-    class Meta:
-        model = Task
-        fields = (
-            "name",
-            "description",
-            "deadline",
-            "priority",
-            "task_type",
-            "project",
-            "tags"
-        )
 
 
 class TeamForm(forms.ModelForm):
