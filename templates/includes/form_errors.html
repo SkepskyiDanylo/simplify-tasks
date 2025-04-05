@@ -4,7 +4,7 @@
       <div>
         {% for error in errors %}
           <div>
-            <span class="text-bold text-sm text-danger mb-1"> {{ error }}</span>
+            <span class="text-bold text-sm text-danger mb-1">{{ field|capfirst }}: {{ error }}</span>
           </div>
         {% endfor %}
       </div>
