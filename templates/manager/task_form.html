@@ -44,7 +44,7 @@
                   </div>
                 </div>
               </li>
-              {% if not form.project %}
+              {% if not assigned_project %}
                 <li class="list-group-item border-0 w-60">
                   <div>
                     {% if form.assigners.errors %}
@@ -54,7 +54,7 @@
                     {% endif %}
                     <div class="d-flex bg-white border border-radius-xl p-2 h-100">
                     {% if selected_user %}
-                      <select name="{{ form.assigners.name }}" id="id_assigners" class="form-select" multiple required>
+                      <select name="{{ form.assigners.name }}" id="id_assigners" class="form-select" multiple>
                         {% for user in users %}
                           <option value="{{ user.pk }}" {% if user.pk == selected_user.pk %} selected {% endif %}>
                             {{ user.pk }}| {{ user.first_name }} {{ user.last_name }}
@@ -62,7 +62,7 @@
                         {% endfor %}
                       </select>
                     {% else %}
-                      <select name="{{ form.assigners.name }}" id="id_assigners" class="form-select" multiple required>
+                      <select name="{{ form.assigners.name }}" id="id_assigners" class="form-select" multiple>
                         {% for user in users %}
                           <option value="{{ user.pk }}" {% if task and user in task.assigners.all %} selected {% endif %}>
                             {{ user.first_name }} {{ user.last_name }}
@@ -74,14 +74,7 @@
                   </div>
                 </li>
               {% else %}
-                <li class="list-group-item border-0 w-60">
-                  <div>
-                    <span class="text text-sm">Project:</span>
-                    <div class="d-flex bg-white border border-radius-xl p-2">
-                      {{ form.project }}
-                    </div>
-                  </div>
-                </li>
+                <input type="hidden" name="{{ form.project.name }}" value="{{ assigned_project.pk }}">
               {% endif %}
               <li class="list-group-item border-0 w-60">
                 <div>
