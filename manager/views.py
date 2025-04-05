@@ -9,10 +9,30 @@ from django.http import HttpRequest, HttpResponseRedirect, Http404
 from django.shortcuts import get_object_or_404
 from django.urls import reverse_lazy, reverse
 from django.utils import timezone
-from django.views.generic import DetailView, ListView, CreateView, UpdateView, TemplateView, DeleteView
+from django.views.generic import (
+    DetailView,
+    ListView,
+    CreateView,
+    UpdateView,
+    TemplateView,
+    DeleteView
+)
 
-from manager.forms import LoginForm, WorkerSearchForm, WorkerForm, TaskSearchForm, TaskForm, TeamForm, ProjectForm
-from manager.models import Worker, Task, Project, Team
+from manager.forms import (
+    LoginForm,
+    WorkerSearchForm,
+    WorkerForm,
+    TaskSearchForm,
+    TaskForm,
+    TeamForm,
+    ProjectForm
+)
+from manager.models import (
+    Worker,
+    Task,
+    Project,
+    Team
+)
 
 
 class UserLoginView(LoginView):
@@ -43,18 +63,27 @@ class IndexView(TemplateView):
     template_name = "manager/index.html"
 
     def get_context_data(self, **kwargs):
-        tasks_completed = round(Task.objects.filter(is_completed=True).count() / Task.objects.count() * 100)
-        tasks_not_completed = round(Task.objects.filter(is_completed=False).count() / Task.objects.count() * 100)
+        tasks_completed = round(Task.objects.filter(
+            is_completed=True
+        ).count() / Task.objects.count() * 100)
+        tasks_not_completed = round(
+            Task.objects.filter(is_completed=False).count()
+            / Task.objects.count() * 100)
         month = timezone.now().month
-        tasks_this_month = Task.objects.filter(is_completed=True, completed_at__month=month).count()
+        tasks_this_month = Task.objects.filter(
+            is_completed=True,
+            completed_at__month=month).count()
         context = super().get_context_data(**kwargs)
-        context["tasks"] = Task.objects.filter(is_completed=True).order_by("-completed_at")[:6]
+        context["tasks"] = Task.objects.filter(
+            is_completed=True
+        ).order_by("-completed_at")[:6]
         context["workers_count"] = Worker.objects.count()
         context["tasks_count"] = Task.objects.count()
         context["tasks_completed"] = tasks_completed
         context["tasks_not_completed"] = tasks_not_completed
         context["tasks_completed_rounded"] = round(tasks_completed / 10) * 10
-        context["tasks_not_completed_rounded"] = round(tasks_not_completed / 10) * 10
+        context["tasks_not_completed_rounded"] = round(
+            tasks_not_completed / 10) * 10
         context["tasks_this_month"] = tasks_this_month
         context["projects_count"] = Project.objects.count()
         context["teams_count"] = Team.objects.count()
@@ -136,7 +165,9 @@ class WorkerUpdateView(LoginRequiredMixin, UpdateView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context["segment"] = f"worker #{self.object.pk} edit"
-        context["picture"] = get_object_or_404(Worker, pk=self.object.pk).profile_picture.url
+        context["picture"] = get_object_or_404(
+            Worker,
+            pk=self.object.pk).profile_picture.url
         return context
 
 
@@ -192,7 +223,10 @@ class TaskListView(ListView):
         elif user:
             queryset = Task.objects.all().filter(assigners__in=user)
         else:
-            queryset = Task.objects.all().filter(project=None, is_completed=False)
+            queryset = Task.objects.all().filter(
+                project=None,
+                is_completed=False
+            )
         if name:
             queryset = queryset.filter(name__icontains=name)
         return queryset.order_by("is_completed", "-completed_at")
@@ -218,7 +252,9 @@ class TaskDetailView(DetailView):
 
 
 @login_required
-def toggle_task_assignment(request: HttpRequest, pk: int) -> HttpResponseRedirect:
+def toggle_task_assignment(
+        request: HttpRequest,
+        pk: int) -> HttpResponseRedirect:
     user = request.user
     task = get_object_or_404(Task, pk=pk)
     if user in task.assigners.all():
@@ -234,7 +270,9 @@ def toggle_task_assignment(request: HttpRequest, pk: int) -> HttpResponseRedirec
 
 
 @login_required
-def toggle_task_completed(request: HttpRequest, pk: int) -> HttpResponseRedirect:
+def toggle_task_completed(
+        request: HttpRequest,
+        pk: int) -> HttpResponseRedirect:
     user = request.user
     task = get_object_or_404(Task, pk=pk)
     if user in task.assigners.all() or user.is_superuser:
@@ -247,7 +285,9 @@ def toggle_task_completed(request: HttpRequest, pk: int) -> HttpResponseRedirect
     task.save()
     project = request.GET.get("project", None)
     if project:
-        return HttpResponseRedirect(reverse_lazy("manager:project-detail", args=[project]))
+        return HttpResponseRedirect(
+            reverse_lazy("manager:project-detail", args=[project])
+        )
     return HttpResponseRedirect(reverse_lazy("manager:task-list"))
 
 
@@ -284,7 +324,9 @@ class TaskCreateView(LoginRequiredMixin, CreateView):
         if self.request.user.is_superuser:
             context["users"] = get_user_model().objects.all()
         else:
-            context["users"] = get_user_model().objects.filter(pk=self.request.user.pk)
+            context["users"] = get_user_model().objects.filter(
+                pk=self.request.user.pk
+            )
         user_id = self.request.GET.get("user", None)
         if user_id:
             try:
@@ -326,8 +368,14 @@ class ProjectListView(ListView):
                 project.completed_tasks = 0
                 project.completed_rounded = 0
             else:
-                project.completed_tasks = round(project.tasks.filter(is_completed=True).count() / project.tasks.all().count() * 100)
-                project.completed_rounded = round(project.completed_tasks / 10) * 10
+                project.completed_tasks = round(
+                    project.tasks.filter(
+                        is_completed=True
+                    ).count() / project.tasks.all().count() * 100
+                )
+                project.completed_rounded = round(
+                    project.completed_tasks / 10
+                ) * 10
         return context
 
     def get_queryset(self):
@@ -424,12 +472,16 @@ def add_worker_to_team(request: HttpRequest) -> HttpResponseRedirect | None:
         if request.user == team.leader or request.user.is_superuser:
             worker.team = team
             worker.save()
-        return HttpResponseRedirect(reverse_lazy("manager:team-detail", kwargs={"pk": team.pk}))
+        return HttpResponseRedirect(
+            reverse_lazy("manager:team-detail", kwargs={"pk": team.pk})
+        )
     return None
 
 
 @login_required
-def delete_worker_from_team(request: HttpRequest, **kwargs) -> HttpResponseRedirect:
+def delete_worker_from_team(
+        request: HttpRequest,
+        **kwargs) -> HttpResponseRedirect:
     user = request.user
     team = get_object_or_404(Team, id=kwargs["pk"])
     if user.is_superuser or user == team.leader:
@@ -437,7 +489,9 @@ def delete_worker_from_team(request: HttpRequest, **kwargs) -> HttpResponseRedir
         del_worker = get_object_or_404(Worker, id=del_user)
         team.workers.remove(del_worker)
         team.save()
-    return HttpResponseRedirect(reverse_lazy("manager:team-update", kwargs={"pk": team.pk}))
+    return HttpResponseRedirect(
+        reverse_lazy("manager:team-update", kwargs={"pk": team.pk})
+    )
 
 
 class TeamCreateView(LoginRequiredMixin, CreateView):
@@ -461,7 +515,9 @@ class TeamCreateView(LoginRequiredMixin, CreateView):
     def get(self, request, *args, **kwargs):
         user = self.request.user
         if hasattr(user, "team") and user.team:
-            return HttpResponseRedirect(reverse_lazy("manager:team-detail", args=[user.team.pk]))
+            return HttpResponseRedirect(
+                reverse_lazy("manager:team-detail", args=[user.team.pk])
+            )
         return super().get(request, *args, **kwargs)
 
 
@@ -476,7 +532,7 @@ class TeamUpdateView(LoginRequiredMixin, UpdateView):
     def get_context_data(self, **kwargs) -> dict:
         context = super().get_context_data(**kwargs)
         team = context["team"]
-        context["segment"] = f"team {team.pk } update"
+        context["segment"] = f"team {team.pk} update"
         leader = team.leader
         context["workers"] = team.workers.all().exclude(pk=leader.pk)
         context["available_workers"] = Worker.objects.filter(team=None)
@@ -497,7 +553,9 @@ class TeamDeleteView(LoginRequiredMixin, DeleteView):
         return context
 
 
-def toggle_project_by_team(request: HttpRequest, **kwargs) -> HttpResponseRedirect:
+def toggle_project_by_team(
+        request: HttpRequest,
+        **kwargs) -> HttpResponseRedirect:
     user = request.user
     team = user.team
     project = get_object_or_404(Project, id=kwargs["pk"])
@@ -512,4 +570,9 @@ def toggle_project_by_team(request: HttpRequest, **kwargs) -> HttpResponseRedire
         else:
             project.team = team
             project.save()
-    return HttpResponseRedirect(reverse_lazy("manager:project-detail", kwargs={"pk": project.pk}))
+    return HttpResponseRedirect(
+        reverse_lazy(
+            "manager:project-detail",
+            kwargs={"pk": project.pk}
+        )
+    )

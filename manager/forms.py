@@ -1,23 +1,29 @@
 from django import forms
-from django.contrib.auth.password_validation import validate_password
-from django.core.exceptions import ValidationError
-from django.forms import ModelForm
 from django.contrib.auth.forms import (
     AuthenticationForm,
     UsernameField,
 )
+from django.contrib.auth.password_validation import validate_password
+from django.core.exceptions import ValidationError
+from django.forms import ModelForm
 from django.utils.timezone import make_aware
 
 from manager.models import Worker, Position, Task, TaskType, Tag, Project, Team
 
 
 class LoginForm(AuthenticationForm):
-  username = UsernameField(widget=forms.TextInput(attrs={"class": "form-control", "placeholder": "Username"}))
-  password = forms.CharField(
-      label="Password",
-      strip=False,
-      widget=forms.PasswordInput(attrs={"class": "form-control", "placeholder": "Password"}),
-  )
+    username = UsernameField(
+        widget=forms.TextInput(
+            attrs={"class": "form-control", "placeholder": "Username"}
+        )
+    )
+    password = forms.CharField(
+        label="Password",
+        strip=False,
+        widget=forms.PasswordInput(
+            attrs={"class": "form-control", "placeholder": "Password"}
+        ),
+    )
 
 
 class WorkerSearchForm(forms.Form):
@@ -39,12 +45,7 @@ class WorkerForm(ModelForm):
         label="",
         required=False,
         widget=forms.TextInput(
-            attrs=
-            {
-                "class": "transparent-input"
-                ,"placeholder": "Username"
-            }
-        ),
+            attrs={"class": "transparent-input", "placeholder": "Username", }),
     )
     password1 = forms.CharField(
         label="",
@@ -52,7 +53,7 @@ class WorkerForm(ModelForm):
         widget=forms.PasswordInput(
             attrs={
                 "class": "transparent-text",
-                "placeholder": "Password"
+                "placeholder": "Password",
             }
         )
     )
@@ -188,9 +189,10 @@ class WorkerForm(ModelForm):
             "class": "form-check-input border",
         })
     )
+
     class Meta:
         model = Worker
-        fields =  (
+        fields = (
             "first_name",
             "last_name",
             "email",
@@ -220,7 +222,7 @@ class WorkerForm(ModelForm):
                 raise ValidationError(e.messages)
 
         return password2
-    
+
     def clean_phone_number(self) -> str:
         phone_number = self.cleaned_data.get("phone_number")
         if phone_number:
@@ -337,6 +339,7 @@ class TaskForm(forms.ModelForm):
             }
         )
     )
+
     class Meta:
         model = Task
         fields = (
@@ -412,6 +415,7 @@ class ProjectForm(forms.ModelForm):
             }
         )
     )
+
     class Meta:
         model = Project
         fields = (

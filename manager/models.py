@@ -49,7 +49,13 @@ class Worker(AbstractUser):
     facebook = models.URLField(blank=True, null=True)
     twitter = models.URLField(blank=True, null=True)
     location = models.CharField(max_length=255, blank=True, null=True)
-    team = models.ForeignKey("Team", on_delete=models.SET_NULL, blank=True, null=True, related_name="workers")
+    team = models.ForeignKey(
+        "Team",
+        on_delete=models.SET_NULL,
+        blank=True,
+        null=True,
+        related_name="workers"
+    )
 
     class Meta:
         ordering = ("position", "username")
@@ -58,7 +64,8 @@ class Worker(AbstractUser):
         return f"{self.username}"
 
     def check_is_online(self, days: int = 1) -> bool:
-        status = timezone.now().date() - self.last_activity < timedelta(days=days)
+        status = (timezone.now().date()
+                  - self.last_activity < timedelta(days=days))
         self.is_online = status
         self.save()
         return status
@@ -79,7 +86,13 @@ class TaskType(models.Model):
 
 class Team(models.Model):
     name = models.CharField(max_length=255)
-    leader = models.ForeignKey("Worker", on_delete=models.SET_NULL, blank=True, null=True, related_name="leader_of")
+    leader = models.ForeignKey(
+        "Worker",
+        on_delete=models.SET_NULL,
+        blank=True,
+        null=True,
+        related_name="leader_of"
+    )
 
     class Meta:
         ordering = ("name",)
@@ -91,7 +104,12 @@ class Team(models.Model):
 class Project(models.Model):
     name = models.CharField(max_length=255)
     description = models.TextField(blank=True)
-    team = models.ForeignKey(Team, on_delete=models.SET_NULL,null=True, related_name="projects")
+    team = models.ForeignKey(
+        Team,
+        on_delete=models.SET_NULL,
+        null=True,
+        related_name="projects"
+    )
 
     def __str__(self):
         return f"{self.name}, (Team: {self.team})"
@@ -123,7 +141,11 @@ class Task(models.Model):
     )
     assigners = models.ManyToManyField(Worker, related_name="tasks")
     project = models.ForeignKey(
-        Project, on_delete=models.CASCADE, related_name="tasks", blank=True, null=True
+        Project,
+        on_delete=models.CASCADE,
+        related_name="tasks",
+        blank=True,
+        null=True
     )
     tags = models.ManyToManyField(Tag, related_name="tasks")
     completed_at = models.DateTimeField(blank=True, null=True)
