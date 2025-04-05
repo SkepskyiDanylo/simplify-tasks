@@ -10,13 +10,18 @@ admin.site.unregister(Group)
 class AuthUserAdmin(UserAdmin):
     list_display = UserAdmin.list_display + ("position",)
     fieldsets = UserAdmin.fieldsets + (
-        (("Additional info",
-          {"fields": ("position", "profile_picture", "team")}), )
+        (("Additional data",
+          {"fields": ("profile_picture", "position", "team", "description", "location", "phone_number", "last_activity", "is_online")}),
+         ("Social",
+          {"fields": ("instagram", "facebook", "twitter")})
+        )
     )
-
     add_fieldsets = UserAdmin.add_fieldsets + (
-        (("Additional info",
-          {"fields": ("position", "profile_picture", "team")}), )
+        (("Additional data",
+          {"fields": ("profile_picture", "position", "team", "description", "location", "phone_number", "last_activity", "is_online")}),
+         ("Social",
+          {"fields": ("instagram", "facebook", "twitter")})
+        )
     )
 
 
@@ -39,7 +44,7 @@ class TeamAdmin(admin.ModelAdmin):
 class TaskAdmin(admin.ModelAdmin):
     list_display = ("name", "deadline", "priority", "is_completed")
     list_filter = ("is_completed", "priority", "tags")
-    search_fields = ("name",)
+    search_fields = ("name", "description", "assigners__username")
 
 
 @admin.register(Position)
@@ -50,3 +55,5 @@ class PositionAdmin(admin.ModelAdmin):
 @admin.register(Project)
 class ProjectAdmin(admin.ModelAdmin):
     list_display = ("name", "team")
+    list_filter = ("team",)
+    search_fields = ("name", "team__name")
