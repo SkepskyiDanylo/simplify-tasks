@@ -33,8 +33,10 @@
                         <i class="fa fa-ellipsis-h text-white"></i>
                       </a>
                       <ul class="dropdown-menu px-2 py-3" aria-labelledby="dropdownUsers1">
-                        <li><a class="dropdown-item border-radius-md" href="{% url "manager:worker-create" %}">Add
-                          worker</a></li>
+                        {% if user.is_authenticated %}
+                        <li><a class="dropdown-item border-radius-md" href="{% url "manager:worker-create" %}">Create</a></li>
+                        {% endif %}
+                      <li><a class="dropdown-item border-radius-md" href="{% url "manager:worker-list" %}">Show all</a></li>
                       </ul>
                     </div>
                   </div>
@@ -42,7 +44,6 @@
               </div>
             </div>
           </div>
-
           <div class="col-lg-6 col-md-6 col-12 mt-4 mt-md-0">
             <div class="card">
               <span class="mask bg-dark opacity-10 border-radius-lg"></span>
@@ -67,7 +68,10 @@
                         <i class="fa fa-ellipsis-h text-white"></i>
                       </a>
                       <ul class="dropdown-menu px-2 py-3" aria-labelledby="dropdownUsers2">
-                        <li><a class="dropdown-item border-radius-md" href="#add_task">Add task</a></li>
+                        <li><a class="dropdown-item border-radius-md" href="{% url "manager:task-list" %}">Show all</a></li>
+                        {% if user.is_superuser %}
+                          <li><a class="dropdown-item border-radius-md" href="{% url "manager:task-create" %}">Create</a></li>
+                        {% endif %}
                       </ul>
                     </div>
                   </div>
@@ -101,7 +105,13 @@
                         <i class="fa fa-ellipsis-h text-white"></i>
                       </a>
                       <ul class="dropdown-menu px-2 py-3" aria-labelledby="dropdownUsers3">
-                        <li><a class="dropdown-item border-radius-md" href="#team-create">Create a team</a></li>
+                        {% if user.team %}
+                          <li><a class="dropdown-item border-radius-md" href="{% url "manager:team-detail" pk=user.team.pk %}">Show team</a></li>
+                        {% elif user.is_authenticated %}
+                          <li><a class="dropdown-item border-radius-md" href="{% url "manager:team-create" %}">Create</a></li>
+                        {% else %}
+                          <li><span class="dropdown-item border-radius-md">No actions available</span></li>
+                        {% endif %}
                       </ul>
                     </div>
                   </div>
@@ -109,7 +119,6 @@
               </div>
             </div>
           </div>
-
           <div class="col-lg-6 col-md-6 col-12 mt-4 mt-md-0">
             <div class="card">
               <span class="mask bg-primary opacity-10 border-radius-lg"></span>
@@ -133,7 +142,10 @@
                         <i class="fa fa-ellipsis-h text-white"></i>
                       </a>
                       <ul class="dropdown-menu px-2 py-3" aria-labelledby="dropdownUsers4">
-                        <li><a class="dropdown-item border-radius-md" href="#add-project">Add project</a></li>
+                        {% if user.is_superuser %}
+                          <li><a class="dropdown-item border-radius-md" href="{% url "manager:project-create" %}">Add project</a></li>
+                        {% endif %}
+                        <li><a class="dropdown-item border-radius-md" href="{% url "manager:project-list" %}">Show all</a></li>
                       </ul>
                     </div>
                   </div>
