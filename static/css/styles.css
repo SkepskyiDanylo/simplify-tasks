@@ -8,7 +8,7 @@
 }
 
 .nav-link.active {
-    background-color: rgba(0, 0, 0, 5%)!important;
+    background-color: rgba(0, 0, 0, 5%) !important;
 }
 
 .git-hub-container {
@@ -337,7 +337,56 @@ body.modal-open {
     background-color: rgba(0, 0, 0, 5%);
 }
 
-.btn-logout{
+.btn-logout {
     max-width: 218px;
     width: 100%;
+}
+
+.dropdown-container {
+    display: none;
+    position: absolute;
+    right: 0;
+    left: auto;
+    background-color: #ffffff;
+    min-width: 130px;
+    box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.2);
+    z-index: 1;
+    border-radius: 10px;
+    overflow: hidden;
+    padding: 5px;
+    margin: 0;
+}
+
+.dropdown-container li {
+    list-style: none;
+    width: 100%;
+    margin: 2px auto;
+}
+
+.task-dropdown {
+    position: relative;
+    display: inline-block;
+}
+
+.task-dropdown:hover .dropdown-container {
+    display: block;
+}
+
+.task-dropdown:hover .dropdown-container,
+.dropdown-container:hover {
+  display: block;
+}
+
+.dropdown-task-item {
+    font-size: 16px;
+    display: block;
+    width: 100%;
+    padding: 0 10px;
+    text-decoration: none;
+    color: black;
+    border-radius: 20px;
+    transition: background-color 0.3s ease-in-out;
+}
+.dropdown-task-item:hover {
+    background-color: rgba(0, 0, 0, 5%);
 }

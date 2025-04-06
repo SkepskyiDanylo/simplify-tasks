@@ -3,7 +3,7 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
 from django.templatetags.static import static
 from django.contrib.auth.mixins import LoginRequiredMixin
-from django.db.models import QuerySet
+from django.db.models import QuerySet, Q
 from django.contrib.auth.views import LoginView, LogoutView
 from django.http import HttpRequest, HttpResponseRedirect, Http404
 from django.shortcuts import get_object_or_404
@@ -31,7 +31,7 @@ from manager.models import (
     Worker,
     Task,
     Project,
-    Team
+    Team, Tag
 )
 
 
@@ -212,16 +212,20 @@ class TaskListView(ListView):
         context["search_form"] = TaskSearchForm(
             initial={"name": name}
         )
+        context["tags"] = Tag.objects.all()
         return context
 
     def get_queryset(self) -> QuerySet:
         name = self.request.GET.get("name")
         user = self.request.GET.get("user")
-        all_tasks = self.request.GET.get("all")
-        if all_tasks == "true":
+        task_filter = self.request.GET.get("filter")
+        tag = self.request.GET.get("tag")
+        if task_filter == "all":
             queryset = Task.objects.all().filter(project=None)
+        elif task_filter == "available":
+            queryset = Task.objects.all().filter(Q(project=None) & ~Q(assigners__in=[self.request.user]))
         elif user:
-            queryset = Task.objects.all().filter(assigners__in=user)
+            queryset = Task.objects.filter(project=None, assigners__in=[user])
         else:
             queryset = Task.objects.all().filter(
                 project=None,
@@ -229,6 +233,8 @@ class TaskListView(ListView):
             )
         if name:
             queryset = queryset.filter(name__icontains=name)
+        if tag:
+            queryset = queryset.filter(tags__name__icontains=tag)
         return queryset.order_by("is_completed", "-completed_at")
 
 

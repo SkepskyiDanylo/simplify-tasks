@@ -13,15 +13,29 @@
                   <div class="col-11">
                     {{ search_form.name }}
                     <input type="hidden" name="all" value="{{ request.GET.all|default:'' }}">
+                    <input type="hidden" name="filter" value="{{ request.GET.filter|default:'' }}">
+                    <input type="hidden" name="user" value="{{ request.GET.filter|default:'' }}">
+                    <input type="hidden" name="tag" value="{{ request.GET.filter|default:'' }}">
                     <button type="submit" class="visually-hidden"></button>
                   </div>
                   <div class="col-1 m-auto">
                     <a href="{% url "manager:task-create" %}" class="text-end">
                       <img src="{% static "images/task-add.png" %}" alt="task-add" class="table-image m-auto">
                     </a>
-                    <a href="?{% query_transform request all=request.GET.all|yesno:',true' %}" class="ml-1">
-                      <img src="{% static "images/all-tasks.png" %}" alt="task-all-toggle" class="table-image m-auto">
-                    </a>
+                    <div class="ml-1 task-dropdown">
+                      <img src="{% static "images/filter.png" %}" alt="task-all-toggle" class="table-image m-auto">
+                      <ul class="dropdown-container">
+                        <li><a href="?filter=all" class="dropdown-task-item">Show all</a></li>
+                        <li><a href="?filter=available" class="dropdown-task-item">Available</a></li>
+                        <li><a href="?" class="dropdown-task-item">Yours</a></li>
+                        {% if tags %}
+                          <hr class="horizontal dark mt-0 mb-1">
+                          {% for tag in tags.all %}
+                            <li><a href="?{% query_transform request tag=tag.name %}" class="dropdown-task-item">{{ tag.name }}</a></li>
+                          {% endfor %}
+                        {% endif %}
+                      </ul>
+                    </div>
                   </div>
                 </div>
               </form>
@@ -82,7 +96,7 @@
       {% endfor %}
     </div>
     {% if is_paginated %}
-      <div class="row h-50 mt-2">
+      <div class="row h-50 mt-2 mb-5">
         <div class="col-lg-12 col-md-12">
           <div class="card">
             <card class="card-body p-1">

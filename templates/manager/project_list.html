@@ -62,6 +62,17 @@
         <img src="{% static "images/project-create.png" %}" alt="project-create" class="sidebar-image">
       </a>
     </div>
+    {% if is_paginated %}
+      <div class="row h-50 mt-2 mb-5">
+        <div class="col-lg-12 col-md-12">
+          <div class="card">
+            <card class="card-body p-1">
+              {% include "includes/pagination.html" %}
+            </card>
+          </div>
+        </div>
+      </div>
+    {% endif %}
   </div>
   {% if user.is_authenticated and not request.user.team %}
     <div class="error-container" id="toast-container">
