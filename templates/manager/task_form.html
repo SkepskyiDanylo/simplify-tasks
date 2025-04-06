@@ -53,23 +53,24 @@
                       <span class="text text-sm">Assigners:</span>
                     {% endif %}
                     <div class="d-flex bg-white border border-radius-xl p-2 h-100">
-                    {% if selected_user %}
-                      <select name="{{ form.assigners.name }}" id="id_assigners" class="form-select" multiple>
-                        {% for user in users %}
-                          <option value="{{ user.pk }}" {% if user.pk == selected_user.pk %} selected {% endif %}>
-                            {{ user.pk }}| {{ user.first_name }} {{ user.last_name }}
-                          </option>
-                        {% endfor %}
-                      </select>
-                    {% else %}
-                      <select name="{{ form.assigners.name }}" id="id_assigners" class="form-select" multiple>
-                        {% for user in users %}
-                          <option value="{{ user.pk }}" {% if task and user in task.assigners.all %} selected {% endif %}>
-                            {{ user.first_name }} {{ user.last_name }}
-                          </option>
-                        {% endfor %}
-                      </select>
-                    {% endif %}
+                      {% if selected_user %}
+                        <select name="{{ form.assigners.name }}" id="id_assigners" class="form-select" multiple>
+                          {% for user in users %}
+                            <option value="{{ user.pk }}" {% if user.pk == selected_user.pk %} selected {% endif %}>
+                              {{ user.pk }}| {{ user.first_name }} {{ user.last_name }}
+                            </option>
+                          {% endfor %}
+                        </select>
+                      {% else %}
+                        <select name="{{ form.assigners.name }}" id="id_assigners" class="form-select" multiple>
+                          {% for user in users %}
+                            <option value="{{ user.pk }}" {% if task and user in task.assigners.all %}
+                                    selected {% endif %}>
+                              {{ user.first_name }} {{ user.last_name }}
+                            </option>
+                          {% endfor %}
+                        </select>
+                      {% endif %}
                     </div>
                   </div>
                 </li>
@@ -81,13 +82,30 @@
                   <span class="text text-sm">Tags:</span>
                   <div class="d-flex bg-white border border-radius-xl p-2">
                     <div class="form-switch me-2">
-                      {% for checkbox in form.tags %}
+                    {% for tag in form.fields.tags.queryset %}
                         <div>
-                          {{ checkbox.tag }}
-                          <span class="text text-sm">{{ checkbox.choice_label }}</span>
+                          <input
+                              class="form-check-input"
+                              type="checkbox"
+                              name="tags"
+                              value="{{ tag.pk }}"
+                              id="tag_{{ tag.pk }}"
+                              {% if tag in form.initial.tags %}checked{% endif %}>
+                          <label class="text text-sm text-dark" for="tag_{{ tag.pk }}">
+                            {{ tag.name }}
+                          </label>
+                          {% if user.is_superuser %}
+                            <span onclick="delete_tag({{ tag.pk }})" class="ms-2 cursor-pointer">
+                              <i class="fas fa-times remove-user"></i>
+                            </span>
+                          {% endif %}
                         </div>
                       {% endfor %}
                     </div>
+                  </div>
+                  <div class="d-flex align-items-center gap-2 mt-2">
+                    <input type="text" id="tagInput" placeholder="Create Tag" class="form-control">
+                    <button type="button" onclick="create_tag()" class="btn btn-sm btn-success mb-0">Create</button>
                   </div>
                 </div>
               </li>
@@ -102,4 +120,30 @@
   </form>
   {% include "includes/form_errors.html" %}
 {% endblock %}
-
+{% block extra_js %}
+  <script>
+      function create_tag() {
+          const inputValue = document.getElementById("tagInput").value;
+          fetch("{% url 'manager:create-tag' %}", {
+              method: "POST",
+              headers: {
+                  "Content-Type": "application/x-www-form-urlencoded",
+                  "X-CSRFToken": "{{ csrf_token }}"
+              },
+              body: `name=${inputValue}`
+          })
+          location.reload();
+      }
+      function delete_tag(pk) {
+          fetch("{% url 'manager:delete-tag' %}", {
+              method: "POST",
+              headers: {
+                  "Content-Type": "application/x-www-form-urlencoded",
+                  "X-CSRFToken": "{{ csrf_token }}"
+              },
+              body: `pk=${pk}`
+          })
+          location.reload();
+      }
+  </script>
+{% endblock %}

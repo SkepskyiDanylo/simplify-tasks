@@ -582,3 +582,22 @@ def toggle_project_by_team(
             kwargs={"pk": project.pk}
         )
     )
+
+
+@login_required
+def create_tag(request: HttpRequest) -> HttpResponseRedirect:
+    if request.method == "POST":
+        name = request.POST.get("name", None)
+        print(name)
+        if name:
+            Tag.objects.create(name=name)
+    return HttpResponseRedirect(reverse_lazy("manager:task-list"))
+
+
+@login_required
+def delete_tag(request: HttpRequest) -> HttpResponseRedirect:
+    if request.method == "POST" and request.user.is_superuser:
+        pk = request.POST.get("pk", None)
+        tag = get_object_or_404(Tag, pk=pk)
+        tag.delete()
+    return HttpResponseRedirect(reverse_lazy("manager:task-list"))

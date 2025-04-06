@@ -31,7 +31,8 @@
                         {% if tags %}
                           <hr class="horizontal dark mt-0 mb-1">
                           {% for tag in tags.all %}
-                            <li><a href="?{% query_transform request tag=tag.name %}" class="dropdown-task-item">{{ tag.name }}</a></li>
+                            <li><a href="?{% query_transform request tag=tag.name %}"
+                                   class="dropdown-task-item">{{ tag.name }}</a></li>
                           {% endfor %}
                         {% endif %}
                       </ul>
