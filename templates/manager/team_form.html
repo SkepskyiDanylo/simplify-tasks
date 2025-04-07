@@ -90,14 +90,12 @@
             </ul>
           </div>
           <div class="card-footer pt-0 pb-1">
-            {% if request.user.is_superuser or request.user == team.leader %}
-              <div class="mt-4">
-                <button class="btn btn-success btn-sm" type="submit">Save</button>
-                {% if team %}
-                <a href="{% url "manager:team-delete" pk=team.pk %}" class="btn btn-sm btn-danger">Delete</a>
-                {% endif %}
-              </div>
-            {% endif %}
+            <div class="mt-4">
+              <button class="btn btn-success btn-sm" type="submit">Save</button>
+              {% if team %}
+              <a href="{% url "manager:team-delete" pk=team.pk %}" class="btn btn-sm btn-danger">Delete</a>
+              {% endif %}
+            </div>
           </div>
         </div>
       </div>
