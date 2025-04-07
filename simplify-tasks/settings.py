@@ -31,7 +31,7 @@ JAZZMIN_SETTINGS = {
     "site_brand": "Simplify Tasks",
     "welcome_sign": "Welcome to Simplify Tasks admin panel",
     "site_logo": "images/main-logo.png",
-    "login_logo":"logo-small.png",
+    "login_logo":"images/main-logo.png",
     "login_logo_dark": None,
     "topmenu_links": [
         {"name": "Main Page",  "url": "/"},
