@@ -8,6 +8,7 @@ Whether you're organizing personal to-dos or coordinating team efforts, Simplify
 - Django 5.1.5
 - User authentication
 - Django jazzmin admin panel
+- Separated functionality based on user roles.
 
 ## Installation
 
@@ -69,6 +70,7 @@ python manage.py test tests
 - Task type pages, CRUD
 - Add files support for tasks
 - Deep Role system
+- Deep Test system
 
 ## License
 This project is licensed under the MIT [License](LICENSE).
