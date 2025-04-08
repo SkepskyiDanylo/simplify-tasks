@@ -1,18 +1,9 @@
+import os
 from pathlib import Path
 
+BASE_DIR = Path(__file__).resolve().parent.parent.parent
 
-BASE_DIR = Path(__file__).resolve().parent.parent
-
-
-
-SECRET_KEY = "django-insecure-z29iyf4vhl0q16ssm9v&l2@exaqq2wkirx$m(qtxz(zt%wzf2f"
-
-
-DEBUG = True
-
-ALLOWED_HOSTS = []
-
-
+SECRET_KEY = os.getenv("SECRET_KEY", "django-insecure-z29iyf4vhl0q16ssm9v&l2@exaqq2wkirx$m(qtxz(zt%wzf2f")
 
 INSTALLED_APPS = [
     "jazzmin",
@@ -31,10 +22,10 @@ JAZZMIN_SETTINGS = {
     "site_brand": "Simplify Tasks",
     "welcome_sign": "Welcome to Simplify Tasks admin panel",
     "site_logo": "images/main-logo.png",
-    "login_logo":"images/main-logo.png",
+    "login_logo": "images/main-logo.png",
     "login_logo_dark": None,
     "topmenu_links": [
-        {"name": "Main Page",  "url": "/"},
+        {"name": "Main Page", "url": "/"},
     ],
     "show_sidebar": True,
     "changeform_format": "vertical_tabs",
@@ -51,7 +42,6 @@ JAZZMIN_SETTINGS = {
         "manager.TaskType": "fa-solid fa-list",
     }
 }
-
 
 JAZZMIN_UI_TWEAKS = {
     "navbar_small_text": False,
@@ -88,6 +78,7 @@ JAZZMIN_UI_TWEAKS = {
 
 MIDDLEWARE = [
     "django.middleware.security.SecurityMiddleware",
+    "whitenoise.middleware.WhiteNoiseMiddleware",
     "django.contrib.sessions.middleware.SessionMiddleware",
     "django.middleware.common.CommonMiddleware",
     "django.middleware.csrf.CsrfViewMiddleware",
@@ -117,17 +108,6 @@ TEMPLATES = [
 
 WSGI_APPLICATION = "simplify-tasks.wsgi.application"
 
-
-
-DATABASES = {
-    "default": {
-        "ENGINE": "django.db.backends.sqlite3",
-        "NAME": BASE_DIR / "db.sqlite3",
-    }
-}
-
-
-
 AUTH_PASSWORD_VALIDATORS = [
     {
         "NAME": "django.contrib.auth.password_validation.UserAttributeSimilarityValidator",
@@ -143,8 +123,6 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
-
-
 LANGUAGE_CODE = "en-us"
 
 TIME_ZONE = "Europe/Berlin"
@@ -152,7 +130,6 @@ TIME_ZONE = "Europe/Berlin"
 USE_I18N = True
 
 USE_TZ = True
-
 
 STATIC_URL = "static/"
 
@@ -164,13 +141,11 @@ MEDIA_URL = "/media/"
 
 MEDIA_ROOT = BASE_DIR / "media"
 
-
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
 AUTH_USER_MODEL = "manager.Worker"
 
-
-SESSION_COOKIE_AGE = 3600*24*7
+SESSION_COOKIE_AGE = 3600 * 24 * 7
 SESSION_EXPIRE_AT_BROWSER_CLOSE = False
 
 LOGIN_REDIRECT_URL = "/profile/"
