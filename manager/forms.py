@@ -69,7 +69,7 @@ class WorkerForm(ModelForm):
     )
     first_name = forms.CharField(
         max_length=255,
-        required=False,
+        required=True,
         label="",
         widget=forms.TextInput(
             attrs={
@@ -80,7 +80,7 @@ class WorkerForm(ModelForm):
     )
     last_name = forms.CharField(
         max_length=255,
-        required=False,
+        required=True,
         label="",
         widget=forms.TextInput(
             attrs={
