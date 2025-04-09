@@ -7,3 +7,6 @@ pip install -r requirements.txt
 
 # Apply any outstanding database migrations
 python manage.py migrate
+
+# Apply default values
+python manage.py reset_db
