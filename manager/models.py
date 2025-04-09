@@ -41,7 +41,9 @@ class Worker(AbstractUser):
     description = models.TextField(blank=True)
     phone_number = models.CharField(
         max_length=15,
-        validators=[phone_number_validator]
+        validators=[phone_number_validator],
+        blank=True,
+        null=True,
     )
     last_activity = models.DateField(default=timezone.now)
     is_online = models.BooleanField(default=False)
