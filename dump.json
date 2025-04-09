@@ -1,0 +1,943 @@
+[
+{
+    "model": "manager.position",
+    "pk": 1,
+    "fields": {
+        "name": "QA-engineer"
+    }
+},
+{
+    "model": "manager.position",
+    "pk": 2,
+    "fields": {
+        "name": "Python-developer"
+    }
+},
+{
+    "model": "manager.position",
+    "pk": 3,
+    "fields": {
+        "name": "Frontend-developer"
+    }
+},
+{
+    "model": "manager.position",
+    "pk": 4,
+    "fields": {
+        "name": "Recruiter"
+    }
+},
+{
+    "model": "manager.position",
+    "pk": 5,
+    "fields": {
+        "name": "UI-designer"
+    }
+},
+{
+    "model": "manager.position",
+    "pk": 6,
+    "fields": {
+        "name": "DevOps"
+    }
+},
+{
+    "model": "manager.position",
+    "pk": 7,
+    "fields": {
+        "name": "Project-manager"
+    }
+},
+{
+    "model": "manager.position",
+    "pk": 8,
+    "fields": {
+        "name": "Admin"
+    }
+},
+{
+    "model": "manager.position",
+    "pk": 9,
+    "fields": {
+        "name": "3D Designer"
+    }
+},
+{
+    "model": "manager.position",
+    "pk": 10,
+    "fields": {
+        "name": "Manager"
+    }
+},
+{
+    "model": "manager.position",
+    "pk": 11,
+    "fields": {
+        "name": "Stuff"
+    }
+},
+{
+    "model": "manager.position",
+    "pk": 12,
+    "fields": {
+        "name": "Frontend Developer"
+    }
+},
+{
+    "model": "manager.position",
+    "pk": 13,
+    "fields": {
+        "name": "Data Scientist"
+    }
+},
+{
+    "model": "manager.position",
+    "pk": 14,
+    "fields": {
+        "name": "Project Manager"
+    }
+},
+{
+    "model": "manager.position",
+    "pk": 15,
+    "fields": {
+        "name": "Tech. Support"
+    }
+},
+{
+    "model": "manager.position",
+    "pk": 16,
+    "fields": {
+        "name": "DB Administrator"
+    }
+},
+{
+    "model": "manager.position",
+    "pk": 17,
+    "fields": {
+        "name": "Business Analyst"
+    }
+},
+{
+    "model": "manager.position",
+    "pk": 18,
+    "fields": {
+        "name": "Junior .net developer in Unity-Bars"
+    }
+},
+{
+    "model": "manager.position",
+    "pk": 19,
+    "fields": {
+        "name": "Developer"
+    }
+},
+{
+    "model": "manager.position",
+    "pk": 20,
+    "fields": {
+        "name": "Designer"
+    }
+},
+{
+    "model": "manager.worker",
+    "pk": 1,
+    "fields": {
+        "password": "pbkdf2_sha256$870000$wXAxgJ7hRTMLOA0FEyM8cp$6q4Uxc9lWCtErHzO+O3A/+IT/mhTKRY7wbQ9HjPmmKI=",
+        "last_login": "2025-04-09T09:02:37.174Z",
+        "is_superuser": true,
+        "username": "admin",
+        "first_name": "Admin",
+        "last_name": "Admin",
+        "email": "admin@admin.com",
+        "is_staff": true,
+        "is_active": true,
+        "date_joined": "2024-12-27T14:58:16Z",
+        "profile_picture": "profile_pictures/91289796-76e0-4315-98ae-7ee384fda472.jpg",
+        "position": 8,
+        "description": "",
+        "phone_number": "111111111",
+        "last_activity": "2025-04-09",
+        "is_online": true,
+        "instagram": "https://www.instagram.com/vivertonick/",
+        "facebook": "",
+        "twitter": "",
+        "location": "",
+        "team": 7,
+        "groups": [],
+        "user_permissions": []
+    }
+},
+{
+    "model": "manager.worker",
+    "pk": 3,
+    "fields": {
+        "password": "pbkdf2_sha256$870000$28DlYHE8F0lVRsMBhTpGIN$TCNyhMyEXJPcZzV0LwY+VAub98ln5lMdIpZ3rJ54BK4=",
+        "last_login": null,
+        "is_superuser": false,
+        "username": "GrimlerNerf",
+        "first_name": "Alex",
+        "last_name": "Petrov",
+        "email": "Sawa.pe01@gmail.com",
+        "is_staff": false,
+        "is_active": true,
+        "date_joined": "2024-12-31T16:32:48Z",
+        "profile_picture": "profile_pictures/download.jpg",
+        "position": 9,
+        "description": "",
+        "phone_number": "",
+        "last_activity": "2025-01-03",
+        "is_online": false,
+        "instagram": "",
+        "facebook": "",
+        "twitter": "",
+        "location": null,
+        "team": null,
+        "groups": [],
+        "user_permissions": []
+    }
+},
+{
+    "model": "manager.worker",
+    "pk": 4,
+    "fields": {
+        "password": "pbkdf2_sha256$870000$dbOOh0o1fPm6vgRYWquplH$D0MHPMhWl/DSkhuTkKUyXQUV2FDHl8f6wCfoSffem30=",
+        "last_login": null,
+        "is_superuser": false,
+        "username": "seven7een",
+        "first_name": "Ihor",
+        "last_name": "Panomarenko",
+        "email": "1h0rs7een@gmail.com",
+        "is_staff": false,
+        "is_active": true,
+        "date_joined": "2024-12-31T16:37:02Z",
+        "profile_picture": "profile_pictures/default.jpg",
+        "position": 10,
+        "description": "",
+        "phone_number": "",
+        "last_activity": "2025-01-03",
+        "is_online": false,
+        "instagram": "",
+        "facebook": "",
+        "twitter": "",
+        "location": null,
+        "team": null,
+        "groups": [],
+        "user_permissions": []
+    }
+},
+{
+    "model": "manager.worker",
+    "pk": 5,
+    "fields": {
+        "password": "pbkdf2_sha256$870000$DU7wQ6OdN8nF1fr8yugyle$WtOlaSrPdRgodnztoEu00MTH7sq1UIdeVb1Z0o920k0=",
+        "last_login": null,
+        "is_superuser": false,
+        "username": "edixen",
+        "first_name": "Eduard",
+        "last_name": "Liubchenko",
+        "email": "edixen@gmail.com",
+        "is_staff": false,
+        "is_active": true,
+        "date_joined": "2024-12-31T16:38:47Z",
+        "profile_picture": "profile_pictures/default.jpg",
+        "position": 15,
+        "description": "",
+        "phone_number": "",
+        "last_activity": "2025-01-03",
+        "is_online": false,
+        "instagram": "",
+        "facebook": "",
+        "twitter": "",
+        "location": null,
+        "team": null,
+        "groups": [],
+        "user_permissions": []
+    }
+},
+{
+    "model": "manager.worker",
+    "pk": 6,
+    "fields": {
+        "password": "pbkdf2_sha256$870000$idGZQD5bjVu323WobxVrBA$CallUV9YmZdiSdN3SMxXUvHPuRi32TmSeVDNWZEviQw=",
+        "last_login": "2025-01-07T11:41:57.146Z",
+        "is_superuser": false,
+        "username": "Ymi.ko",
+        "first_name": "Yehor",
+        "last_name": "Tcapchuk",
+        "email": "opri4nik0103@gmail.com",
+        "is_staff": false,
+        "is_active": true,
+        "date_joined": "2024-12-31T16:39:29Z",
+        "profile_picture": "profile_pictures/c0fb9379-7e11-4d5b-beb9-0dcba4507825.jpg",
+        "position": 1,
+        "description": "",
+        "phone_number": "",
+        "last_activity": "2025-01-07",
+        "is_online": false,
+        "instagram": "",
+        "facebook": "",
+        "twitter": "",
+        "location": "",
+        "team": 7,
+        "groups": [],
+        "user_permissions": []
+    }
+},
+{
+    "model": "manager.worker",
+    "pk": 7,
+    "fields": {
+        "password": "pbkdf2_sha256$870000$QQFPY0mVcRFDgz82ep1C07$UlDoFK7RMl6xVPKFEaTKHlHUp86jlnsuCcbmH+K5iNg=",
+        "last_login": null,
+        "is_superuser": false,
+        "username": "ivaaanov",
+        "first_name": "Ivan",
+        "last_name": "Ivanov",
+        "email": "ivanivanov1779@gmail.com",
+        "is_staff": false,
+        "is_active": true,
+        "date_joined": "2024-12-31T16:40:54Z",
+        "profile_picture": "profile_pictures/default.jpg",
+        "position": 19,
+        "description": "",
+        "phone_number": "",
+        "last_activity": "2025-01-03",
+        "is_online": false,
+        "instagram": "",
+        "facebook": "",
+        "twitter": "",
+        "location": null,
+        "team": null,
+        "groups": [],
+        "user_permissions": []
+    }
+},
+{
+    "model": "manager.worker",
+    "pk": 8,
+    "fields": {
+        "password": "pbkdf2_sha256$870000$m6la8OTQtAg2RfzfqPVJSp$qdy5ZTHtlx3X0r7KQLQlyrHsvTRAz68WJGHYqnUXwPg=",
+        "last_login": null,
+        "is_superuser": false,
+        "username": "tech_creator",
+        "first_name": "Alex",
+        "last_name": "Johnson",
+        "email": "alex.johnson@example.com",
+        "is_staff": false,
+        "is_active": true,
+        "date_joined": "2024-12-31T16:42:05Z",
+        "profile_picture": "profile_pictures/default.jpg",
+        "position": 3,
+        "description": "",
+        "phone_number": "",
+        "last_activity": "2025-01-03",
+        "is_online": false,
+        "instagram": "",
+        "facebook": "",
+        "twitter": "",
+        "location": null,
+        "team": null,
+        "groups": [],
+        "user_permissions": []
+    }
+},
+{
+    "model": "manager.worker",
+    "pk": 9,
+    "fields": {
+        "password": "pbkdf2_sha256$870000$vI2V7duNef9AP5XlW24bn7$CbLHNF0Jt4B2pGxlDvv9PEy2KExnilgqhmcCNhNfoB8=",
+        "last_login": null,
+        "is_superuser": false,
+        "username": "Ray_Vortex",
+        "first_name": "Ray",
+        "last_name": "Vortex",
+        "email": "ex3nt.it@gmail.com",
+        "is_staff": false,
+        "is_active": true,
+        "date_joined": "2024-12-31T16:42:44Z",
+        "profile_picture": "profile_pictures/default.jpg",
+        "position": 17,
+        "description": "",
+        "phone_number": "",
+        "last_activity": "2025-01-03",
+        "is_online": false,
+        "instagram": "",
+        "facebook": "",
+        "twitter": "",
+        "location": null,
+        "team": null,
+        "groups": [],
+        "user_permissions": []
+    }
+},
+{
+    "model": "manager.worker",
+    "pk": 10,
+    "fields": {
+        "password": "pbkdf2_sha256$870000$EsPGQEdzEgzqd1sxb82yzs$fUwoKsaYpFJ/PQWoBsyixzCZus+5MMHnUilh3AwXefo=",
+        "last_login": null,
+        "is_superuser": false,
+        "username": "Phoenix",
+        "first_name": "Nikoletta",
+        "last_name": "Chernyaeva",
+        "email": "phoenix@gmail.com",
+        "is_staff": false,
+        "is_active": true,
+        "date_joined": "2024-12-31T16:43:37Z",
+        "profile_picture": "profile_pictures/default.jpg",
+        "position": 20,
+        "description": "",
+        "phone_number": "",
+        "last_activity": "2025-01-03",
+        "is_online": false,
+        "instagram": "",
+        "facebook": "",
+        "twitter": "",
+        "location": null,
+        "team": null,
+        "groups": [],
+        "user_permissions": []
+    }
+},
+{
+    "model": "manager.worker",
+    "pk": 11,
+    "fields": {
+        "password": "pbkdf2_sha256$870000$nnFi1Gf42tPvs27QnjX9a0$JHNs5RGbt470irpNB7N0ExH4WZf+uFAUq49Udtb7BIA=",
+        "last_login": null,
+        "is_superuser": false,
+        "username": "Sinkor",
+        "first_name": "Roman",
+        "last_name": "Chernyaev",
+        "email": "chernyaev.roman.s@gmail.com",
+        "is_staff": false,
+        "is_active": true,
+        "date_joined": "2024-12-31T16:45:00Z",
+        "profile_picture": "profile_pictures/default.jpg",
+        "position": 18,
+        "description": "",
+        "phone_number": "1234512345",
+        "last_activity": "2025-01-03",
+        "is_online": false,
+        "instagram": "",
+        "facebook": "",
+        "twitter": "",
+        "location": null,
+        "team": null,
+        "groups": [],
+        "user_permissions": []
+    }
+},
+{
+    "model": "manager.worker",
+    "pk": 12,
+    "fields": {
+        "password": "pbkdf2_sha256$870000$cTvPksiPgiTOCsQgBXxD02$/74IScEMjzVO11eBxr81FKtVgjY8mqmAZoleq8OFswc=",
+        "last_login": null,
+        "is_superuser": false,
+        "username": "nimpo",
+        "first_name": "Rollan",
+        "last_name": "Kim",
+        "email": "nimpo@nimpo.com",
+        "is_staff": false,
+        "is_active": true,
+        "date_joined": "2025-01-03T19:01:51Z",
+        "profile_picture": "profile_pictures/default.jpg",
+        "position": 15,
+        "description": "",
+        "phone_number": "",
+        "last_activity": "2025-01-03",
+        "is_online": false,
+        "instagram": "",
+        "facebook": "",
+        "twitter": "",
+        "location": null,
+        "team": null,
+        "groups": [],
+        "user_permissions": []
+    }
+},
+{
+    "model": "manager.worker",
+    "pk": 13,
+    "fields": {
+        "password": "pbkdf2_sha256$870000$skOTCiMXlbvH3MP22L7IK9$85bJEHQlGT5zGiGSiWM9TLFRujLfjkW2n63IlPzk0Ko=",
+        "last_login": null,
+        "is_superuser": false,
+        "username": "aleg",
+        "first_name": "Aleg",
+        "last_name": "Popov",
+        "email": "aleg@gmail.com",
+        "is_staff": false,
+        "is_active": true,
+        "date_joined": "2025-01-05T00:45:02.327Z",
+        "profile_picture": "profile_pictures/default.jpg",
+        "position": 1,
+        "description": "",
+        "phone_number": "",
+        "last_activity": "2025-01-05",
+        "is_online": false,
+        "instagram": "",
+        "facebook": "",
+        "twitter": "",
+        "location": null,
+        "team": 7,
+        "groups": [],
+        "user_permissions": []
+    }
+},
+{
+    "model": "manager.worker",
+    "pk": 14,
+    "fields": {
+        "password": "pbkdf2_sha256$870000$LRZHwg2GQYoJPLRr5ZY2VH$i/yuZFPkUa8QMr/MeKQ7ZjFK1AvvE7A8DLuNyX1CwkY=",
+        "last_login": null,
+        "is_superuser": false,
+        "username": "vitcss",
+        "first_name": "Victor",
+        "last_name": "Orudzhev",
+        "email": "visw@gmail.com",
+        "is_staff": false,
+        "is_active": true,
+        "date_joined": "2025-01-05T01:35:29.841Z",
+        "profile_picture": "profile_pictures/default.jpg",
+        "position": 12,
+        "description": "",
+        "phone_number": "15123044001",
+        "last_activity": "2025-01-05",
+        "is_online": false,
+        "instagram": "",
+        "facebook": "",
+        "twitter": "",
+        "location": null,
+        "team": null,
+        "groups": [],
+        "user_permissions": []
+    }
+},
+{
+    "model": "manager.worker",
+    "pk": 15,
+    "fields": {
+        "password": "pbkdf2_sha256$870000$rD5rTFpMeVhEIeB3677NYv$4j2AJERlg+xpdq21MHLYsmnxQo9EyzwkMTfxdPESgCI=",
+        "last_login": null,
+        "is_superuser": false,
+        "username": "sanyapro",
+        "first_name": "Alexander",
+        "last_name": "Petrov",
+        "email": "sanya@gmail.com",
+        "is_staff": false,
+        "is_active": true,
+        "date_joined": "2025-01-05T12:00:51.982Z",
+        "profile_picture": "profile_pictures/default.jpg",
+        "position": 7,
+        "description": "",
+        "phone_number": "",
+        "last_activity": "2025-01-05",
+        "is_online": false,
+        "instagram": "",
+        "facebook": "",
+        "twitter": "",
+        "location": null,
+        "team": null,
+        "groups": [],
+        "user_permissions": []
+    }
+},
+{
+    "model": "manager.worker",
+    "pk": 16,
+    "fields": {
+        "password": "pbkdf2_sha256$870000$l5SDKcAOluCnWeGpMAjPp5$oVM7Fw4c8pYcqi6qgQFr0k18I33IH8fjZT1IXjKjuWk=",
+        "last_login": "2025-04-09T10:39:23.372Z",
+        "is_superuser": false,
+        "username": "test",
+        "first_name": "Test",
+        "last_name": "Profile",
+        "email": "kol230305@gmail.com",
+        "is_staff": false,
+        "is_active": true,
+        "date_joined": "2025-01-06T19:10:57.179Z",
+        "profile_picture": "profile_pictures/9436393f-c775-434d-9f19-9e1c1e3a5141.png",
+        "position": 1,
+        "description": "Hello my name is test",
+        "phone_number": "4915123044008",
+        "last_activity": "2025-04-09",
+        "is_online": true,
+        "instagram": "https://instagram.com",
+        "facebook": "https://facebook.com",
+        "twitter": "",
+        "location": "USA",
+        "team": 8,
+        "groups": [],
+        "user_permissions": []
+    }
+},
+{
+    "model": "manager.worker",
+    "pk": 17,
+    "fields": {
+        "password": "pbkdf2_sha256$870000$Bow4RuwVzvb0NvgdJZuZBb$ctrgDFy4Qos8LsjaDu4bIZ9WiM6aewhtamTCPHammJc=",
+        "last_login": "2025-03-17T19:28:40.699Z",
+        "is_superuser": false,
+        "username": "sds",
+        "first_name": "",
+        "last_name": "",
+        "email": "",
+        "is_staff": false,
+        "is_active": true,
+        "date_joined": "2025-03-17T19:28:27.232Z",
+        "profile_picture": "profile_pictures/e983e4aa-41e5-45a1-a241-7d3291ab4bee.png",
+        "position": 2,
+        "description": "",
+        "phone_number": "",
+        "last_activity": "2025-03-17",
+        "is_online": false,
+        "instagram": "",
+        "facebook": "",
+        "twitter": "",
+        "location": "",
+        "team": null,
+        "groups": [],
+        "user_permissions": []
+    }
+},
+{
+    "model": "manager.worker",
+    "pk": 18,
+    "fields": {
+        "password": "pbkdf2_sha256$870000$AOOaXBsAwrw0CgZMOIzMzd$qRFS2oQtof88/MysHEc+QjSpQSpadtUhC/lfT1J+//w=",
+        "last_login": "2025-03-22T12:03:12.014Z",
+        "is_superuser": true,
+        "username": "testlol",
+        "first_name": "",
+        "last_name": "",
+        "email": "",
+        "is_staff": false,
+        "is_active": true,
+        "date_joined": "2025-03-22T12:03:03.806Z",
+        "profile_picture": "profile_pictures/default.jpg",
+        "position": 1,
+        "description": "",
+        "phone_number": "",
+        "last_activity": "2025-03-22",
+        "is_online": false,
+        "instagram": "",
+        "facebook": "",
+        "twitter": "",
+        "location": "",
+        "team": null,
+        "groups": [],
+        "user_permissions": []
+    }
+},
+{
+    "model": "manager.tasktype",
+    "pk": 1,
+    "fields": {
+        "name": "Bug"
+    }
+},
+{
+    "model": "manager.tasktype",
+    "pk": 2,
+    "fields": {
+        "name": "Feature"
+    }
+},
+{
+    "model": "manager.tasktype",
+    "pk": 3,
+    "fields": {
+        "name": "Improvement"
+    }
+},
+{
+    "model": "manager.tasktype",
+    "pk": 4,
+    "fields": {
+        "name": "Refactor"
+    }
+},
+{
+    "model": "manager.tasktype",
+    "pk": 5,
+    "fields": {
+        "name": "Hotfix"
+    }
+},
+{
+    "model": "manager.tasktype",
+    "pk": 6,
+    "fields": {
+        "name": "Develop"
+    }
+},
+{
+    "model": "manager.team",
+    "pk": 7,
+    "fields": {
+        "name": "Admin Team",
+        "leader": 1
+    }
+},
+{
+    "model": "manager.team",
+    "pk": 8,
+    "fields": {
+        "name": "Test",
+        "leader": 16
+    }
+},
+{
+    "model": "manager.project",
+    "pk": 2,
+    "fields": {
+        "name": "Test Project",
+        "description": "It's a test project",
+        "team": 7
+    }
+},
+{
+    "model": "manager.tag",
+    "pk": 1,
+    "fields": {
+        "name": "Python"
+    }
+},
+{
+    "model": "manager.tag",
+    "pk": 2,
+    "fields": {
+        "name": "JS"
+    }
+},
+{
+    "model": "manager.tag",
+    "pk": 3,
+    "fields": {
+        "name": "HTML"
+    }
+},
+{
+    "model": "manager.tag",
+    "pk": 4,
+    "fields": {
+        "name": "UI/UX"
+    }
+},
+{
+    "model": "manager.tag",
+    "pk": 6,
+    "fields": {
+        "name": "Mobile"
+    }
+},
+{
+    "model": "manager.task",
+    "pk": 1,
+    "fields": {
+        "name": "Admin Bug",
+        "description": "some description",
+        "deadline": "2025-01-31T15:08:55Z",
+        "is_completed": true,
+        "priority": 1,
+        "task_type": 1,
+        "project": null,
+        "completed_at": "2025-03-23T18:25:18.477Z",
+        "assigners": [],
+        "tags": []
+    }
+},
+{
+    "model": "manager.task",
+    "pk": 3,
+    "fields": {
+        "name": "Development of a Task Management System for Employees",
+        "description": "Develop an internal task management system integrated into the corporate portal. Key features:\r\nAssignment and distribution of tasks among employees.\r\nNotification system for deadlines and task updates.\r\nTask status tracking (e.g., \"To Do,\" \"In Progress,\" \"Done\").\r\nRole-based access for managers and employees.\r\nIntegration with third-party services like Slack or Microsoft Teams.",
+        "deadline": "2025-02-21T15:00:00Z",
+        "is_completed": false,
+        "priority": 1,
+        "task_type": 2,
+        "project": null,
+        "completed_at": null,
+        "assigners": [
+            6,
+            16
+        ],
+        "tags": [
+            2,
+            3
+        ]
+    }
+},
+{
+    "model": "manager.task",
+    "pk": 4,
+    "fields": {
+        "name": "E-commerce Website with a Recommendation Engine",
+        "description": "Build a fully functional e-commerce platform with an integrated AI-driven recommendation system. Key requirements:\r\n\r\nUser authentication and profile management.\r\nDynamic product catalog with filtering and sorting.\r\nAI-based recommendation engine for personalized product suggestions.\r\nSecure payment gateway integration.\r\nAdmin dashboard for managing inventory and orders.",
+        "deadline": "2025-02-07T18:59:50Z",
+        "is_completed": true,
+        "priority": 3,
+        "task_type": 3,
+        "project": null,
+        "completed_at": "2025-03-23T18:25:17.173Z",
+        "assigners": [
+            13,
+            16,
+            4
+        ],
+        "tags": [
+            1
+        ]
+    }
+},
+{
+    "model": "manager.task",
+    "pk": 5,
+    "fields": {
+        "name": "Mobile App for Event Management",
+        "description": "Develop a cross-platform mobile application for organizing and managing events. Features should include:\r\n\r\nEvent creation and customization (e.g., location, schedule, attendees).\r\nRSVP management and reminders for participants.\r\nIntegration with calendar applications.\r\nReal-time notifications for updates or changes.\r\nUser feedback and rating system for events.",
+        "deadline": "2025-03-07T23:00:00Z",
+        "is_completed": true,
+        "priority": 5,
+        "task_type": 6,
+        "project": null,
+        "completed_at": "2025-03-23T18:25:20.682Z",
+        "assigners": [
+            16,
+            14,
+            5
+        ],
+        "tags": [
+            6
+        ]
+    }
+},
+{
+    "model": "manager.task",
+    "pk": 6,
+    "fields": {
+        "name": "Client Website Development",
+        "description": "Design and develop a fully responsive website for a local business client, integrating features like contact forms, user authentication, and analytics tracking.",
+        "deadline": "2025-01-08T13:33:35Z",
+        "is_completed": true,
+        "priority": 4,
+        "task_type": 6,
+        "project": null,
+        "completed_at": "2025-03-22T14:26:34.013Z",
+        "assigners": [
+            16,
+            8,
+            1
+        ],
+        "tags": []
+    }
+},
+{
+    "model": "manager.task",
+    "pk": 7,
+    "fields": {
+        "name": "IT Security Audit",
+        "description": "Conduct a comprehensive security audit of the company's internal systems, identifying vulnerabilities and providing recommendations for improvement.",
+        "deadline": "2025-02-08T23:00:00Z",
+        "is_completed": true,
+        "priority": 5,
+        "task_type": 6,
+        "project": null,
+        "completed_at": "2025-04-08T20:16:46.101Z",
+        "assigners": [
+            16,
+            5,
+            12,
+            7
+        ],
+        "tags": [
+            2,
+            3,
+            4
+        ]
+    }
+},
+{
+    "model": "manager.task",
+    "pk": 8,
+    "fields": {
+        "name": "DevOps Pipeline Optimization",
+        "description": "Analyze and improve the company�s existing CI/CD pipeline to reduce deployment time and ensure code quality standards.",
+        "deadline": "2025-08-21T12:35:11Z",
+        "is_completed": false,
+        "priority": 3,
+        "task_type": 6,
+        "project": null,
+        "completed_at": null,
+        "assigners": [
+            13,
+            16,
+            4,
+            11
+        ],
+        "tags": [
+            1,
+            4
+        ]
+    }
+},
+{
+    "model": "manager.task",
+    "pk": 9,
+    "fields": {
+        "name": "Task",
+        "description": "Test task",
+        "deadline": "2030-03-17T23:00:00Z",
+        "is_completed": false,
+        "priority": 3,
+        "task_type": 2,
+        "project": null,
+        "completed_at": null,
+        "assigners": [
+            6,
+            13,
+            16
+        ],
+        "tags": [
+            1,
+            2
+        ]
+    }
+},
+{
+    "model": "manager.task",
+    "pk": 16,
+    "fields": {
+        "name": "Admin project task #1",
+        "description": "sdsd",
+        "deadline": "2025-04-07T00:31:00Z",
+        "is_completed": true,
+        "priority": 3,
+        "task_type": 1,
+        "project": 2,
+        "completed_at": "2025-04-07T00:31:30.944Z",
+        "assigners": [],
+        "tags": []
+    }
+},
+{
+    "model": "manager.task",
+    "pk": 17,
+    "fields": {
+        "name": "Admin project task #2",
+        "description": "",
+        "deadline": "2025-04-07T00:31:00Z",
+        "is_completed": false,
+        "priority": 3,
+        "task_type": 2,
+        "project": 2,
+        "completed_at": null,
+        "assigners": [],
+        "tags": []
+    }
+}
+]
