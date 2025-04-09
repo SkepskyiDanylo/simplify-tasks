@@ -9,6 +9,23 @@ Whether you're organizing personal to-dos or coordinating team efforts, Simplify
 - User authentication
 - Django jazzmin admin panel
 - Separated functionality based on user roles.
+- Static/Media files handling by AWS S3
+- External Postgres DB
+
+## Live Demo
+
+### 🔗 Link
+- [Visit Website](https://your-project-demo-link.com)
+
+#### 👤 Admin
+- **username:** admin  
+- **password:** admin
+
+#### 👤 User
+- **username:** user  
+- **password:** testuser12345
+
+_If you can't connect, wait around 2-3 minutes, website needs to start up_
 
 ## Installation
 
@@ -19,11 +36,37 @@ Ensure you have the following installed:
 - Virtual environment tool (e.g., `venv` or `virtualenv`)
 
 ### Setup
+
+#### Clone the repository
 ```bash
-# Clone the repository
 git clone https://github.com/yourusername/yourproject.git
 cd yourproject
+```
 
+#### Configure .env file
+```.env
+# DB
+POSTGRES_DB=<DB>
+POSTGRES_DB_PORT=5432
+POSTGRES_USER=<USER>
+POSTGRES_PASSWORD=<PASSWORD>
+POSTGRES_HOST=<HOST>
+
+# Django
+SECRET_KEY=<SECRET_KEY>
+# prod version requires AWS S3 configuration
+# dev version saves files localy
+DJANGO_SETTINGS_MODULE=simplify-tasks.settings.prod / simplify-tasks.settings.dev
+
+# AWS
+AWS_ACCESS_KEY_ID=<ID>
+AWS_SECRET_ACCESS_KEY=<ACCESS_KEY>
+AWS_STORAGE_BUCKET_NAME=<BUCKET_NAME>
+RENDER_EXTERNAL_HOSTNAME=<HOST>
+```
+
+#### Configure project
+```bash
 # Create and activate a virtual environment
 python -m venv venv
 source venv/bin/activate
@@ -39,6 +82,12 @@ python manage.py createsuperuser
 
 # Start the development server
 python manage.py runserver
+```
+
+#### Configure prod project
+```bash
+# Save static files
+python manage.py collectstatic
 ```
 
 
